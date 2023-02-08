@@ -12,11 +12,11 @@ function CameraCard({isActive}: CameraCardProps): JSX.Element {
         <picture>
           <source
             type="image/webp"
-            srcSet="img/content/img1.webp, img/content/img1@2x.webp 2x"
+            srcSet="/img/content/img1.webp, /img/content/img1@2x.webp 2x"
           />
           <img
-            src="img/content/img1.jpg"
-            srcSet="img/content/img1@2x.jpg 2x"
+            src="/img/content/img1.jpg"
+            srcSet="/img/content/img1@2x.jpg 2x"
             width={280}
             height={240}
             alt="Ретрокамера «Das Auge IV»"

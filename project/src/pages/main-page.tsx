@@ -3,7 +3,7 @@ import Header from '../components/header/header';
 import Filters from '../components/filters/filters';
 import Sort from '../components/sort/sort';
 import CameraCard from '../components/camera-card/camera-card';
-import Footer from '../footer/footer';
+import Footer from '../components/footer/footer';
 import Breadcrumbs from '../components/breadcrumbs/breadcrumbs';
 
 function MainPage(): JSX.Element {

@@ -1,22 +1,26 @@
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const/app-route';
+
 function Header(): JSX.Element {
   return (
     <header className="header" id="header">
       <div className="container">
-        <a
+        <Link
           className="header__logo"
-          href="//TODO"
+          to={AppRoute.Main}
           aria-label="Переход на главную"
+          title="На главную"
         >
           <svg width={100} height={36} aria-hidden="true">
             <use xlinkHref="#icon-logo" />
           </svg>
-        </a>
+        </Link>
         <nav className="main-nav header__main-nav">
           <ul className="main-nav__list">
             <li className="main-nav__item">
-              <a className="main-nav__link" href="catalog.html">
+              <Link className="main-nav__link" to={AppRoute.Main}>
               Каталог
-              </a>
+              </Link>
             </li>
             <li className="main-nav__item">
               <a className="main-nav__link" href="//TODO">
@@ -78,11 +82,11 @@ function Header(): JSX.Element {
             <span className="visually-hidden">Сбросить поиск</span>
           </button>
         </div>
-        <a className="header__basket-link" href="//TODO">
+        <Link className="header__basket-link" to={AppRoute.Basket}>
           <svg width={16} height={16} aria-hidden="true">
             <use xlinkHref="#icon-basket" />
           </svg>
-        </a>
+        </Link>
       </div>
     </header>
   );

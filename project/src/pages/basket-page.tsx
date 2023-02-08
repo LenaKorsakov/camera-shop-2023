@@ -1,5 +1,5 @@
 import Header from '../components/header/header';
-import Footer from '../footer/footer';
+import Footer from '../components/footer/footer';
 import Breadcrumbs from '../components/breadcrumbs/breadcrumbs';
 import BasketItem from '../components/basket-item/basket-item';
 

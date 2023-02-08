@@ -1,10 +1,11 @@
 import CameraCard from '../camera-card/camera-card';
+//TODO map, чтобы сделать компонент видимым надо CameraCard добавить класс is-active передать пропс isActive в компонент
 
 function CameraSimilar(): JSX.Element {
   return (
     <div className="product-similar__slider">
       <div className="product-similar__slider-list">
-        <CameraCard isActive/>(//TODO map, чтобы сделать компонент видимым надо CameraCard добавить класс is-active передать пропс isActive в компонент)
+        <CameraCard isActive/>
       </div>
       <button
         className="slider-controls slider-controls--prev"

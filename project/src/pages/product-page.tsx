@@ -1,6 +1,6 @@
 import Header from '../components/header/header';
 import ProductContent from '../components/product-content/product-content';
-import Footer from '../footer/footer';
+import Footer from '../components/footer/footer';
 
 function ProductPage(): JSX.Element {
   return (
