@@ -1,5 +1,6 @@
 import { store } from '../store/index';
-import { Cameras, Promo } from './camera-types';
+import { Camera, Cameras, Promo } from './camera-types';
+import { ReviewsRaw } from './review-types';
 
 export type State = ReturnType<typeof store.getState>;
 
@@ -11,4 +12,8 @@ export type CatalogData = {
   isLoading: boolean;
 }
 
-
+export type ProductData = {
+  camera: Camera;
+  reviews: ReviewsRaw;
+  similarCameras: Cameras;
+}

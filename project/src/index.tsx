@@ -7,10 +7,14 @@ import { Provider } from 'react-redux';
 import App from './components/app/app';
 
 import { store } from './store';
+import { fetchAllCameraAction, fetchPromoAction } from './store/api-actions';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
+
+store.dispatch(fetchAllCameraAction());
+store.dispatch(fetchPromoAction());
 
 root.render(
   <React.StrictMode>

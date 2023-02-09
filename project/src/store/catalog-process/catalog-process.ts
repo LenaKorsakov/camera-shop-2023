@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { CatalogData } from '../../@types/store-types';
 import { Promo } from '../../@types/camera-types';
 import { NameSpace } from '../../const/name-space';
-import { fetchAllCameras, fetchPromo } from '../api-actions';
+import { fetchAllCameraAction, fetchPromoAction } from '../api-actions';
 
 const initialState: CatalogData = {
   cameras: [],
@@ -16,17 +16,17 @@ export const catalogData = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(fetchAllCameras.fulfilled, (state, action) => {
+      .addCase(fetchAllCameraAction.fulfilled, (state, action) => {
         state.cameras = action.payload;
         state.isLoading = false;
       })
-      .addCase(fetchAllCameras.pending, (state) => {
+      .addCase(fetchAllCameraAction.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(fetchAllCameras.rejected, (state) => {
+      .addCase(fetchAllCameraAction.rejected, (state) => {
         state.isLoading = false;
       })
-      .addCase(fetchPromo.fulfilled, (state, action) => {
+      .addCase(fetchPromoAction.fulfilled, (state, action) => {
         state.promo = action.payload;
       });
   }
