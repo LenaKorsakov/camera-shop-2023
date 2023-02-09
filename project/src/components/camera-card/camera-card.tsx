@@ -1,9 +1,27 @@
+import { Link } from 'react-router-dom';
+import { Camera } from '../../@types/camera-types';
+import { AppRoute } from '../../const/app-route';
+import { capitalizeFirstLetter, formatPrice } from '../../utiles/format';
+import IconStar from '../icon-star/icon-star';
+
+const STAR_MAX = 5;
 
 type CameraCardProps = {
 isActive: boolean;
+camera: Camera;
 }
 
-function CameraCard({isActive}: CameraCardProps): JSX.Element {
+function CameraCard({isActive, camera}: CameraCardProps): JSX.Element {
+  const {id, name, rating, price, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, reviewCount } = camera;
+
+  const getStarsRating = (): JSX.Element => {
+    const stars = [];
+    for(let i = 0; i < STAR_MAX; i++) {
+      stars.push(<IconStar isFull={i < rating} key={i}/>);
+    }
+    return <div>{stars}</div> ;
+  };
+
   return (
     <div
       className={`product-card ${isActive ? 'is-active' : ''}`}
@@ -12,44 +30,31 @@ function CameraCard({isActive}: CameraCardProps): JSX.Element {
         <picture>
           <source
             type="image/webp"
-            srcSet="/img/content/img1.webp, /img/content/img1@2x.webp 2x"
+            srcSet={`${previewImgWebp}, ${previewImgWebp2x} 2x`}
           />
           <img
-            src="/img/content/img1.jpg"
-            srcSet="/img/content/img1@2x.jpg 2x"
+            src={previewImg}
+            srcSet={`${previewImg2x} 2x`}
             width={280}
             height={240}
-            alt="Ретрокамера «Das Auge IV»"
+            alt={name}
           />
         </picture>
       </div>
       <div className="product-card__info">
         <div className="rate product-card__rate">
-          <svg width={17} height={16} aria-hidden="true">
-            <use xlinkHref="#icon-full-star" />
-          </svg>
-          <svg width={17} height={16} aria-hidden="true">
-            <use xlinkHref="#icon-full-star" />
-          </svg>
-          <svg width={17} height={16} aria-hidden="true">
-            <use xlinkHref="#icon-full-star" />
-          </svg>
-          <svg width={17} height={16} aria-hidden="true">
-            <use xlinkHref="#icon-star" />
-          </svg>
-          <svg width={17} height={16} aria-hidden="true">
-            <use xlinkHref="#icon-star" />
-          </svg>
-          <p className="visually-hidden">Рейтинг: 3</p>
+          {getStarsRating()}
+          {}
+          <p className="visually-hidden">Рейтинг: {rating}</p>
           <p className="rate__count">
-            <span className="visually-hidden">Всего оценок:</span>23
+            <span className="visually-hidden">Всего оценок:</span>{reviewCount}
           </p>
         </div>
         <p className="product-card__title">
-                      Ретрокамера «Das Auge IV»
+          {capitalizeFirstLetter(name)}
         </p>
         <p className="product-card__price">
-          <span className="visually-hidden">Цена:</span>73 450 ₽
+          <span className="visually-hidden">Цена:</span> {formatPrice(price)} ₽
         </p>
       </div>
       <div className="product-card__buttons">
@@ -59,9 +64,9 @@ function CameraCard({isActive}: CameraCardProps): JSX.Element {
         >
                       Купить
         </button>
-        <a className="btn btn--transparent" href="//TODO">
+        <Link className="btn btn--transparent" to={`${AppRoute.Product}/${id}`}>
                       Подробнее
-        </a>
+        </Link>
       </div>
     </div>
   );
