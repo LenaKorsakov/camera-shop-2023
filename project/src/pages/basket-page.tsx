@@ -9,7 +9,10 @@ function BasketPage(): JSX.Element {
       <Header/>
       <main>
         <div className="page-content">
-          <Breadcrumbs/>
+          <Breadcrumbs
+            isActive={false}
+            isProductPage={false}
+          />
           <section className="basket">
             <div className="container">
               <h1 className="title title--h2">Корзина</h1>

@@ -16,7 +16,10 @@ function MainPage(): JSX.Element {
       <main>
         <Bunner/>
         <div className="page-content">
-          <Breadcrumbs/>
+          <Breadcrumbs
+            isActive
+            isProductPage={false}
+          />
           <Catalog cameras={cameras}/>
         </div>
       </main>

@@ -7,7 +7,11 @@ function ProductContent(): JSX.Element {
   return (
     <main>
       <div className="page-content">
-        <Breadcrumbs/>
+        <Breadcrumbs
+          isActive={false}
+          isProductPage
+          productName={'Название камеры'}
+        />
         <div className="page-content__section">
           <CameraInfo/>
         </div>
