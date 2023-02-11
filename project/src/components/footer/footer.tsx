@@ -1,118 +1,67 @@
-import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const/app-route';
+import { NAV_ITEMS } from '../../const/nav-items';
+import { RESOURCES_ITEMS } from '../../const/resources-items';
+import { SOCIAL_ITEMS } from '../../const/social-items';
+import { SUPPORT_ITEMS } from '../../const/support-items';
+import FooterLogo from './footer-logo';
+import FooterNavItem from './footer-nav-item';
+import SocialItem from './social-item';
 
 function Footer(): JSX.Element {
+  //еще упростим
   return (
     <footer className="footer">
       <div className="container">
         <div className="footer__info">
-          <Link
-            className="footer__logo"
-            to={AppRoute.Main}
-            aria-label="Переход на главную"
-          >
-            <svg width={100} height={36} aria-hidden="true">
-              <use xlinkHref="#icon-logo-mono" />
-            </svg>
-          </Link>
+          <FooterLogo/>
           <p className="footer__description">
       Интернет-магазин фото- и видеотехники
           </p>
           <ul className="social">
-            <li className="social__item">
-              <a
-                className="link"
-                href="#//"
-                aria-label="Переход на страницу вконтатке"
-              >
-                <svg width={20} height={20} aria-hidden="true">
-                  <use xlinkHref="#icon-vk" />
-                </svg>
-              </a>
-            </li>
-            <li className="social__item">
-              <a
-                className="link"
-                href="//"
-                aria-label="Переход на страницу pinterest"
-              >
-                <svg width={20} height={20} aria-hidden="true">
-                  <use xlinkHref="#icon-pinterest" />
-                </svg>
-              </a>
-            </li>
-            <li className="social__item">
-              <a
-                className="link"
-                href="//"
-                aria-label="Переход на страницу reddit"
-              >
-                <svg width={20} height={20} aria-hidden="true">
-                  <use xlinkHref="#icon-reddit" />
-                </svg>
-              </a>
-            </li>
+            {SOCIAL_ITEMS.map(({title, icon, link}) => (
+              <SocialItem
+                title={title}
+                icon={icon}
+                link={link}
+                key={`${title}-${icon}`}
+              />
+            ))}
           </ul>
         </div>
         <ul className="footer__nav">
           <li className="footer__nav-item">
             <p className="footer__title">Навигация</p>
             <ul className="footer__list">
-              <li className="footer__item">
-                <Link className="link" to={AppRoute.Main}>
-            Каталог
-                </Link>
-              </li>
-              <li className="footer__item">
-                <a className="link" href="//TODO">
-            Гарантии
-                </a>
-              </li>
-              <li className="footer__item">
-                <a className="link" href="//TODO">
-            Доставка
-                </a>
-              </li>
-              <li className="footer__item">
-                <a className="link" href="//TODO">
-            О компании
-                </a>
-              </li>
+              {NAV_ITEMS.map(({title, route}) => (
+                <FooterNavItem
+                  title={title}
+                  route={route}
+                  key={title}
+                />
+              ))}
             </ul>
           </li>
           <li className="footer__nav-item">
             <p className="footer__title">Ресурсы</p>
             <ul className="footer__list">
-              <li className="footer__item">
-                <a className="link" href="//TODO">
-            Курсы операторов
-                </a>
-              </li>
-              <li className="footer__item">
-                <a className="link" href="//TODO">
-            Блог
-                </a>
-              </li>
-              <li className="footer__item">
-                <a className="link" href="//TODO">
-            Сообщество
-                </a>
-              </li>
+              {RESOURCES_ITEMS.map(({title, route}) => (
+                <FooterNavItem
+                  title={title}
+                  route={route}
+                  key={title}
+                />
+              ))}
             </ul>
           </li>
           <li className="footer__nav-item">
             <p className="footer__title">Поддержка</p>
             <ul className="footer__list">
-              <li className="footer__item">
-                <a className="link" href="//TODO">
-            FAQ
-                </a>
-              </li>
-              <li className="footer__item">
-                <a className="link" href="//TODO">
-            Задать вопрос
-                </a>
-              </li>
+              {SUPPORT_ITEMS.map(({title, route}) => (
+                <FooterNavItem
+                  title={title}
+                  route={route}
+                  key={title}
+                />
+              ))}
             </ul>
           </li>
         </ul>

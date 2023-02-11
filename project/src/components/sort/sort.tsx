@@ -40,7 +40,7 @@ function Sort(): JSX.Element {
                 id="down"
                 name="sort-icon"
                 aria-label="По убыванию"
-              />
+              />{' '}
               <label htmlFor="down">
                 <svg width={16} height={14} aria-hidden="true">
                   <use xlinkHref="#icon-sort" />

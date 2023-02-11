@@ -57,7 +57,6 @@ function CameraCard({isActive, camera}: CameraCardProps): JSX.Element {
       <div className="product-card__info">
         <div className="rate product-card__rate">
           {getStarsRating()}
-          {}
           <p className="visually-hidden">Рейтинг: {rating}</p>
           <p className="rate__count">
             <span className="visually-hidden">Всего оценок:</span>{reviewCount}
@@ -66,8 +65,7 @@ function CameraCard({isActive, camera}: CameraCardProps): JSX.Element {
         <p className="product-card__title">
           {capitalizeFirstLetter(name)}
         </p>
-        <p className="product-card__price">
-          <span className="visually-hidden">Цена:</span> {formatPrice(price)} ₽
+        <p className="product-card__price"><span className="visually-hidden">Цена:</span>{formatPrice(price)} ₽
         </p>
       </div>
       <div className="product-card__buttons">
