@@ -1,92 +1,28 @@
-import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const/app-route';
+import BasketCounter from './basket-counter';
+import FormSearch from './form-search';
+import Logo from './logo';
+import NavItem from './nav-item';
+
+import { NAV_ITEMS } from '../../const/nav-items';
 
 function Header(): JSX.Element {
   return (
     <header className="header" id="header">
       <div className="container">
-        <Link
-          className="header__logo"
-          to={AppRoute.Main}
-          aria-label="Переход на главную"
-          title="На главную"
-        >
-          <svg width={100} height={36} aria-hidden="true">
-            <use xlinkHref="#icon-logo" />
-          </svg>
-        </Link>
+        <Logo/>
         <nav className="main-nav header__main-nav">
           <ul className="main-nav__list">
-            <li className="main-nav__item">
-              <Link className="main-nav__link" to={AppRoute.Main}>
-              Каталог
-              </Link>
-            </li>
-            <li className="main-nav__item">
-              <a className="main-nav__link" href="//TODO">
-              Гарантии
-              </a>
-            </li>
-            <li className="main-nav__item">
-              <a className="main-nav__link" href="//TODO">
-              Доставка
-              </a>
-            </li>
-            <li className="main-nav__item">
-              <a className="main-nav__link" href="//TODO">
-              О компании
-              </a>
-            </li>
+            {NAV_ITEMS.map(({title, route}) => (
+              <NavItem
+                title={title}
+                route={route}
+                key={title}
+              />
+            ))}
           </ul>
         </nav>
-        <div className="form-search">
-          <form>
-            <label>
-              <svg
-                className="form-search__icon"
-                width={16}
-                height={16}
-                aria-hidden="true"
-              >
-                <use xlinkHref="#icon-lens" />
-              </svg>
-              <input
-                className="form-search__input"
-                type="text"
-                autoComplete="off"
-                placeholder="Поиск по сайту"
-              />
-            </label>
-            <ul className="form-search__select-list">
-              <li className="form-search__select-item" tabIndex={0}>
-              Cannonball Pro MX 8i
-              </li>
-              <li className="form-search__select-item" tabIndex={0}>
-              Cannonball Pro MX 7i
-              </li>
-              <li className="form-search__select-item" tabIndex={0}>
-              Cannonball Pro MX 6i
-              </li>
-              <li className="form-search__select-item" tabIndex={0}>
-              Cannonball Pro MX 5i
-              </li>
-              <li className="form-search__select-item" tabIndex={0}>
-              Cannonball Pro MX 4i
-              </li>
-            </ul>
-          </form>
-          <button className="form-search__reset" type="reset">
-            <svg width={10} height={10} aria-hidden="true">
-              <use xlinkHref="#icon-close" />
-            </svg>
-            <span className="visually-hidden">Сбросить поиск</span>
-          </button>
-        </div>
-        <Link className="header__basket-link" to={AppRoute.Basket}>
-          <svg width={16} height={16} aria-hidden="true">
-            <use xlinkHref="#icon-basket" />
-          </svg>
-        </Link>
+        <FormSearch/>
+        <BasketCounter/>
       </div>
     </header>
   );
