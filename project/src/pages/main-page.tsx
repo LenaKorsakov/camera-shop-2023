@@ -2,29 +2,33 @@ import Bunner from '../components/banner/banner';
 import Header from '../components/header/header';
 import Footer from '../components/footer/footer';
 import Breadcrumbs from '../components/breadcrumbs/breadcrumbs';
-import { useAppSelector } from '../hooks';
-import { getAllCameras } from '../store/catalog-process/catalog-process-selectors';
+import LoadingPage from './loading-page';
 import Catalog from '../components/catalog/catalog';
+
+import { useAppSelector } from '../hooks';
+import { getAllCameras, getCatalogLoadingStatus } from '../store/catalog-process/catalog-process-selectors';
 
 function MainPage(): JSX.Element {
   const cameras = useAppSelector(getAllCameras);
-  //TODO экран Loading
+  const isLoading = useAppSelector(getCatalogLoadingStatus);
 
   return (
-    <>
-      <Header/>
-      <main>
-        <Bunner/>
-        <div className="page-content">
-          <Breadcrumbs
-            isActive
-            isProductPage={false}
-          />
-          <Catalog cameras={cameras}/>
-        </div>
-      </main>
-      <Footer/>
-    </>);
+    isLoading ? <LoadingPage/> :
+      <>
+        <Header/>
+        <main>
+          <Bunner/>
+          <div className="page-content">
+            <Breadcrumbs
+              isActive
+              isProductPage={false}
+            />
+            <Catalog cameras={cameras}/>
+          </div>
+        </main>
+        <Footer/>
+      </>
+  );
 }
 
 export default MainPage;

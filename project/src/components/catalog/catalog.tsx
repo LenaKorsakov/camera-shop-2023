@@ -2,6 +2,7 @@ import Filters from '../filters/filters';
 import Sort from '../sort/sort';
 import CameraCard from '../camera-card/camera-card';
 import Pagination from '../pagination/pagination';
+
 import { Cameras } from '../../@types/camera-types';
 
 type CatalogProps = {
