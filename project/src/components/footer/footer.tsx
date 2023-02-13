@@ -1,13 +1,10 @@
-import { NAV_ITEMS } from '../../const/nav-items';
-import { RESOURCES_ITEMS } from '../../const/resources-items';
-import { SOCIAL_ITEMS } from '../../const/social-items';
-import { SUPPORT_ITEMS } from '../../const/support-items';
 import FooterLogo from './footer-logo';
-import FooterNavItem from './footer-nav-item';
 import SocialItem from './social-item';
+import { FOOTER_ITEMS, SOCIAL_ITEMS } from '../../const/nav-items-titles';
+import FooterItem from './footer-item';
 
 function Footer(): JSX.Element {
-  //еще упростим
+
   return (
     <footer className="footer">
       <div className="container">
@@ -28,42 +25,16 @@ function Footer(): JSX.Element {
           </ul>
         </div>
         <ul className="footer__nav">
-          <li className="footer__nav-item">
-            <p className="footer__title">Навигация</p>
-            <ul className="footer__list">
-              {NAV_ITEMS.map(({title, route}) => (
-                <FooterNavItem
-                  title={title}
-                  route={route}
-                  key={title}
-                />
-              ))}
-            </ul>
-          </li>
-          <li className="footer__nav-item">
-            <p className="footer__title">Ресурсы</p>
-            <ul className="footer__list">
-              {RESOURCES_ITEMS.map(({title, route}) => (
-                <FooterNavItem
-                  title={title}
-                  route={route}
-                  key={title}
-                />
-              ))}
-            </ul>
-          </li>
-          <li className="footer__nav-item">
-            <p className="footer__title">Поддержка</p>
-            <ul className="footer__list">
-              {SUPPORT_ITEMS.map(({title, route}) => (
-                <FooterNavItem
-                  title={title}
-                  route={route}
-                  key={title}
-                />
-              ))}
-            </ul>
-          </li>
+          {FOOTER_ITEMS.map((item, index) => {
+            const keyValue = `${item.name}-${index}`;
+
+            return (
+              <FooterItem
+                navItem={item}
+                key={keyValue}
+              />
+            );}
+          )}
         </ul>
       </div>
     </footer>

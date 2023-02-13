@@ -3,7 +3,7 @@ import FormSearch from './form-search';
 import Logo from './logo';
 import NavItem from './nav-item';
 
-import { NAV_ITEMS } from '../../const/nav-items';
+import { NAV_ITEMS } from '../../const/nav-items-titles';
 
 function Header(): JSX.Element {
   return (
@@ -12,13 +12,17 @@ function Header(): JSX.Element {
         <Logo/>
         <nav className="main-nav header__main-nav">
           <ul className="main-nav__list">
-            {NAV_ITEMS.map(({title, route}) => (
-              <NavItem
-                title={title}
-                route={route}
-                key={title}
-              />
-            ))}
+            {NAV_ITEMS.map(({title, route}, index) => {
+              const keyValue = `${title}-${index}`;
+
+              return (
+                <NavItem
+                  title={title}
+                  route={route}
+                  key={keyValue}
+                />
+              );}
+            )}
           </ul>
         </nav>
         <FormSearch/>
