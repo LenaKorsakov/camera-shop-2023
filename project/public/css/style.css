@@ -2447,6 +2447,7 @@ button,
 .product-card__title {
   margin: 0;
   padding-top: 8px;
+  width: 100%;
 }
 
 .product-card__price {
