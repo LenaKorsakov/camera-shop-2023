@@ -1,36 +1,21 @@
 import { useState } from 'react';
+
+import { UsePaganation } from './@types';
+
 import { MIN_PAGE_NUMBER } from '../const/const';
 
-interface UsePaginationProps {
-  contentPerPage: number;
-  count: number;
-}
-
-interface UsePaganationReturn {
-  page: number;
-  totalPages: number;
-  firstContentIndex: number;
-  lastContentIndex: number;
-  pagesNumbers: number[];
-  nextPage: () => void;
-  prevPage: () => void;
-  setPage: (page: number) => void;
-}
-
-type UsePaganation = (arg: UsePaginationProps) => UsePaganationReturn;
-
-const usePagination: UsePaganation = ({contentPerPage, count}) => {
+const usePagination: UsePaganation = ({contentPerPage, productQty}) => {
   const [page, setPage] = useState<number>(MIN_PAGE_NUMBER);
 
-  const pageCount = Math.ceil(count / contentPerPage);
+  const pageQty = Math.ceil(productQty / contentPerPage);
   const lastContentIndex = page * contentPerPage;
   const firstContentIndex = lastContentIndex - contentPerPage;
-  const pagesNumbers = Array.from({length: pageCount}, (_, index) => index + 1 );
+  const pagesNumbers = Array.from({length: pageQty}, (_, index) => index + 1 );
 
   const changePage = (direction: boolean) => {
     setPage((prevState) => {
       if (direction) {
-        if (prevState === pageCount) {
+        if (prevState === pageQty) {
           return prevState;
         }
         return prevState + 1;
@@ -44,8 +29,8 @@ const usePagination: UsePaganation = ({contentPerPage, count}) => {
   };
 
   const setCurrentPage = (currentPageNumber: number) => {
-    if (currentPageNumber > pageCount) {
-      setPage(pageCount);
+    if (currentPageNumber > pageQty) {
+      setPage(pageQty);
     } else if (currentPageNumber < MIN_PAGE_NUMBER) {
       setPage(MIN_PAGE_NUMBER);
     } else {
@@ -55,7 +40,7 @@ const usePagination: UsePaganation = ({contentPerPage, count}) => {
 
   return {
     page,
-    totalPages: pageCount,
+    totalPages: pageQty,
     firstContentIndex,
     lastContentIndex,
     pagesNumbers,

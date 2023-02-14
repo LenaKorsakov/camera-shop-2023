@@ -7,6 +7,7 @@ import Catalog from '../components/catalog/catalog';
 
 import { useAppSelector } from '../hooks';
 import { getAllCameras, getCatalogLoadingStatus } from '../store/catalog-process/catalog-process-selectors';
+import { memo } from 'react';
 
 function MainPage(): JSX.Element {
   const cameras = useAppSelector(getAllCameras);
@@ -31,4 +32,4 @@ function MainPage(): JSX.Element {
   );
 }
 
-export default MainPage;
+export default memo(MainPage);

@@ -17,6 +17,11 @@ function App(): JSX.Element {
         >
         </Route>
         <Route
+          path={`${AppRoute.Catalog}:pageNum`}
+          element={<MainPage/>}
+        >
+        </Route>
+        <Route
           path={`${AppRoute.Product}/:id`}
           element={<ProductPage/>}
         >

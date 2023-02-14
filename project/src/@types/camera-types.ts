@@ -18,3 +18,7 @@ export type Cameras = Camera[];
 
 export type Promo = Pick<Camera, 'id'| 'name'| 'previewImg'| 'previewImg2x'| 'previewImgWebp'| 'previewImgWebp2x'>
 
+export type Size = {
+    width: string;
+    height: string;
+}

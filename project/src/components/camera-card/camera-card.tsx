@@ -10,6 +10,8 @@ import { capitalizeFirstLetter, formatPrice } from '../../utiles/format';
 import { STAR_MAX } from '../../const/const';
 
 import InBasketButton from './in-basket-button';
+import Picture from '../picture/picture';
+import { PictureSize } from '../../const/picture-size';
 
 type CameraCardProps = {
 isActive: boolean;
@@ -20,13 +22,6 @@ function CameraCard({isActive, camera}: CameraCardProps): JSX.Element {
   const {id, name, rating, price, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, reviewCount } = camera;
   const [inBasket, setInBasket] = useState<boolean>(false);
 
-  const handleButtonClick = () => {
-    //появляется попап с кнопкой добавить товар в корзину
-    //по клику на кнопку диспатчим отправку заказа
-    // если все ок перенаправляем в корзину и  показать попап спасибо и далее
-    setInBasket(true);
-  };
-
   const getStarsRating = (): JSX.Element => {
     const stars = [];
     for(let i = 0; i < STAR_MAX; i++) {
@@ -35,24 +30,26 @@ function CameraCard({isActive, camera}: CameraCardProps): JSX.Element {
     return <div>{stars}</div> ;
   };
 
+  const handleButtonClick = () => {
+    //появляется попап с кнопкой добавить товар в корзину
+    //по клику на кнопку диспатчим отправку заказа
+    // если все ок перенаправляем в корзину и  показать попап спасибо и далее
+    setInBasket(true);
+  };
+
   return (
     <div
       className={`product-card ${isActive ? 'is-active' : ''}`}
     >
       <div className="product-card__img">
-        <picture>
-          <source
-            type="image/webp"
-            srcSet={`${previewImgWebp}, ${previewImgWebp2x} 2x`}
-          />
-          <img
-            src={previewImg}
-            srcSet={`${previewImg2x} 2x`}
-            width={280}
-            height={240}
-            alt={name}
-          />
-        </picture>
+        <Picture
+          previewImg={previewImg}
+          previewImgWebp={previewImgWebp}
+          previewImgWebp2x={previewImgWebp2x}
+          previewImg2x={previewImg2x}
+          name={name}
+          size={PictureSize.PREVIEW_PICTURE}
+        />
       </div>
       <div className="product-card__info">
         <div className="rate product-card__rate">
