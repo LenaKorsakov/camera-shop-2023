@@ -10,6 +10,7 @@ type BreadcrumbsProps = {
 }
 
 function Breadcrumbs({ isActive, productName, isProductPage }: BreadcrumbsProps): JSX.Element {
+  //сделать рефакторинг! Возможно использовать navlink
   return (
     <div className="breadcrumbs">
       <div className="container">
@@ -24,7 +25,7 @@ function Breadcrumbs({ isActive, productName, isProductPage }: BreadcrumbsProps)
           </li>
           {isActive ?
             <li className="breadcrumbs__item">
-              <span className="breadcrumbs__link breadcrumbs__link--active">Каталог</span>
+              <span className="breadcrumbs__link breadcrumbs__link--active">{BreadcrumbsNames.Catalog}</span>
             </li>
             : <BreadcrumbsItem isProductPage={isProductPage} productName={productName}/>}
         </ul>

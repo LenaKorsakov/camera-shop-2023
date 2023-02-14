@@ -1,30 +1,38 @@
+import { Link } from 'react-router-dom';
+
+import Picture from '../picture/picture';
+
+import { useAppSelector } from '../../hooks';
+import { getPromo } from '../../store/catalog-process/catalog-process-selectors';
+
+import { AppRoute } from '../../const/app-route';
+import { PictureSize } from '../../const/picture-size';
+
 function Bunner(): JSX.Element {
+  const promoCamera = useAppSelector(getPromo);
+  const { name, previewImg, previewImgWebp, previewImg2x, previewImgWebp2x, id } = promoCamera;
+
   return (
     <div className="banner">
-      <picture>
-        <source
-          type="image/webp"
-          srcSet="img/content/banner-bg.webp, img/content/banner-bg@2x.webp 2x"
-        />
-        <img
-          src="img/content/banner-bg.jpg"
-          srcSet="img/content/banner-bg@2x.jpg 2x"
-          width={1280}
-          height={280}
-          alt="баннер"
-        />
-      </picture>
+      <Picture
+        previewImg={previewImg}
+        previewImgWebp={previewImgWebp}
+        previewImgWebp2x={previewImgWebp2x}
+        previewImg2x={previewImg2x}
+        name={name}
+        size={PictureSize.PROMO_PICTURE}
+      />
       <p className="banner__info">
         <span className="banner__message">Новинка!</span>
         <span className="title title--h1">
-          Cannonball&nbsp;Pro&nbsp;MX&nbsp;8i
+          {name}
         </span>
         <span className="banner__text">
           Профессиональная камера от&nbsp;известного производителя
         </span>
-        <a className="btn" href="//TODO">
+        <Link className="btn" to={`${AppRoute.Product}/${id}`}>
           Подробнее
-        </a>
+        </Link>
       </p>
     </div>
   );
