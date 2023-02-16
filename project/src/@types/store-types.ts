@@ -16,4 +16,5 @@ export type ProductData = {
   camera: Camera;
   reviews: ReviewsRaw;
   similarCameras: Cameras;
+  isLoading: boolean;
 }

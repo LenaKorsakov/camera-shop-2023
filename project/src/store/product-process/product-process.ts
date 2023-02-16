@@ -7,7 +7,8 @@ import { fetchCameraByIdAction, fetchReviewAction, fetchSimilarCamerasAction } f
 const initialState: ProductData = {
   camera: {} as Camera,
   similarCameras: [],
-  reviews: []
+  reviews: [],
+  isLoading: false,
 };
 
 export const productData = createSlice({
@@ -18,6 +19,13 @@ export const productData = createSlice({
     builder
       .addCase(fetchCameraByIdAction.fulfilled, (state, action) => {
         state.camera = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(fetchCameraByIdAction.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(fetchCameraByIdAction.rejected, (state) => {
+        state.isLoading = false;
       })
       .addCase(fetchSimilarCamerasAction.fulfilled, (state, action) => {
         state.similarCameras = action.payload;

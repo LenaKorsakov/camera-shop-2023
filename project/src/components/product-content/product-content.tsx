@@ -1,9 +1,14 @@
+import { Camera } from '../../@types/camera-types';
 import Breadcrumbs from '../breadcrumbs/breadcrumbs';
 import CameraInfo from '../camera-info/camers-info';
 import CameraSimilar from '../camera-similar/camera-similar';
 import ReviewBlock from '../review-block/review-block';
 
-function ProductContent(): JSX.Element {
+type ProductContentProps = {
+  camera: Camera;
+}
+
+function ProductContent({camera}: ProductContentProps): JSX.Element {
   return (
     <main>
       <div className="page-content">
@@ -13,7 +18,7 @@ function ProductContent(): JSX.Element {
           productName={'Название камеры'}
         />
         <div className="page-content__section">
-          <CameraInfo/>
+          <CameraInfo camera={camera}/>
         </div>
         <div className="page-content__section">
           <section className="product-similar">
