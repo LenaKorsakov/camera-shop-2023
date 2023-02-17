@@ -18,3 +18,7 @@ export type ProductData = {
   similarCameras: Cameras;
   isLoading: boolean;
 }
+
+export type BasketData = {
+  inBasket: boolean;
+}

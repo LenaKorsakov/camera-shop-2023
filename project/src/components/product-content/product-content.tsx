@@ -15,7 +15,7 @@ function ProductContent({camera}: ProductContentProps): JSX.Element {
         <Breadcrumbs
           isActive={false}
           isProductPage
-          productName={'Название камеры'}
+          productName={camera.name}
         />
         <div className="page-content__section">
           <CameraInfo camera={camera}/>

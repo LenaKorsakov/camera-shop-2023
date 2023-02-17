@@ -1,6 +1,6 @@
 import TabsContent from '../tabs-content.tsx/tabs-content';
 import Picture from '../picture/picture';
-import StarsRating from '../stars-rating/stars-rating';
+import CameraRating from '../camera-rating/camera-rating';
 
 import { PictureSize } from '../../const/picture-size';
 import { capitalizeFirstLetter, formatPrice } from '../../utiles/format';
@@ -11,7 +11,9 @@ type CameraInfoProps = {
   camera: Camera;
 }
 function CameraInfo({camera}: CameraInfoProps): JSX.Element {
-  const { name, category, reviewCount, rating, price, previewImg, previewImgWebp, previewImg2x, previewImgWebp2x } = camera;
+  const { name, reviewCount, rating, price, previewImg, previewImgWebp, previewImg2x, previewImgWebp2x } = camera;
+  //TODO кнопка добавить в корзину будет реагировать на состояние inBasket
+
   return (
     <section className="product">
       <div className="container">
@@ -26,13 +28,12 @@ function CameraInfo({camera}: CameraInfoProps): JSX.Element {
           />
         </div>
         <div className="product__content">
-          <h1 className="title title--h3">{`${capitalizeFirstLetter(category)} «${capitalizeFirstLetter(name)}»`}</h1>
+          <h1 className="title title--h3">{capitalizeFirstLetter(name)}</h1>
           <div className="rate product__rate">
-            <StarsRating rating={rating}/>
-            <p className="visually-hidden">Рейтинг: {rating}</p>
-            <p className="rate__count">
-              <span className="visually-hidden">Всего оценок:</span>{reviewCount}
-            </p>
+            <CameraRating
+              rating={rating}
+              reviewCount={reviewCount}
+            />
           </div>
           <p className="product__price">
             <span className="visually-hidden">Цена:</span>{formatPrice(price)} ₽

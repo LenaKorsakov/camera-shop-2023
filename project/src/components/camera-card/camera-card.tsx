@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
-import StarsRating from '../stars-rating/stars-rating';
 import InBasketButton from './in-basket-button';
+import CameraRating from '../camera-rating/camera-rating';
 import Picture from '../picture/picture';
 
 import { AppRoute } from '../../const/app-route';
@@ -17,14 +17,14 @@ camera: Camera;
 }
 
 function CameraCard({isActive, camera}: CameraCardProps): JSX.Element {
-  const {id, name, rating, price, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, reviewCount } = camera;
+  const {id, name, rating, price, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, reviewCount, category } = camera;
   const [inBasket, setInBasket] = useState<boolean>(false);
 
   const handleButtonClick = () => {
     //появляется попап с кнопкой добавить товар в корзину
     //по клику на кнопку диспатчим отправку заказа
     // если все ок перенаправляем в корзину и  показать попап спасибо и далее
-    setInBasket(true);
+    setInBasket(true);//это тоже будет устанавливаться и забираться из глобального state пока так
   };
 
   return (
@@ -43,16 +43,13 @@ function CameraCard({isActive, camera}: CameraCardProps): JSX.Element {
       </div>
       <div className="product-card__info">
         <div className="rate product-card__rate">
-          <StarsRating
+          <CameraRating
             rating={rating}
+            reviewCount={reviewCount}
           />
-          <p className="visually-hidden">Рейтинг: {rating}</p>
-          <p className="rate__count">
-            <span className="visually-hidden">Всего оценок:</span>{reviewCount}
-          </p>
         </div>
         <p className="product-card__title">
-          {`«${capitalizeFirstLetter(name)}»`}
+          {`${capitalizeFirstLetter(category)} ${capitalizeFirstLetter(name)}`}
         </p>
         <p className="product-card__price"><span className="visually-hidden">Цена:</span>{formatPrice(price)} ₽
         </p>
