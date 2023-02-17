@@ -10,7 +10,7 @@ function BasketPage(): JSX.Element {
       <main>
         <div className="page-content">
           <Breadcrumbs
-            isActive={false}
+            isCatalogActive={false}
             isProductPage={false}
           />
           <section className="basket">

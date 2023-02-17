@@ -21,7 +21,7 @@ function MainPage(): JSX.Element {
           <Bunner/>
           <div className="page-content">
             <Breadcrumbs
-              isActive
+              isCatalogActive
               isProductPage={false}
             />
             <Catalog cameras={cameras}/>

@@ -49,7 +49,7 @@ function CameraCard({isActive, camera}: CameraCardProps): JSX.Element {
           />
         </div>
         <p className="product-card__title">
-          {`${capitalizeFirstLetter(category)} ${capitalizeFirstLetter(name)}`}
+          {`${capitalizeFirstLetter(category)} «${capitalizeFirstLetter(name)}»`}
         </p>
         <p className="product-card__price"><span className="visually-hidden">Цена:</span>{formatPrice(price)} ₽
         </p>

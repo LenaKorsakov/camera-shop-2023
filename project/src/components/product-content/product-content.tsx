@@ -1,8 +1,11 @@
-import { Camera } from '../../@types/camera-types';
 import Breadcrumbs from '../breadcrumbs/breadcrumbs';
 import CameraInfo from '../camera-info/camers-info';
 import CameraSimilar from '../camera-similar/camera-similar';
 import ReviewBlock from '../review-block/review-block';
+
+import { capitalizeFirstLetter } from '../../utiles/format';
+
+import { Camera } from '../../@types/camera-types';
 
 type ProductContentProps = {
   camera: Camera;
@@ -13,9 +16,9 @@ function ProductContent({camera}: ProductContentProps): JSX.Element {
     <main>
       <div className="page-content">
         <Breadcrumbs
-          isActive={false}
+          isCatalogActive={false}
           isProductPage
-          productName={camera.name}
+          productName={`${capitalizeFirstLetter(camera.category)} «${capitalizeFirstLetter(camera.name)}»`}
         />
         <div className="page-content__section">
           <CameraInfo camera={camera}/>

@@ -11,7 +11,7 @@ type CameraInfoProps = {
   camera: Camera;
 }
 function CameraInfo({camera}: CameraInfoProps): JSX.Element {
-  const { name, reviewCount, rating, price, previewImg, previewImgWebp, previewImg2x, previewImgWebp2x } = camera;
+  const { name, reviewCount, rating, price, previewImg, previewImgWebp, previewImg2x, previewImgWebp2x, category } = camera;
   //TODO кнопка добавить в корзину будет реагировать на состояние inBasket
 
   return (
@@ -28,7 +28,7 @@ function CameraInfo({camera}: CameraInfoProps): JSX.Element {
           />
         </div>
         <div className="product__content">
-          <h1 className="title title--h3">{capitalizeFirstLetter(name)}</h1>
+          <h1 className="title title--h3">{`${capitalizeFirstLetter(category)} «${capitalizeFirstLetter(name)}»`}</h1>
           <div className="rate product__rate">
             <CameraRating
               rating={rating}
