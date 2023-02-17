@@ -1,4 +1,4 @@
-import TabsContent from '../tabs-content.tsx/tabs-content';
+import Tabs from '../tabs-content.tsx/tabs';
 import Picture from '../picture/picture';
 import CameraRating from '../camera-rating/camera-rating';
 
@@ -44,7 +44,7 @@ function CameraInfo({camera}: CameraInfoProps): JSX.Element {
             </svg>
                 Добавить в корзину
           </button>
-          <TabsContent camera={camera}/>
+          <Tabs camera={camera}/>
         </div>
       </div>
     </section>

@@ -5,6 +5,7 @@ export type Camera = {
   type: string;
   category: string;
   description: string;
+  level: string;
   rating: number;
   price: number;
   previewImg: string;
