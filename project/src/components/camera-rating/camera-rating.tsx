@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import StarsRating from '../stars-rating/stars-rating';
 
 type CameraCardProps = {
@@ -21,4 +22,4 @@ function CameraRating({rating, reviewCount}: CameraCardProps): JSX.Element {
   );
 }
 
-export default CameraRating;
+export default memo(CameraRating);

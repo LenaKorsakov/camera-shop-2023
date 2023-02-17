@@ -1,4 +1,4 @@
-import { memo, useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 
 import TabButton from './tab-button';
 import TabDescription from './tab-description';
@@ -15,15 +15,15 @@ function Tabs({camera}: TabsProps): JSX.Element {
   const [isCharacteristicsActive, setisCharacteristicsActive] = useState<boolean>(false);
   const [isDescriptionActive, setisDescriptionActive] = useState<boolean>(true);
 
-  const handleCharacteristicsButtonClick = () => {
+  const handleCharacteristicsButtonClick = useCallback(() => {
     setisCharacteristicsActive(true);
     setisDescriptionActive(false);
-  };
+  },[]);
 
-  const handleDescriptionButtonClick = () => {
+  const handleDescriptionButtonClick = useCallback(() => {
     setisDescriptionActive(true);
     setisCharacteristicsActive(false);
-  };
+  },[]);
 
   return (
     <div className="tabs product__tabs">

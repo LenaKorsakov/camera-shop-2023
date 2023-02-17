@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { AppRoute } from '../../const/app-route';
 import { BreadcrumbsNames } from '../../const/breadcrumbs-names';
 import BreadcrumbsItem from './breadcrumbs-item';
@@ -27,4 +28,4 @@ function Breadcrumbs({ isCatalogActive, productName, isProductPage }: Breadcrumb
   );
 }
 
-export default Breadcrumbs;
+export default memo(Breadcrumbs);

@@ -6,6 +6,7 @@ import { PictureSize } from '../../const/picture-size';
 import { capitalizeFirstLetter, formatPrice } from '../../utiles/format';
 
 import { Camera } from '../../@types/camera-types';
+import { memo } from 'react';
 
 type CameraInfoProps = {
   camera: Camera;
@@ -51,4 +52,4 @@ function CameraInfo({camera}: CameraInfoProps): JSX.Element {
   );
 }
 
-export default CameraInfo;
+export default memo(CameraInfo);

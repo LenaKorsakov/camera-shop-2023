@@ -7,6 +7,7 @@ type StarsRatingProps = {
 
 function StarsRating({ rating }: StarsRatingProps): JSX.Element {
   const stars = [];
+
   for(let i = 0; i < STAR_MAX; i++) {
     stars.push(
       <IconStar
