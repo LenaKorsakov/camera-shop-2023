@@ -15,8 +15,6 @@ function Slider({cameras}: SliderProps): JSX.Element {
   const productQty = cameras.length;
 
   const lastContentIndex = firstContentIndex + CONTENT_PAR_SLIDE;
-  // eslint-disable-next-line no-console
-  console.log(lastContentIndex, productQty);
 
   const changeSlide = (direction: boolean) => {
     setFirstContentIndex((prevState) => {
@@ -43,13 +41,13 @@ function Slider({cameras}: SliderProps): JSX.Element {
       {
         //ниже добавлены стили вручную из-за того, что при использовании класса slider-controls возникает проблема: onClick не отрабатывает
       }
-      <div onClick={handleButtonPrevClick} style={{position: 'absolute', top: '50%', left: '0', width: '40px', height: '40px'}}>
+      <div onClick={handleButtonPrevClick} style={{position: 'absolute', top: 'calc(50% - 20px)', left: '0', width: '40px', height: '40px'}}>
         <button
           className="slider-controls slider-controls--prev"
           type="button"
           aria-label="Предыдущий слайд"
           disabled={firstContentIndex === MIN_SLIDE_ITEM_INDEX}
-          style={{top: '0'}}
+          style={{top: '20px'}}
         >
           <svg width={7} height={12} aria-hidden="true">
             <use xlinkHref="#icon-arrow" />
@@ -68,12 +66,12 @@ function Slider({cameras}: SliderProps): JSX.Element {
       {
         //ниже добавлены стили вручную из-за того, что при использовании класса slider-controls возникает проблема: onClick не отрабатывает
       }
-      <div onClick={handleButtonNextClick} style={{position: 'absolute', top: '50%', right: '0', width: '40px', height: '40px'}}>
+      <div onClick={handleButtonNextClick} style={{position: 'absolute', top: 'calc(50% - 20px)', right: '0', width: '40px', height: '40px'}}>
         <button
           className="slider-controls slider-controls--next"
           type="button"
           aria-label="Следующий слайд"
-          style={{top: '0'}}
+          style={{top: '20px'}}
           disabled={lastContentIndex === productQty}
         >
           <svg width={7} height={12} aria-hidden="true">
