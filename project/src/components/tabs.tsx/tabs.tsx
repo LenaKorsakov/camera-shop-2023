@@ -7,22 +7,25 @@ import TabCharacteristics from './tab-characteristics';
 import { TabsButtonsTitles } from '../../const/tabs-buttons-titles';
 
 import { Camera } from '../../@types/camera-types';
+import { useNavigate } from 'react-router-dom';
+import { AppRoute } from '../../const/app-route';
 
 type TabsProps = {
   camera: Camera;
 }
 function Tabs({camera}: TabsProps): JSX.Element {
-  const [isCharacteristicsActive, setisCharacteristicsActive] = useState<boolean>(false);
-  const [isDescriptionActive, setisDescriptionActive] = useState<boolean>(true);
+  const [isCharacteristicsActive, setIsCharacteristicsActive] = useState<boolean>(false);
+  const [isDescriptionActive, setIsDescriptionActive] = useState<boolean>(true);
 
   const handleCharacteristicsButtonClick = useCallback(() => {
-    setisCharacteristicsActive(true);
-    setisDescriptionActive(false);
+    setIsCharacteristicsActive(true);
+    setIsDescriptionActive(false);
   },[]);
 
   const handleDescriptionButtonClick = useCallback(() => {
-    setisDescriptionActive(true);
-    setisCharacteristicsActive(false);
+    setIsDescriptionActive(true);
+    setIsCharacteristicsActive(false);
+
   },[]);
 
   return (

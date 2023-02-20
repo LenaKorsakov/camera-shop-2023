@@ -1,7 +1,12 @@
+import { memo } from 'react';
+
 import Breadcrumbs from '../breadcrumbs/breadcrumbs';
 import CameraInfo from '../camera-info/camers-info';
-import CameraSimilar from '../camera-similar/camera-similar';
 import ReviewBlock from '../review-block/review-block';
+import SimilarCamerasList from '../similar-cameras-list/similar-cameras-list';
+
+import { useAppSelector } from '../../hooks';
+import { getSimilarCameras } from '../../store/product-process/product-data-selectors';
 
 import { capitalizeFirstLetter } from '../../utiles/format';
 
@@ -12,6 +17,8 @@ type ProductContentProps = {
 }
 
 function ProductContent({camera}: ProductContentProps): JSX.Element {
+  const similarCameras = useAppSelector(getSimilarCameras);
+
   return (
     <main>
       <div className="page-content">
@@ -25,10 +32,10 @@ function ProductContent({camera}: ProductContentProps): JSX.Element {
         </div>
         <div className="page-content__section">
           <section className="product-similar">
-            <div className="container">
-              <h2 className="title title--h3">Похожие товары</h2>
-              <CameraSimilar/>
-            </div>
+            {similarCameras.length > 0 &&
+              <SimilarCamerasList
+                cameras={similarCameras}
+              />}
           </section>
         </div>
         <div className="page-content__section">
@@ -39,4 +46,4 @@ function ProductContent({camera}: ProductContentProps): JSX.Element {
   );
 }
 
-export default ProductContent;
+export default memo(ProductContent);

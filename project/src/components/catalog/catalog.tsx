@@ -51,13 +51,10 @@ function Catalog({cameras}: CatalogProps): JSX.Element {
     setPage(pageNumber);
   };
 
-  const handleButtonPrevClick = () => {
-    prevPage();
-  };
+  const handleButtonPrevClick = () => prevPage();
 
-  const handleButtonNextClick = () => {
-    nextPage();
-  };
+
+  const handleButtonNextClick = () => nextPage();
 
   return (
     <section className="catalog">

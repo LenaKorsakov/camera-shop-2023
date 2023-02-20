@@ -1,4 +1,4 @@
-import Tabs from '../tabs-content.tsx/tabs';
+import Tabs from '../tabs.tsx/tabs';
 import Picture from '../picture/picture';
 import CameraRating from '../camera-rating/camera-rating';
 

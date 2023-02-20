@@ -9,7 +9,7 @@ import LoadingPage from './loading-page';
 
 import { useAppSelector } from '../hooks';
 import { getProductLoadingStatus } from '../store/product-process/product-data-selectors';
-import { fetchCameraByIdAction, fetchReviewAction, fetchSimilarCamerasAction } from '../store/api-actions';
+import { fetchReviewAction, fetchSimilarCamerasAction } from '../store/api-actions';
 import { getAllCameras } from '../store/catalog-process/catalog-process-selectors';
 import { store } from '../store';
 
@@ -23,7 +23,7 @@ function ProductPage(): JSX.Element {
 
   useEffect(() => {
     if(selectedCamera !== null) {
-      store.dispatch(fetchCameraByIdAction(selectedCamera.id));
+      //store.dispatch(fetchCameraByIdAction(selectedCamera.id));
       store.dispatch(fetchSimilarCamerasAction(selectedCamera.id));
       store.dispatch(fetchReviewAction(selectedCamera.id));
     }
@@ -40,7 +40,9 @@ function ProductPage(): JSX.Element {
       :
       <>
         <Header/>
-        <ProductContent camera={selectedCamera}/>
+        <ProductContent
+          camera={selectedCamera}
+        />
         <a className="up-btn" href="#header">
           <svg width={12} height={18} aria-hidden="true">
             <use xlinkHref="#icon-arrow2" />
