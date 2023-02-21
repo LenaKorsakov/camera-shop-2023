@@ -33,27 +33,25 @@ function Slider({cameras}: SliderProps): JSX.Element {
   };
 
   const handleButtonNextClick = () => changeSlide(true);
-
   const handleButtonPrevClick = () => changeSlide(false);
+
+  const isPrev = firstContentIndex === MIN_SLIDE_ITEM_INDEX;
+  const isNext = lastContentIndex === productQty;
 
   return (
     <div className="product-similar__slider-list">
-      {
-        //ниже добавлены стили вручную из-за того, что при использовании класса slider-controls возникает проблема: onClick не отрабатывает
-      }
-      <div onClick={handleButtonPrevClick} style={{position: 'absolute', top: 'calc(50% - 20px)', left: '0', width: '40px', height: '40px'}}>
-        <button
-          className="slider-controls slider-controls--prev"
-          type="button"
-          aria-label="Предыдущий слайд"
-          disabled={firstContentIndex === MIN_SLIDE_ITEM_INDEX}
-          style={{top: '20px'}}
-        >
-          <svg width={7} height={12} aria-hidden="true">
-            <use xlinkHref="#icon-arrow" />
-          </svg>
-        </button>
-      </div>
+      <button
+        className="slider-controls slider-controls--prev"
+        type="button"
+        aria-label="Предыдущий слайд"
+        disabled={isPrev}
+        style={{pointerEvents: isPrev ? 'none' : 'auto'}}
+        onClick={handleButtonPrevClick}
+      >
+        <svg width={7} height={12} aria-hidden="true">
+          <use xlinkHref="#icon-arrow" />
+        </svg>
+      </button>
 
       {cameras.map((camera, index) => (
         <CameraCard
@@ -63,22 +61,18 @@ function Slider({cameras}: SliderProps): JSX.Element {
         />
       ))}
 
-      {
-        //ниже добавлены стили вручную из-за того, что при использовании класса slider-controls возникает проблема: onClick не отрабатывает
-      }
-      <div onClick={handleButtonNextClick} style={{position: 'absolute', top: 'calc(50% - 20px)', right: '0', width: '40px', height: '40px'}}>
-        <button
-          className="slider-controls slider-controls--next"
-          type="button"
-          aria-label="Следующий слайд"
-          style={{top: '20px'}}
-          disabled={lastContentIndex === productQty}
-        >
-          <svg width={7} height={12} aria-hidden="true">
-            <use xlinkHref="#icon-arrow"/>
-          </svg>
-        </button>
-      </div>
+      <button
+        className="slider-controls slider-controls--next"
+        type="button"
+        aria-label="Следующий слайд"
+        disabled={isNext}
+        style={{pointerEvents: isNext ? 'none' : 'auto'}}
+        onClick={handleButtonNextClick}
+      >
+        <svg width={7} height={12} aria-hidden="true">
+          <use xlinkHref="#icon-arrow"/>
+        </svg>
+      </button>
     </div>
   );
 }
