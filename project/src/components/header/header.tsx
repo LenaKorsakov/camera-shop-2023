@@ -4,7 +4,6 @@ import Logo from './logo';
 import NavItem from './nav-item';
 
 import { NAV_ITEMS } from '../../const/nav-items-titles';
-import { memo } from 'react';
 
 function Header(): JSX.Element {
   return (
@@ -33,4 +32,4 @@ function Header(): JSX.Element {
   );
 }
 
-export default memo(Header);
+export default Header;

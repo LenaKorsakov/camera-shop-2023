@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
 import InBasketButton from './in-basket-button';
@@ -65,9 +64,9 @@ function CameraCard({isActive, camera}: CameraCardProps): JSX.Element {
                       Купить
           </button>}
 
-        <Link className="btn btn--transparent" to={`${AppRoute.Product}/${id}`}>
+        <a className="btn btn--transparent" href={`${AppRoute.Product}/${id}`}>
                       Подробнее
-        </Link>
+        </a>
       </div>
     </div>
   );

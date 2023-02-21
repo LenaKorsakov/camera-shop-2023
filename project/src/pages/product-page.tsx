@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { memo, useEffect } from 'react';
+import { useEffect } from 'react';
 
 import Header from '../components/header/header';
 import ProductContent from '../components/product-content/product-content';
@@ -49,4 +49,4 @@ function ProductPage(): JSX.Element {
       </>);
 }
 
-export default memo(ProductPage);
+export default ProductPage;

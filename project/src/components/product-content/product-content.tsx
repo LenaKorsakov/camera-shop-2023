@@ -6,7 +6,7 @@ import ReviewBlock from '../review-block/review-block';
 import SimilarCamerasList from '../similar-cameras-list/similar-cameras-list';
 
 import { useAppSelector } from '../../hooks';
-import { getSimilarCameras } from '../../store/product-process/product-data-selectors';
+import { getSimilarCameras, getSortedReviews } from '../../store/product-process/product-data-selectors';
 
 import { capitalizeFirstLetter } from '../../utiles/format';
 
@@ -18,6 +18,7 @@ type ProductContentProps = {
 
 function ProductContent({camera}: ProductContentProps): JSX.Element {
   const similarCameras = useAppSelector(getSimilarCameras);
+  const reviews = useAppSelector(getSortedReviews);
 
   return (
     <main>
@@ -39,7 +40,10 @@ function ProductContent({camera}: ProductContentProps): JSX.Element {
           </section>
         </div>
         <div className="page-content__section">
-          <ReviewBlock/>
+          {reviews.length > 0 &&
+          <ReviewBlock
+            reviews={reviews}
+          />}
         </div>
       </div>
     </main>

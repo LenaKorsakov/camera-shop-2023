@@ -1,5 +1,3 @@
-import { memo } from 'react';
-
 import FooterLogo from './footer-logo';
 import FooterItem from './footer-item';
 import SocialItem from './social-item';
@@ -44,4 +42,4 @@ function Footer(): JSX.Element {
   );
 }
 
-export default memo(Footer);
+export default Footer;
