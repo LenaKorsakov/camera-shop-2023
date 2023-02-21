@@ -1,7 +1,10 @@
+import { memo } from 'react';
+
 import FooterLogo from './footer-logo';
-import SocialItem from './social-item';
-import { FOOTER_ITEMS, SOCIAL_ITEMS } from '../../const/nav-items-titles';
 import FooterItem from './footer-item';
+import SocialItem from './social-item';
+
+import { FOOTER_ITEMS, SOCIAL_ITEMS } from '../../const/nav-items-titles';
 
 function Footer(): JSX.Element {
 
@@ -41,4 +44,4 @@ function Footer(): JSX.Element {
   );
 }
 
-export default Footer;
+export default memo(Footer);

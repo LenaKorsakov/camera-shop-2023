@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const/app-route';
 
@@ -17,4 +16,4 @@ function FooterNavItem({title, route}: FooterNavItemProps): JSX.Element{
   );
 }
 
-export default memo(FooterNavItem);
+export default FooterNavItem;

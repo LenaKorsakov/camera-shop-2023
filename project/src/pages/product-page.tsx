@@ -3,6 +3,7 @@ import { memo, useEffect } from 'react';
 
 import Header from '../components/header/header';
 import ProductContent from '../components/product-content/product-content';
+import ButtonToTop from '../components/button-to-top/button-to-top';
 import Footer from '../components/footer/footer';
 import NotFoundPage from './not-found-page';
 import LoadingPage from './loading-page';
@@ -43,11 +44,7 @@ function ProductPage(): JSX.Element {
         <ProductContent
           camera={selectedCamera}
         />
-        <a className="up-btn" href="#header">
-          <svg width={12} height={18} aria-hidden="true">
-            <use xlinkHref="#icon-arrow2" />
-          </svg>
-        </a>
+        <ButtonToTop/>
         <Footer/>
       </>);
 }

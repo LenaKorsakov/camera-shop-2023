@@ -1,6 +1,5 @@
 import FooterNavItem from './footer-nav-item';
 import { FooterColumn } from '../../const/nav-items-titles';
-import { memo } from 'react';
 
 type FooterItemProps = {
 navItem: FooterColumn;
@@ -25,4 +24,4 @@ function FooterItem({navItem}: FooterItemProps): JSX.Element {
   );
 }
 
-export default memo(FooterItem);
+export default FooterItem;
