@@ -6,10 +6,12 @@ type ReiewTextareaProps = {
   }
 
 function ReviewFormTextArea ({ onChange, reviewText }: ReiewTextareaProps): JSX.Element {
+  // eslint-disable-next-line no-console
+  console.log(reviewText);
 
   return(
     <div className="custom-textarea form-review__item">
-      <label>
+      <label htmlFor="review">
         <span className="custom-textarea__label">
                   Комментарий
           <svg width={9} height={9} aria-hidden="true">
@@ -17,7 +19,8 @@ function ReviewFormTextArea ({ onChange, reviewText }: ReiewTextareaProps): JSX.
           </svg>
         </span>
         <textarea
-          name="user-comment"
+          id="review"
+          name="review"
           minLength={5}
           placeholder="Поделитесь своим опытом покупки"
           value={reviewText}

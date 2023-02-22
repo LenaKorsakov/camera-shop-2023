@@ -4,9 +4,11 @@ import ReviewForm from '../review-form/review-form';
 
 type ReviewModalProps = {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  cameraId: number;
 }
 
-function ReviewModal({ setIsOpen}: ReviewModalProps): JSX.Element {
+function ReviewModal({ setIsOpen, cameraId}: ReviewModalProps): JSX.Element {
+  //TODO забрать камераАЙдИ через useContext
   const closeModal = () => {
     setIsOpen(false);
 
@@ -43,7 +45,7 @@ function ReviewModal({ setIsOpen}: ReviewModalProps): JSX.Element {
         >
           <p className="title title--h4">Оставить отзыв</p>
           <div className="form-review">
-            <ReviewForm/>
+            <ReviewForm cameraId={cameraId}/>
           </div>
           <button
             className="cross-btn"

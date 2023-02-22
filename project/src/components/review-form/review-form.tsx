@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 
 import RatingPicker from '../rating-picker/rating-picker';
 
@@ -6,6 +6,8 @@ import { ReviewPost } from '../../@types/review-types';
 import { REVIEW_ITEM_ATRIBUTES } from '../../const/review-items-titles';
 import ReviewFormInput from './review-form-input';
 import ReviewFormTextArea from './review-form-textarea';
+import { useAppDispatch } from '../../hooks';
+import { fetchReviewAction, sendReviewAction } from '../../store/api-actions';
 
 const INITIAL_FORM_DATA = {
   userName: '',
@@ -16,7 +18,11 @@ const INITIAL_FORM_DATA = {
   cameraId: 0,
 };
 
-function ReviewForm (): JSX.Element {
+type ReviewFormProps = {
+  cameraId: number;
+}
+
+function ReviewForm ({cameraId}: ReviewFormProps): JSX.Element {
   const [formData, setFormData] = useState<ReviewPost>(INITIAL_FORM_DATA);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -24,12 +30,14 @@ function ReviewForm (): JSX.Element {
 
     setFormData({
       ...formData,
-      [name]: value
+      [name]: name === 'rating' ? +value : value
     });
   };
 
   const handleTextAreaChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const { value } = event.target;
+    // eslint-disable-next-line no-console
+    console.log(value);
 
     setFormData({
       ...formData,
@@ -39,9 +47,29 @@ function ReviewForm (): JSX.Element {
 
   // eslint-disable-next-line no-console
   console.log(formData);
+  const dispatch = useAppDispatch();
+
+  const handleFormSubmit = (event: FormEvent) => {
+    event.preventDefault();
+
+    dispatch(sendReviewAction({
+      ...formData,
+      cameraId: cameraId
+    })).unwrap().then(
+      () => {
+        dispatch(fetchReviewAction(cameraId));
+        setFormData(INITIAL_FORM_DATA);
+      },
+      () => {
+        throw new Error('oшибка');
+      });
+  };
 
   return(
-    <form method="post">
+    <form
+      method="post"
+      onSubmit={handleFormSubmit}
+    >
       <div className="form-review__rate" onChange={handleInputChange}>
         <RatingPicker
           rate={formData.rating}

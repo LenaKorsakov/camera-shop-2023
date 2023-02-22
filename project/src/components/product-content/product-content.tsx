@@ -40,7 +40,7 @@ function ProductContent({camera}: ProductContentProps): JSX.Element {
           </section>
         </div>
         <div className="page-content__section">
-          <ReviewBlock/>
+          <ReviewBlock cameraId = {camera.id}/>
         </div>
       </div>
     </main>

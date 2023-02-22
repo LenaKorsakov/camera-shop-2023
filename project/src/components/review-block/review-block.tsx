@@ -7,7 +7,11 @@ import ReviewsList from './review-list';
 import { useAppSelector } from '../../hooks';
 import { getSortedReviews } from '../../store/product-process/product-data-selectors';
 
-function ReviewBlock(): JSX.Element {
+type ReviewBlockProps = {
+  cameraId: number;
+}
+
+function ReviewBlock({ cameraId }: ReviewBlockProps): JSX.Element {
   const reviews = useAppSelector(getSortedReviews);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -41,7 +45,7 @@ function ReviewBlock(): JSX.Element {
 
       </section>
       <ButtonToTop />
-      {isOpen && <ReviewModal setIsOpen={setIsOpen}/>}
+      {isOpen && <ReviewModal cameraId={cameraId} setIsOpen={setIsOpen}/>}
     </>
   );
 }
