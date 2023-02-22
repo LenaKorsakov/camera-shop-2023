@@ -11,7 +11,13 @@ function ReviewBlock(): JSX.Element {
   const reviews = useAppSelector(getSortedReviews);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const handleNewReviewButtonClick = () => setIsOpen(true);
+  const handleNewReviewButtonClick = () => {
+    setIsOpen(true);
+
+    if (typeof window !== 'undefined' && window.document) {
+      document.body.style.overflow = 'hidden';
+    }
+  };
 
   return (
     <>

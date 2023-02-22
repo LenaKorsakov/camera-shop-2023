@@ -1,13 +1,17 @@
 import { useEffect, useRef } from 'react';
 import useOnClickOutside from '../../hooks/use-on-click-outside';
-import ReviewForm from './review-form';
+import ReviewForm from '../review-form/review-form';
 
 type ReviewModalProps = {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 function ReviewModal({ setIsOpen}: ReviewModalProps): JSX.Element {
-  const closeModal = () => setIsOpen(false);
+  const closeModal = () => {
+    setIsOpen(false);
+
+    document.body.style.overflow = 'unset';
+  };
 
   const handleButtonCloseClick = () => closeModal();
 
