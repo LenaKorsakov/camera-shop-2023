@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import InBasketButton from './in-basket-button';
+import InBasketLink from './in-basket-link';
 import CameraRating from '../camera-rating/camera-rating';
 import Picture from '../picture/picture';
 
@@ -55,7 +55,7 @@ function CameraCard({isActive, camera}: CameraCardProps): JSX.Element {
       </div>
       <div className="product-card__buttons">
 
-        { inBasket ? <InBasketButton/> :
+        { inBasket ? <InBasketLink/> :
           <button
             className="btn btn--purple product-card__btn"
             type="button"
@@ -64,7 +64,10 @@ function CameraCard({isActive, camera}: CameraCardProps): JSX.Element {
                       Купить
           </button>}
 
-        <a className="btn btn--transparent" href={`${AppRoute.Product}/${id}`}>
+        <a
+          className="btn btn--transparent"
+          href={`${AppRoute.Product}/${id}`}
+        >
                       Подробнее
         </a>
       </div>

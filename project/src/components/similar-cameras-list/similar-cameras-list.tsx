@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 import Slider from '../slider/slider';
 
 import { Cameras } from '../../@types/camera-types';
@@ -7,6 +9,8 @@ type SimilarCameraListProps = {
 }
 
 function SimilarCamerasList({cameras}: SimilarCameraListProps): JSX.Element {
+  // eslint-disable-next-line no-console
+  console.log('prprp');
   return (
     <div className="container">
       <h2 className="title title--h3">Похожие товары</h2>
@@ -19,4 +23,4 @@ function SimilarCamerasList({cameras}: SimilarCameraListProps): JSX.Element {
   );
 }
 
-export default SimilarCamerasList;
+export default memo(SimilarCamerasList);

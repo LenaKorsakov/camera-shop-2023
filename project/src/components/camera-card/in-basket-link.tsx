@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const/app-route';
 
-function InBasketButton(): JSX.Element {
+function InBasketLink(): JSX.Element {
   return (
     <Link
       className="btn btn--purple-border product-card__btn product-card__btn--in-cart"
@@ -15,4 +15,4 @@ function InBasketButton(): JSX.Element {
   );
 }
 
-export default InBasketButton;
+export default InBasketLink;

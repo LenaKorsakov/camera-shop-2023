@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 
 import ReviewItem from './review-item';
+
+import { REVIEWS_PER_PAGE } from '../../const/const';
 
 import { ReviewsAdapt } from '../../@types/review-types';
 
@@ -9,7 +11,6 @@ type ReviewBlockProps = {
 }
 
 function ReviewBlock({reviews}: ReviewBlockProps): JSX.Element {
-  const REVIEWS_PER_PAGE = 3;
   const [reviewQty, setReviewQty] = useState<number>(REVIEWS_PER_PAGE);
 
   const visibleReviews = reviews.slice(0, reviewQty);
@@ -54,4 +55,4 @@ function ReviewBlock({reviews}: ReviewBlockProps): JSX.Element {
   );
 }
 
-export default ReviewBlock;
+export default memo(ReviewBlock);
