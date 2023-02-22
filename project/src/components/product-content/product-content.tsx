@@ -11,6 +11,8 @@ import { getSimilarCameras, getSortedReviews } from '../../store/product-process
 import { capitalizeFirstLetter } from '../../utiles/format';
 
 import { Camera } from '../../@types/camera-types';
+import ButtonToTop from '../button-to-top/button-to-top';
+import ReviewModal from '../review-modal/review-modal';
 
 type ProductContentProps = {
   camera: Camera;
@@ -46,6 +48,8 @@ function ProductContent({camera}: ProductContentProps): JSX.Element {
           />}
         </div>
       </div>
+      <ButtonToTop/>
+      <ReviewModal/>
     </main>
   );
 }

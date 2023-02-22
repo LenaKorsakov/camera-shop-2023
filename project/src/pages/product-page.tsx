@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 
 import Header from '../components/header/header';
 import ProductContent from '../components/product-content/product-content';
-import ButtonToTop from '../components/button-to-top/button-to-top';
 import Footer from '../components/footer/footer';
 import NotFoundPage from './not-found-page';
 import LoadingPage from './loading-page';
@@ -44,7 +43,6 @@ function ProductPage(): JSX.Element {
         <ProductContent
           camera={selectedCamera}
         />
-        <ButtonToTop/>
         <Footer/>
       </>);
 }
