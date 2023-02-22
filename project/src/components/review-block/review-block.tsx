@@ -1,57 +1,42 @@
 import { memo, useState } from 'react';
 
-import ReviewItem from './review-item';
+import ButtonToTop from '../button-to-top/button-to-top';
+import ReviewModal from '../review-modal/review-modal';
+import ReviewsList from './review-list';
 
-import { REVIEWS_PER_PAGE } from '../../const/const';
+import { useAppSelector } from '../../hooks';
+import { getSortedReviews } from '../../store/product-process/product-data-selectors';
 
-import { ReviewsAdapt } from '../../@types/review-types';
+function ReviewBlock(): JSX.Element {
+  const reviews = useAppSelector(getSortedReviews);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
-type ReviewBlockProps = {
-  reviews: ReviewsAdapt;
-}
-
-function ReviewBlock({reviews}: ReviewBlockProps): JSX.Element {
-  const [reviewQty, setReviewQty] = useState<number>(REVIEWS_PER_PAGE);
-
-  const visibleReviews = reviews.slice(0, reviewQty);
-  const isButtonVisible = reviewQty < reviews.length;
-
-  const handleButtonClick = () => setReviewQty((prevState) => prevState + REVIEWS_PER_PAGE);
+  const handleNewReviewButtonClick = () => setIsOpen(true);
 
   return (
-    <section className="review-block">
-      <div className="container">
+    <>
+      <section className="review-block">
+        <div className="container">
 
-        <div className="page-content__headed">
-          <h2 className="title title--h3">Отзывы</h2>
+          <div className="page-content__headed">
+            <h2 className="title title--h3">Отзывы</h2>
 
-          <button className="btn" type="button">
-                Оставить свой отзыв
-          </button>
+            <button
+              className="btn"
+              type="button"
+              onClick={handleNewReviewButtonClick}
+            >
+            Оставить свой отзыв
+            </button>
 
+          </div>
+          {reviews.length > 0 && <ReviewsList reviews={reviews}/>}
         </div>
-        <ul className="review-block__list">
-          {visibleReviews.map((review) => (
-            <ReviewItem
-              reviewData={review}
-              key={review.id}
-            />
-          ))}
-        </ul>
 
-        {isButtonVisible &&
-        <div className="review-block__buttons">
-          <button
-            className="btn btn--purple"
-            type="button"
-            onClick={handleButtonClick}
-          >
-                Показать больше отзывов
-          </button>
-        </div>}
-
-      </div>
-    </section>
+      </section>
+      <ButtonToTop />
+      {isOpen && <ReviewModal setIsOpen={setIsOpen}/>}
+    </>
   );
 }
 

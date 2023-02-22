@@ -5,14 +5,13 @@ import CameraInfo from '../camera-info/camers-info';
 import ReviewBlock from '../review-block/review-block';
 import SimilarCamerasList from '../similar-cameras-list/similar-cameras-list';
 
+import { getSimilarCameras } from '../../store/product-process/product-data-selectors';
+
 import { useAppSelector } from '../../hooks';
-import { getSimilarCameras, getSortedReviews } from '../../store/product-process/product-data-selectors';
 
 import { capitalizeFirstLetter } from '../../utiles/format';
 
 import { Camera } from '../../@types/camera-types';
-import ButtonToTop from '../button-to-top/button-to-top';
-import ReviewModal from '../review-modal/review-modal';
 
 type ProductContentProps = {
   camera: Camera;
@@ -20,7 +19,6 @@ type ProductContentProps = {
 
 function ProductContent({camera}: ProductContentProps): JSX.Element {
   const similarCameras = useAppSelector(getSimilarCameras);
-  const reviews = useAppSelector(getSortedReviews);
 
   return (
     <main>
@@ -42,14 +40,9 @@ function ProductContent({camera}: ProductContentProps): JSX.Element {
           </section>
         </div>
         <div className="page-content__section">
-          {reviews.length > 0 &&
-          <ReviewBlock
-            reviews={reviews}
-          />}
+          <ReviewBlock/>
         </div>
       </div>
-      <ButtonToTop/>
-      <ReviewModal/>
     </main>
   );
 }
