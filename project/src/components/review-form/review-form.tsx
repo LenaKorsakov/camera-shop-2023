@@ -1,13 +1,20 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
+import { useForm } from 'react-hook-form';
 
 import RatingPicker from '../rating-picker/rating-picker';
-
-import { ReviewPost } from '../../@types/review-types';
-import { REVIEW_ITEM_ATRIBUTES } from '../../const/review-items-titles';
-import ReviewFormInput from './review-form-input';
 import ReviewFormTextArea from './review-form-textarea';
+import ReviewFormInput from './review-form-input';
+
 import { useAppDispatch } from '../../hooks';
 import { fetchReviewAction, sendReviewAction } from '../../store/api-actions';
+
+import { REVIEW_ITEM_ATRIBUTES } from '../../const/review-items-titles';
+
+import { ReviewPost } from '../../@types/review-types';
+
+type ReviewFormProps = {
+  cameraId: number;
+}
 
 const INITIAL_FORM_DATA = {
   userName: '',
@@ -18,12 +25,16 @@ const INITIAL_FORM_DATA = {
   cameraId: 0,
 };
 
-type ReviewFormProps = {
-  cameraId: number;
-}
-
 function ReviewForm ({cameraId}: ReviewFormProps): JSX.Element {
   const [formData, setFormData] = useState<ReviewPost>(INITIAL_FORM_DATA);
+
+  const {
+    register,
+    trigger,
+    formState: { errors, isValid },
+    reset
+  } = useForm({mode: 'onBlur'});
+
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -36,8 +47,6 @@ function ReviewForm ({cameraId}: ReviewFormProps): JSX.Element {
 
   const handleTextAreaChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const { value } = event.target;
-    // eslint-disable-next-line no-console
-    console.log(value);
 
     setFormData({
       ...formData,
@@ -45,12 +54,14 @@ function ReviewForm ({cameraId}: ReviewFormProps): JSX.Element {
     });
   };
 
-  // eslint-disable-next-line no-console
-  console.log(formData);
   const dispatch = useAppDispatch();
 
   const handleFormSubmit = (event: FormEvent) => {
     event.preventDefault();
+    trigger();
+    // if (! isValid) {
+    //   return;
+    // }
 
     dispatch(sendReviewAction({
       ...formData,
@@ -58,6 +69,8 @@ function ReviewForm ({cameraId}: ReviewFormProps): JSX.Element {
     })).unwrap().then(
       () => {
         dispatch(fetchReviewAction(cameraId));
+
+        reset();
         setFormData(INITIAL_FORM_DATA);
       },
       () => {
@@ -73,6 +86,8 @@ function ReviewForm ({cameraId}: ReviewFormProps): JSX.Element {
       <div className="form-review__rate" onChange={handleInputChange}>
         <RatingPicker
           rate={formData.rating}
+          register={register}
+          errors={errors}
         />
         {REVIEW_ITEM_ATRIBUTES.map((item) => (
           <ReviewFormInput
@@ -80,15 +95,22 @@ function ReviewForm ({cameraId}: ReviewFormProps): JSX.Element {
             title={item.title}
             placeholder={item.placeholder}
             errorText={item.errorText}
+            register={register}
+            errors={errors}
             key={item.name}
           />
         ))}
         <ReviewFormTextArea
+          register={register}
+          errors={errors}
           onChange={handleTextAreaChange}
-          reviewText={formData.review}
         />
       </div>
-      <button className="btn btn--purple form-review__btn" type="submit">
+      <button
+        className="btn btn--purple form-review__btn"
+        type="submit"
+        disabled={!isValid}
+      >
             Отправить отзыв
       </button>
     </form>

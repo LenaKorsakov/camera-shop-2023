@@ -8,7 +8,6 @@ type ReviewModalProps = {
 }
 
 function ReviewModal({ setIsOpen, cameraId}: ReviewModalProps): JSX.Element {
-  //TODO забрать камераАЙдИ через useContext
   const closeModal = () => {
     setIsOpen(false);
 
@@ -19,7 +18,7 @@ function ReviewModal({ setIsOpen, cameraId}: ReviewModalProps): JSX.Element {
 
   useEffect(() => {
     const handleEventKeydown = (event: KeyboardEvent) => {
-      if(event.key.startsWith('Esc')) {
+      if(event.key?.startsWith('esc')) {
         event.preventDefault();
 
         closeModal();

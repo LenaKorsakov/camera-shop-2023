@@ -1,14 +1,22 @@
-import RatingPickerItem from './rating-picker-item';
+import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
+import { Fragment } from 'react';
+
+//import RatingPickerItem from './rating-picker-item';
 
 import { RATING_TITLES } from '../../const/rating-titles';
+//import RatingPickerItem from './rating-picker-item';
+
 
 type RatingPickerProps = {
   rate: number;
+  register: UseFormRegister<FieldValues>;
+  errors: FieldErrors<FieldValues>;
 }
-function RatingPicker ({ rate }: RatingPickerProps): JSX.Element {
+
+function RatingPicker ({ rate, register, errors }: RatingPickerProps): JSX.Element {
 
   return(
-    <fieldset className="rate form-review__item">
+    <fieldset className={`rate form-review__item ${errors.rating ? 'is-invalid' : ''}`}>
       <legend className="rate__caption">
                 Рейтинг
         <svg width={9} height={9} aria-hidden="true">
@@ -20,11 +28,21 @@ function RatingPicker ({ rate }: RatingPickerProps): JSX.Element {
           className="rate__group"
         >
           {RATING_TITLES.map(({rating, title}) => (
-            <RatingPickerItem
-              rating={rating}
-              title={title}
-              key={rating}
-            />
+            <Fragment key={rating}>
+              <input
+                className="visually-hidden"
+                id={`star-${rating}`}
+                type="radio"
+                value={rating}
+                {...register('rating', { required: true})}
+              // disabled={isDisabled}
+              />
+              <label
+                className="rate__label"
+                htmlFor={`star-${rating}`}
+                title={title}
+              />
+            </Fragment>
           ))}
         </div>
         <div className="rate__progress">

@@ -1,16 +1,18 @@
 import { ChangeEvent } from 'react';
+import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
+
+import { REVIEW_MIN_LENGTH, ValidationText } from '../../const/validation-text';
 
 type ReiewTextareaProps = {
     onChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
-    reviewText: string;
+    register: UseFormRegister<FieldValues>;
+    errors: FieldErrors<FieldValues>;
   }
 
-function ReviewFormTextArea ({ onChange, reviewText }: ReiewTextareaProps): JSX.Element {
-  // eslint-disable-next-line no-console
-  console.log(reviewText);
+function ReviewFormTextArea ({ onChange, register, errors }: ReiewTextareaProps): JSX.Element {
 
   return(
-    <div className="custom-textarea form-review__item">
+    <div className={`custom-textarea form-review__item ${errors.review ? 'is-invalid' : ''}`}>
       <label htmlFor="review">
         <span className="custom-textarea__label">
                   Комментарий
@@ -20,15 +22,19 @@ function ReviewFormTextArea ({ onChange, reviewText }: ReiewTextareaProps): JSX.
         </span>
         <textarea
           id="review"
-          name="review"
-          minLength={5}
           placeholder="Поделитесь своим опытом покупки"
-          value={reviewText}
-          onChange={onChange}
+          {...register('review', {
+            required: ValidationText.ValidateReview,
+            minLength: {
+              value: REVIEW_MIN_LENGTH,
+              message: ValidationText.ValidateReviewLength
+            },
+            onChange: onChange
+          })}
         />
       </label>
       <div className="custom-textarea__error">
-                Нужно добавить комментарий
+        {errors.review?.message?.toString()}
       </div>
     </div>
   );

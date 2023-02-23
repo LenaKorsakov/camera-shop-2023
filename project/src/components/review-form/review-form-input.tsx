@@ -1,13 +1,17 @@
+import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
+
 type ReviewFormInputProps = {
   name: string;
   title: string;
   placeholder: string;
   errorText: string;
+  register: UseFormRegister<FieldValues>;
+  errors: FieldErrors<FieldValues>;
 }
-function ReviewFormInput ({ name, title, placeholder, errorText}: ReviewFormInputProps): JSX.Element {
+function ReviewFormInput ({ name, title, placeholder, errorText, register, errors }: ReviewFormInputProps): JSX.Element {
 
   return(
-    <div className="custom-input form-review__item">
+    <div className={`custom-input form-review__item ${errors[name] ? 'is-invalid' : ''}`}>
       <label>
         <span className="custom-input__label">
           {title}
@@ -17,9 +21,9 @@ function ReviewFormInput ({ name, title, placeholder, errorText}: ReviewFormInpu
         </span>
         <input
           type="text"
-          name={name}
           placeholder={placeholder}
-          required
+          autoComplete={'off'}
+          {...register(`${name}`, {required: true})}
         />
       </label>
       <p className="custom-input__error">{errorText}</p>
