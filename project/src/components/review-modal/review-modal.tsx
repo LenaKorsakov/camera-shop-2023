@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useAppSelector } from '../../hooks';
 import useOnClickOutside from '../../hooks/use-on-click-outside';
-import { getReviewSendingStatus } from '../../store/product-process/product-data-selectors';
+import { getSuccessStatus } from '../../store/product-process/product-data-selectors';
 import ReviewForm from '../review-form/review-form';
 import ReviewModalSuccess from './review-modal-success';
 
@@ -37,7 +37,7 @@ function ReviewModal({ setIsOpen, cameraId}: ReviewModalProps): JSX.Element {
 
   useOnClickOutside(modalRef, closeModal);
 
-  const isSuccess = useAppSelector(getReviewSendingStatus);
+  const isSuccess = useAppSelector(getSuccessStatus);
 
   return(
     <div className={`modal is-active ${isSuccess ? 'modal--narrow' : ''}`}>

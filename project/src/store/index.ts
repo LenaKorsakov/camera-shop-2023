@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { createAPI } from '../services/api';
+import { errorsWarning } from './middleware/errors-warning';
 import { rootReducer } from './root-reducer';
 
 const api = createAPI();
@@ -11,5 +12,5 @@ export const store = configureStore({
       thunk: {
         extraArgument: api,
       },
-    })
+    }).concat(errorsWarning)
 });

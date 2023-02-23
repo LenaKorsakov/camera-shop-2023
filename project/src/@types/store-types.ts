@@ -18,6 +18,7 @@ export type ProductData = {
   similarCameras: Cameras;
   isLoading: boolean;
   isSuccess: boolean;
+  isSending: boolean;
 }
 
 export type BasketData = {

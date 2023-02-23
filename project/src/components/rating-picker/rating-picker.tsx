@@ -11,9 +11,10 @@ type RatingPickerProps = {
   rate: number;
   register: UseFormRegister<FieldValues>;
   errors: FieldErrors<FieldValues>;
+  disabled: boolean;
 }
 
-function RatingPicker ({ rate, register, errors }: RatingPickerProps): JSX.Element {
+function RatingPicker ({ rate, register, errors, disabled }: RatingPickerProps): JSX.Element {
 
   return(
     <fieldset className={`rate form-review__item ${errors.rating ? 'is-invalid' : ''}`}>
@@ -35,7 +36,7 @@ function RatingPicker ({ rate, register, errors }: RatingPickerProps): JSX.Eleme
                 type="radio"
                 value={rating}
                 {...register('rating', { required: true})}
-              // disabled={isDisabled}
+                disabled={disabled}
               />
               <label
                 className="rate__label"

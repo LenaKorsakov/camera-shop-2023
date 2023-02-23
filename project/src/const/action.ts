@@ -8,5 +8,7 @@ export const Action = {
   FetchSimilarCameras: 'product/fetchSimilarCameras',
 
   SendCoupon: 'order/sendCoupon',
-  SendOrder: 'order/sendOrder'
+  SendOrder: 'order/sendOrder',
+
+  DisplayError: 'app/displayError'
 } as const;

@@ -7,9 +7,10 @@ type ReiewTextareaProps = {
     onChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
     register: UseFormRegister<FieldValues>;
     errors: FieldErrors<FieldValues>;
+    disabled: boolean;
   }
 
-function ReviewFormTextArea ({ onChange, register, errors }: ReiewTextareaProps): JSX.Element {
+function ReviewFormTextArea ({ onChange, register, errors, disabled }: ReiewTextareaProps): JSX.Element {
 
   return(
     <div className={`custom-textarea form-review__item ${errors.review ? 'is-invalid' : ''}`}>
@@ -22,6 +23,7 @@ function ReviewFormTextArea ({ onChange, register, errors }: ReiewTextareaProps)
         </span>
         <textarea
           id="review"
+          disabled={disabled}
           placeholder="Поделитесь своим опытом покупки"
           {...register('review', {
             required: ValidationText.ValidateReview,

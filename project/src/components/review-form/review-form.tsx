@@ -5,12 +5,15 @@ import RatingPicker from '../rating-picker/rating-picker';
 import ReviewFormTextArea from './review-form-textarea';
 import ReviewFormInput from './review-form-input';
 
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchReviewAction, sendReviewAction } from '../../store/api-actions';
+import { displayError } from '../../store/actions';
 
 import { REVIEW_ITEM_ATRIBUTES } from '../../const/review-items-titles';
+import { WarningMessage } from '../../const/warning-message';
 
 import { ReviewPost } from '../../@types/review-types';
+import { getReviewLoadingStatus } from '../../store/product-process/product-data-selectors';
 
 type ReviewFormProps = {
   cameraId: number;
@@ -59,9 +62,9 @@ function ReviewForm ({cameraId}: ReviewFormProps): JSX.Element {
   const handleFormSubmit = (event: FormEvent) => {
     event.preventDefault();
     trigger();
-    // if (! isValid) {
-    //   return;
-    // }
+    if (! isValid) {
+      return;
+    }
 
     dispatch(sendReviewAction({
       ...formData,
@@ -73,10 +76,10 @@ function ReviewForm ({cameraId}: ReviewFormProps): JSX.Element {
         reset();
         setFormData(INITIAL_FORM_DATA);
       },
-      () => {
-        throw new Error('oшибка');
-      });
+      () => dispatch(displayError(WarningMessage.SendingError)));
   };
+
+  const isReviewSending = useAppSelector(getReviewLoadingStatus);
 
   return(
     <>
@@ -91,6 +94,7 @@ function ReviewForm ({cameraId}: ReviewFormProps): JSX.Element {
               rate={formData.rating}
               register={register}
               errors={errors}
+              disabled={isReviewSending}
             />
             {REVIEW_ITEM_ATRIBUTES.map((item) => (
               <ReviewFormInput
@@ -101,18 +105,20 @@ function ReviewForm ({cameraId}: ReviewFormProps): JSX.Element {
                 register={register}
                 errors={errors}
                 key={item.name}
+                disabled={isReviewSending}
               />
             ))}
             <ReviewFormTextArea
               register={register}
               errors={errors}
               onChange={handleTextAreaChange}
+              disabled={isReviewSending}
             />
           </div>
           <button
             className="btn btn--purple form-review__btn"
             type="submit"
-            disabled={!isValid}
+            disabled={isReviewSending}
           >
             Отправить отзыв
           </button>

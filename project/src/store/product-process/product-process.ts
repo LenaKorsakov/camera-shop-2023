@@ -9,7 +9,8 @@ const initialState: ProductData = {
   similarCameras: [],
   reviews: [],
   isLoading: false,
-  isSuccess: false
+  isSuccess: false,
+  isSending: false
 };
 
 export const productData = createSlice({
@@ -40,6 +41,14 @@ export const productData = createSlice({
       })
       .addCase(sendReviewAction.fulfilled, (state, action) => {
         state.isSuccess = true;
+        state.isSending = false;
+      })
+      .addCase(sendReviewAction.pending, (state, action) => {
+        state.isSending = true;
+      })
+      .addCase(sendReviewAction.rejected, (state, action) => {
+        state.isSending = false;
+        state.isSuccess = false;
       });
   }
 });

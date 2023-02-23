@@ -7,8 +7,9 @@ type ReviewFormInputProps = {
   errorText: string;
   register: UseFormRegister<FieldValues>;
   errors: FieldErrors<FieldValues>;
+  disabled: boolean;
 }
-function ReviewFormInput ({ name, title, placeholder, errorText, register, errors }: ReviewFormInputProps): JSX.Element {
+function ReviewFormInput ({ name, title, placeholder, errorText, register, errors, disabled }: ReviewFormInputProps): JSX.Element {
 
   return(
     <div className={`custom-input form-review__item ${errors[name] ? 'is-invalid' : ''}`}>
@@ -23,6 +24,7 @@ function ReviewFormInput ({ name, title, placeholder, errorText, register, error
           type="text"
           placeholder={placeholder}
           autoComplete={'off'}
+          disabled={disabled}
           {...register(`${name}`, {required: true})}
         />
       </label>
