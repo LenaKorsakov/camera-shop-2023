@@ -1,6 +1,9 @@
 import { useEffect, useRef } from 'react';
+import { useAppSelector } from '../../hooks';
 import useOnClickOutside from '../../hooks/use-on-click-outside';
+import { getReviewSendingStatus } from '../../store/product-process/product-data-selectors';
 import ReviewForm from '../review-form/review-form';
+import ReviewModalSuccess from './review-modal-success';
 
 type ReviewModalProps = {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -18,7 +21,7 @@ function ReviewModal({ setIsOpen, cameraId}: ReviewModalProps): JSX.Element {
 
   useEffect(() => {
     const handleEventKeydown = (event: KeyboardEvent) => {
-      if(event.key?.startsWith('esc')) {
+      if(event.key?.startsWith('Esc')) {
         event.preventDefault();
 
         closeModal();
@@ -34,18 +37,17 @@ function ReviewModal({ setIsOpen, cameraId}: ReviewModalProps): JSX.Element {
 
   useOnClickOutside(modalRef, closeModal);
 
+  const isSuccess = useAppSelector(getReviewSendingStatus);
+
   return(
-    <div className="modal is-active">
+    <div className={`modal is-active ${isSuccess ? 'modal--narrow' : ''}`}>
       <div className="modal__wrapper">
         <div className="modal__overlay" />
         <div
           className="modal__content"
           ref={modalRef}
         >
-          <p className="title title--h4">Оставить отзыв</p>
-          <div className="form-review">
-            <ReviewForm cameraId={cameraId}/>
-          </div>
+          {isSuccess ? <ReviewModalSuccess/> : <ReviewForm cameraId={cameraId}/>}
           <button
             className="cross-btn"
             type="button"

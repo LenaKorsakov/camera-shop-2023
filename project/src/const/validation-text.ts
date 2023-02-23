@@ -1,6 +1,6 @@
 export enum ValidationText {
   ValidateReview= 'Нужно добавить комментарий.',
-  ValidateReviewLength = 'Введите комментарий, состоящий не менее, чем из 5 символов.',
+  ValidateReviewLength = 'Введите больше 5 символов.',
   ValidateRate = 'Нужно оценить товар.',
   }
 

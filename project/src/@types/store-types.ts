@@ -17,6 +17,7 @@ export type ProductData = {
   reviews: ReviewsRaw;
   similarCameras: Cameras;
   isLoading: boolean;
+  isSuccess: boolean;
 }
 
 export type BasketData = {

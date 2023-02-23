@@ -10,6 +10,7 @@ import { sortReviewByTime } from '../../utiles/sort-compare';
 
 export const getSelectedCamera = (state: State): Camera => state[NameSpace.ProductData].camera;
 export const getProductLoadingStatus = (state: State): boolean => state[NameSpace.ProductData].isLoading;
+export const getReviewSendingStatus = (state: State): boolean => state[NameSpace.ProductData].isSuccess;
 export const getSimilarCameras = (state: State): Cameras => state[NameSpace.ProductData].similarCameras;
 const getReviewsRaw = (state: State): ReviewsRaw => state[NameSpace.ProductData].reviews;
 

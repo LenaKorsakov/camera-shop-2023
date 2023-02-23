@@ -79,41 +79,46 @@ function ReviewForm ({cameraId}: ReviewFormProps): JSX.Element {
   };
 
   return(
-    <form
-      method="post"
-      onSubmit={handleFormSubmit}
-    >
-      <div className="form-review__rate" onChange={handleInputChange}>
-        <RatingPicker
-          rate={formData.rating}
-          register={register}
-          errors={errors}
-        />
-        {REVIEW_ITEM_ATRIBUTES.map((item) => (
-          <ReviewFormInput
-            name={item.name}
-            title={item.title}
-            placeholder={item.placeholder}
-            errorText={item.errorText}
-            register={register}
-            errors={errors}
-            key={item.name}
-          />
-        ))}
-        <ReviewFormTextArea
-          register={register}
-          errors={errors}
-          onChange={handleTextAreaChange}
-        />
-      </div>
-      <button
-        className="btn btn--purple form-review__btn"
-        type="submit"
-        disabled={!isValid}
-      >
+    <>
+      <p className="title title--h4">Оставить отзыв</p>
+      <div className="form-review">
+        <form
+          method="post"
+          onSubmit={handleFormSubmit}
+        >
+          <div className="form-review__rate" onChange={handleInputChange}>
+            <RatingPicker
+              rate={formData.rating}
+              register={register}
+              errors={errors}
+            />
+            {REVIEW_ITEM_ATRIBUTES.map((item) => (
+              <ReviewFormInput
+                name={item.name}
+                title={item.title}
+                placeholder={item.placeholder}
+                errorText={item.errorText}
+                register={register}
+                errors={errors}
+                key={item.name}
+              />
+            ))}
+            <ReviewFormTextArea
+              register={register}
+              errors={errors}
+              onChange={handleTextAreaChange}
+            />
+          </div>
+          <button
+            className="btn btn--purple form-review__btn"
+            type="submit"
+            disabled={!isValid}
+          >
             Отправить отзыв
-      </button>
-    </form>
+          </button>
+        </form>
+      </div>
+    </>
   );
 }
 export default ReviewForm;

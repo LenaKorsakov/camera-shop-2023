@@ -1,20 +1,25 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ProductData } from '../../@types/store-types';
 import { Camera } from '../../@types/camera-types';
 import { NameSpace } from '../../const/name-space';
-import { fetchCameraByIdAction, fetchReviewAction, fetchSimilarCamerasAction } from '../api-actions';
+import { fetchCameraByIdAction, fetchReviewAction, fetchSimilarCamerasAction, sendReviewAction } from '../api-actions';
 
 const initialState: ProductData = {
   camera: {} as Camera,
   similarCameras: [],
   reviews: [],
   isLoading: false,
+  isSuccess: false
 };
 
 export const productData = createSlice({
   name: NameSpace.ProductData,
   initialState,
-  reducers: {},
+  reducers: {
+    changeSuccessStatus: (state, action: PayloadAction<boolean>) => {
+      state.isSuccess = action.payload;
+    }
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchCameraByIdAction.fulfilled, (state, action) => {
@@ -32,6 +37,11 @@ export const productData = createSlice({
       })
       .addCase(fetchReviewAction.fulfilled, (state, action) => {
         state.reviews = action.payload;
+      })
+      .addCase(sendReviewAction.fulfilled, (state, action) => {
+        state.isSuccess = true;
       });
   }
 });
+
+export const { changeSuccessStatus } = productData.actions;
