@@ -23,7 +23,6 @@ function Tabs({camera}: TabsProps): JSX.Element {
   const handleDescriptionButtonClick = useCallback(() => {
     setIsDescriptionActive(true);
     setIsCharacteristicsActive(false);
-
   },[]);
 
   return (

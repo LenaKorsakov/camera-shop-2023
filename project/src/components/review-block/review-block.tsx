@@ -17,12 +17,13 @@ function ReviewBlock({ cameraId }: ReviewBlockProps): JSX.Element {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const dispatch = useAppDispatch();
 
+
   const handleNewReviewButtonClick = () => {
     setIsOpen(true);
     dispatch(changeSuccessStatus(false));
 
     if (typeof window !== 'undefined' && window.document) {
-      document.body.style.overflow = 'hidden';//disable scrolling the document body
+      //document.body.style.overflow = 'hidden'; disable scrolling the document body
     }
   };
 

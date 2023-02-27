@@ -1,43 +1,32 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
+
+import ReviewForm from '../review-form/review-form';
+import SuccessModal from './success-modal';
+
 import { useAppSelector } from '../../hooks';
 import useOnClickOutside from '../../hooks/use-on-click-outside';
 import { getSuccessStatus } from '../../store/product-process/product-data-selectors';
-import ReviewForm from '../review-form/review-form';
-import SuccessModal from './success-modal';
+import { useDisableBackground } from '../../hooks/use-disable-background';
+import { useKeydownEscClose } from '../../hooks/use-keydown-esc-close';
 
 type ReviewModalProps = {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   cameraId: number;
 }
 
-function ReviewModal({ setIsOpen, cameraId}: ReviewModalProps): JSX.Element {
+function ReviewModal({ setIsOpen, cameraId }: ReviewModalProps): JSX.Element {
   const closeModal = () => {
     setIsOpen(false);
-
-    document.body.style.overflow = 'unset';
   };
 
   const handleButtonCloseClick = () => closeModal();
 
-  useEffect(() => {
-    const handleEventKeydown = (event: KeyboardEvent) => {
-      if(event.key?.startsWith('Esc')) {
-        event.preventDefault();
-
-        closeModal();
-      }
-    };
-
-    document.addEventListener('keydown', handleEventKeydown);
-
-    return () => document.removeEventListener('keydown', handleEventKeydown);
-  });
-
   const modalRef = useRef(null);
+  const isSuccess = useAppSelector(getSuccessStatus);
 
   useOnClickOutside(modalRef, closeModal);
-
-  const isSuccess = useAppSelector(getSuccessStatus);
+  useDisableBackground();
+  useKeydownEscClose(closeModal);
 
   return(
     <div className={`modal is-active ${isSuccess ? 'modal--narrow' : ''}`}>

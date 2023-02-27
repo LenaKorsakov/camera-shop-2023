@@ -10,7 +10,7 @@ const initialState: ProductData = {
   reviews: [],
   isLoading: false,
   isSuccess: false,
-  isSending: false
+  isSending: false,
 };
 
 export const productData = createSlice({
@@ -19,7 +19,7 @@ export const productData = createSlice({
   reducers: {
     changeSuccessStatus: (state, action: PayloadAction<boolean>) => {
       state.isSuccess = action.payload;
-    }
+    },
   },
   extraReducers(builder) {
     builder
