@@ -2,14 +2,11 @@ import { memo } from 'react';
 
 type TabDescriptionProps = {
   description: string;
-  isActive: boolean;
 }
-function TabDescription({description, isActive}: TabDescriptionProps): JSX.Element {
+function TabDescription({ description }: TabDescriptionProps): JSX.Element {
   return (
-    <div className={`tabs__element ${isActive ? 'is-active' : ''}`}>
-      <div className="product__tabs-text">
-        <p>{description}</p>
-      </div>
+    <div className="product__tabs-text">
+      <p>{description}</p>
     </div>
   );
 }

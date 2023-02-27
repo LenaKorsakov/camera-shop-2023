@@ -8,6 +8,7 @@ import Picture from '../picture/picture';
 import { AppRoute } from '../../const/app-route';
 import { capitalizeFirstLetter, formatPrice } from '../../utiles/format';
 import { PictureSize } from '../../const/picture-size';
+import { TabType } from '../../const/tabs-buttons';
 
 import { Camera } from '../../@types/camera-types';
 
@@ -67,7 +68,7 @@ function CameraCard({isActive, camera}: CameraCardProps): JSX.Element {
 
         <Link
           className="btn btn--transparent"
-          to={`${AppRoute.Product}/${id}`}
+          to={`${AppRoute.Product}/${id}/${TabType.Features as string}`}
         >
                       Подробнее
         </Link>
