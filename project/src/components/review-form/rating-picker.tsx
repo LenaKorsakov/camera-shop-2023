@@ -1,10 +1,8 @@
 import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
 import { Fragment } from 'react';
 
-//import RatingPickerItem from './rating-picker-item';
-
 import { RATING_TITLES } from '../../const/rating-titles';
-//import RatingPickerItem from './rating-picker-item';
+import { InputErrorText, InputTitle } from '../../const/review-inputs';
 
 
 type RatingPickerProps = {
@@ -19,7 +17,7 @@ function RatingPicker ({ rate, register, errors, disabled }: RatingPickerProps):
   return(
     <fieldset className={`rate form-review__item ${errors.rating ? 'is-invalid' : ''}`}>
       <legend className="rate__caption">
-                Рейтинг
+        {InputTitle.Rating}
         <svg width={9} height={9} aria-hidden="true">
           <use xlinkHref="#icon-snowflake" />
         </svg>
@@ -51,7 +49,7 @@ function RatingPicker ({ rate, register, errors, disabled }: RatingPickerProps):
           <span className="rate__all-stars">5</span>
         </div>
       </div>
-      <p className="rate__message">Нужно оценить товар</p>
+      <p className="rate__message">{InputErrorText.Rate}</p>
     </fieldset>
   );
 }

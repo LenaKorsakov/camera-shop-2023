@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import RatingPicker from '../rating-picker/rating-picker';
+import RatingPicker from './rating-picker';
 import ReviewFormTextArea from './review-form-textarea';
 import ReviewFormInput from './review-form-input';
 
@@ -9,7 +9,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchReviewAction, sendReviewAction } from '../../store/api-actions';
 import { displayError } from '../../store/actions';
 
-import { REVIEW_ITEM_ATRIBUTES } from '../../const/review-items-titles';
+import { REVIEW_INPUTS } from '../../const/review-inputs';
 import { WarningMessage } from '../../const/warning-message';
 
 import { ReviewPost } from '../../@types/review-types';
@@ -96,15 +96,15 @@ function ReviewForm ({cameraId}: ReviewFormProps): JSX.Element {
               errors={errors}
               disabled={isReviewSending}
             />
-            {REVIEW_ITEM_ATRIBUTES.map((item) => (
+            {REVIEW_INPUTS.map(({name, title, placeholder, errorText}) => (
               <ReviewFormInput
-                name={item.name}
-                title={item.title}
-                placeholder={item.placeholder}
-                errorText={item.errorText}
+                name={name}
+                title={title}
+                placeholder={placeholder}
+                errorText={errorText}
                 register={register}
                 errors={errors}
-                key={item.name}
+                key={name}
                 disabled={isReviewSending}
               />
             ))}

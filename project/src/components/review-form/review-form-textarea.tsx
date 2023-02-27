@@ -1,7 +1,6 @@
 import { ChangeEvent } from 'react';
 import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
-
-import { REVIEW_MIN_LENGTH, ValidationText } from '../../const/validation-text';
+import { InputErrorText, InputName, InputPlaceholder, InputTitle, REVIEW_MIN_LENGTH } from '../../const/review-inputs';
 
 type ReiewTextareaProps = {
     onChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
@@ -14,22 +13,22 @@ function ReviewFormTextArea ({ onChange, register, errors, disabled }: ReiewText
 
   return(
     <div className={`custom-textarea form-review__item ${errors.review ? 'is-invalid' : ''}`}>
-      <label htmlFor="review">
+      <label htmlFor={InputName.Review}>
         <span className="custom-textarea__label">
-                  Комментарий
+          {InputTitle.Review}
           <svg width={9} height={9} aria-hidden="true">
             <use xlinkHref="#icon-snowflake" />
           </svg>
         </span>
         <textarea
-          id="review"
+          id={InputName.Review}
           disabled={disabled}
-          placeholder="Поделитесь своим опытом покупки"
-          {...register('review', {
-            required: ValidationText.ValidateReview,
+          placeholder={InputPlaceholder.Review}
+          {...register(InputName.Review, {
+            required: InputErrorText.Review,
             minLength: {
               value: REVIEW_MIN_LENGTH,
-              message: ValidationText.ValidateReviewLength
+              message: InputErrorText.ReviewLength
             },
             onChange: onChange
           })}

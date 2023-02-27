@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import ReviewItem from './review-item';
 
@@ -12,12 +12,12 @@ type ReviewListProps = {
 }
 
 function ReviewsList({reviews, cameraId}: ReviewListProps): JSX.Element {
-
-  // useEffect(() => {
-  //   const reviewQty = REVIEWS_PER_PAGE;
-  // }, [cameraId]);
-
   const [reviewQty, setReviewQty] = useState<number>(REVIEWS_PER_PAGE);
+
+  useEffect(() => {
+    setReviewQty(REVIEWS_PER_PAGE);
+  }, [cameraId]);
+
 
   const visibleReviews = reviews.slice(0, reviewQty);
   const isButtonVisible = reviewQty < reviews.length;
