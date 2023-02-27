@@ -17,14 +17,9 @@ function ReviewBlock({ cameraId }: ReviewBlockProps): JSX.Element {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const dispatch = useAppDispatch();
 
-
   const handleNewReviewButtonClick = () => {
     setIsOpen(true);
     dispatch(changeSuccessStatus(false));
-
-    if (typeof window !== 'undefined' && window.document) {
-      //document.body.style.overflow = 'hidden'; disable scrolling the document body
-    }
   };
 
   return (
@@ -44,7 +39,7 @@ function ReviewBlock({ cameraId }: ReviewBlockProps): JSX.Element {
             </button>
 
           </div>
-          {reviews.length > 0 && <ReviewsList reviews={reviews}/>}
+          {reviews.length > 0 && <ReviewsList cameraId={cameraId} reviews={reviews}/>}
         </div>
 
       </section>

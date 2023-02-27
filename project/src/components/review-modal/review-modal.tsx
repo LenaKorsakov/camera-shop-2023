@@ -31,7 +31,7 @@ function ReviewModal({ setIsOpen, cameraId }: ReviewModalProps): JSX.Element {
   return(
     <div className={`modal is-active ${isSuccess ? 'modal--narrow' : ''}`}>
       <div className="modal__wrapper">
-        <div className="modal__overlay" />
+        <div className="modal__overlay"/>
         <div
           className="modal__content"
           ref={modalRef}

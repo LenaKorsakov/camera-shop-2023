@@ -7,7 +7,10 @@ export const useDisableBackground = () => {
     const focusModalTrap = createFocusTrap('.modal', {tabbableOptions: {displayCheck: 'none'}});
 
     focusModalTrap.activate();
-    document.body.style.overflow = 'hidden';
+
+    if (typeof window !== 'undefined' && window.document) {
+      document.body.style.overflow = 'hidden'; //disable scrolling the document body
+    }
 
     return () => {
       focusModalTrap.deactivate();

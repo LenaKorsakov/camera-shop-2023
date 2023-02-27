@@ -8,9 +8,15 @@ import { ReviewsAdapt } from '../../@types/review-types';
 
 type ReviewListProps = {
   reviews: ReviewsAdapt;
+  cameraId: number;
 }
 
-function ReviewsList({reviews}: ReviewListProps): JSX.Element {
+function ReviewsList({reviews, cameraId}: ReviewListProps): JSX.Element {
+
+  // useEffect(() => {
+  //   const reviewQty = REVIEWS_PER_PAGE;
+  // }, [cameraId]);
+
   const [reviewQty, setReviewQty] = useState<number>(REVIEWS_PER_PAGE);
 
   const visibleReviews = reviews.slice(0, reviewQty);
