@@ -22,7 +22,7 @@ function ReviewBlock({ cameraId }: ReviewBlockProps): JSX.Element {
     dispatch(changeSuccessStatus(false));
 
     if (typeof window !== 'undefined' && window.document) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden';//disable scrolling the document body
     }
   };
 

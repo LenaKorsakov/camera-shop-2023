@@ -3,7 +3,7 @@ import { useAppSelector } from '../../hooks';
 import useOnClickOutside from '../../hooks/use-on-click-outside';
 import { getSuccessStatus } from '../../store/product-process/product-data-selectors';
 import ReviewForm from '../review-form/review-form';
-import ReviewModalSuccess from './review-modal-success';
+import SuccessModal from './success-modal';
 
 type ReviewModalProps = {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -47,7 +47,7 @@ function ReviewModal({ setIsOpen, cameraId}: ReviewModalProps): JSX.Element {
           className="modal__content"
           ref={modalRef}
         >
-          {isSuccess ? <ReviewModalSuccess/> : <ReviewForm cameraId={cameraId}/>}
+          {isSuccess ? <SuccessModal cameraId={cameraId} onButtonClick={closeModal}/> : <ReviewForm cameraId={cameraId}/>}
           <button
             className="cross-btn"
             type="button"

@@ -1,9 +1,18 @@
 import { useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../const/app-route';
 
-function ReviewModalSuccess (): JSX.Element {
+type SuccessModalProps = {
+  cameraId: number;
+  onButtonClick: () => void;
+}
+
+function SuccessModal ({cameraId, onButtonClick}: SuccessModalProps): JSX.Element {
   const navigate = useNavigate();
-  const handleButtonClick = () => navigate(AppRoute.Main);
+  const handleButtonClick = () => {
+    navigate(`${AppRoute.Product}/${cameraId}`);
+
+    onButtonClick();
+  };
 
   return(
     <>
@@ -25,4 +34,4 @@ function ReviewModalSuccess (): JSX.Element {
 
   );
 }
-export default ReviewModalSuccess;
+export default SuccessModal;
