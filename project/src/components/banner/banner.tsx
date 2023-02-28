@@ -7,8 +7,11 @@ import { getPromo } from '../../store/catalog-process/catalog-process-selectors'
 
 import { AppRoute } from '../../const/app-route';
 import { PictureSize } from '../../const/picture-size';
+import { ComponentName } from '../../const/component-name';
+import { TABS_TYPE_DEFAULT } from '../../const/tabs-buttons';
 
 function Bunner(): JSX.Element {
+
   const promoCamera = useAppSelector(getPromo);
   const { name, previewImg, previewImgWebp, previewImg2x, previewImgWebp2x, id } = promoCamera;
 
@@ -30,7 +33,10 @@ function Bunner(): JSX.Element {
         <span className="banner__text">
           Профессиональная камера от&nbsp;известного производителя
         </span>
-        <Link className="btn" to={`${AppRoute.Product}/${id}`}>
+        <Link
+          className="btn"
+          to={`${AppRoute.Product}/${id}?${ComponentName.Tab}=${TABS_TYPE_DEFAULT}`}
+        >
           Подробнее
         </Link>
       </p>

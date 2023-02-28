@@ -26,4 +26,5 @@ export type ReviewData = {
   reviews: ReviewsRaw;
   isSuccess: boolean;
   isSending: boolean;
+  isLoading: boolean;
 }

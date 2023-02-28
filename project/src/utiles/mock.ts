@@ -77,3 +77,4 @@ ThunkDispatch<State, typeof api, Action>
 
 
 export const fakeId = 5;
+export const UNKNOWN_ACTION = {type: 'UNKNOWN_ACTION'};

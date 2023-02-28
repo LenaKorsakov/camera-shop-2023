@@ -6,10 +6,11 @@ import { NameSpace } from '../../const/name-space';
 
 import { ReviewData } from '../../@types/store-types';
 
-const initialState: ReviewData = {
+export const initialState: ReviewData = {
   reviews: [],
   isSuccess: false,
   isSending: false,
+  isLoading: false,
 };
 
 export const reviewData = createSlice({
@@ -24,6 +25,13 @@ export const reviewData = createSlice({
     builder
       .addCase(fetchReviewAction.fulfilled, (state, action) => {
         state.reviews = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(fetchReviewAction.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(fetchReviewAction.rejected, (state) => {
+        state.isLoading = false;
       })
       .addCase(sendReviewAction.fulfilled, (state) => {
         state.isSuccess = true;

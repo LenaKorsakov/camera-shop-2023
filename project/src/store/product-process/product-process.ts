@@ -7,7 +7,7 @@ import { NameSpace } from '../../const/name-space';
 import { ProductData } from '../../@types/store-types';
 import { Camera } from '../../@types/camera-types';
 
-const initialState: ProductData = {
+export const initialState: ProductData = {
   camera: {} as Camera,
   similarCameras: [],
   isLoading: false,

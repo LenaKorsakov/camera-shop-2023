@@ -7,7 +7,7 @@ import { NameSpace } from '../../const/name-space';
 import { CatalogData } from '../../@types/store-types';
 import { Promo } from '../../@types/camera-types';
 
-const initialState: CatalogData = {
+export const initialState: CatalogData = {
   cameras: [],
   promo: {} as Promo,
   isLoading: false
