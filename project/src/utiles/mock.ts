@@ -9,7 +9,7 @@ import { State } from '../@types/store-types';
 import { Action, ThunkDispatch } from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
 
-export const makeFakeCamera = (): Camera => ({
+const makeFakeCamera = (): Camera => ({
   id: datatype.number(),
   name: commerce.productName(),
   vendorCode: datatype.string(),
@@ -25,7 +25,7 @@ export const makeFakeCamera = (): Camera => ({
   previewImgWebp2x: image.imageUrl(),
   reviewCount: datatype.number(),
 });
-
+export const fakeCamera = makeFakeCamera();
 export const fakeCameras = Array.from({length: 20}, makeFakeCamera);
 
 export const makeFakeReview = (): ReviewRaw => ({
@@ -39,6 +39,8 @@ export const makeFakeReview = (): ReviewRaw => ({
   createAt: datatype.string(),
 });
 
+export const fakeReview = makeFakeReview();
+
 export const fakeReviews = Array.from({length: 15}, makeFakeReview);
 
 export const makeFakePromo = (): Promo => ({
@@ -50,6 +52,8 @@ export const makeFakePromo = (): Promo => ({
   previewImgWebp2x: image.imageUrl(),
 });
 
+export const fakePromo = makeFakePromo();
+
 export const makeFakePostReview = (): ReviewPost => ({
   userName: internet.userName(),
   advantage: lorem.sentence(),
@@ -58,6 +62,8 @@ export const makeFakePostReview = (): ReviewPost => ({
   review: lorem.paragraph(),
   cameraId: datatype.number(),
 });
+
+export const fakeReviewPost = makeFakePostReview();
 
 export const api = createAPI();
 export const mockApi = new MockAdapter(api);
@@ -70,3 +76,4 @@ ThunkDispatch<State, typeof api, Action>
 >(middlewares);
 
 
+export const fakeId = 5;
