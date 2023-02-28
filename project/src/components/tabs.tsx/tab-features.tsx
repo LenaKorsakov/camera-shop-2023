@@ -1,8 +1,7 @@
 import { memo } from 'react';
 
-import { capitalizeFirstLetter } from '../../utiles/format';
-
 import { Camera } from '../../@types/camera-types';
+import { FeaturesTitles } from '../../const/tabs-buttons';
 
 type TabFeaturesProps = {
   camera: Camera;
@@ -10,24 +9,27 @@ type TabFeaturesProps = {
 function TabFeatures({ camera }: TabFeaturesProps): JSX.Element {
   const { category, type, vendorCode, level } = camera;
 
+  const FeaturesItem = {
+    vendorCode,
+    category,
+    type,
+    level
+  } as const;
+
   return (
     <ul className="product__tabs-list">
-      <li className="item-list">
-        <span className="item-list__title">Артикул:</span>
-        <p className="item-list__text">{vendorCode}</p>
-      </li>
-      <li className="item-list">
-        <span className="item-list__title">Категория:</span>
-        <p className="item-list__text">{capitalizeFirstLetter(category)}</p>
-      </li>
-      <li className="item-list">
-        <span className="item-list__title">Тип камеры:</span>
-        <p className="item-list__text">{capitalizeFirstLetter(type)}</p>
-      </li>
-      <li className="item-list">
-        <span className="item-list__title">Уровень:</span>
-        <p className="item-list__text">{capitalizeFirstLetter(level)}</p>
-      </li>
+      {Object.values(FeaturesTitles).map((title, index) => {
+        const item = Object.values(FeaturesItem)[index];
+        return (
+          <li
+            key={title}
+            className="item-list"
+          >
+            <span className="item-list__title">{title}:</span>
+            <p className="item-list__text">{item}</p>
+          </li>
+        );
+      })}
     </ul>
   );
 }
