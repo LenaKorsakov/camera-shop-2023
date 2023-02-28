@@ -1,5 +1,5 @@
 import { memo, SyntheticEvent } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
 import TabDescription from './tab-description';
 import TabFeatures from './tab-features';
@@ -12,14 +12,26 @@ import { Camera } from '../../@types/camera-types';
 type TabsProps = {
   camera: Camera;
 }
+
 function Tabs({camera}: TabsProps): JSX.Element {
-  const params = useParams() as { id: string; tab: string};
+  const { id } = useParams() as { id: string };
+
+  const [searchParams] = useSearchParams();
+  const tab = searchParams.get('tab');
+
   const navigate = useNavigate();
-  const { id, tab } = params;
 
   const handleButtonClick = (event: SyntheticEvent<HTMLButtonElement>) => {
+    // const param = {tab: event.currentTarget.dataset.tab};
+    // navigate({
+    //   pathname: `${AppRoute.Product}/${id}`,
+    //   search: `?${new URLSearchParams(param)}`,
+    // });
 
-    navigate(`${AppRoute.Product}/${id}/${event.currentTarget.dataset.tab as string}`);
+    navigate({
+      pathname: `${AppRoute.Product}/${id}`,
+      search: `?tab=${event.currentTarget.dataset.tab as string}`,
+    });
   };
 
   return (
@@ -44,7 +56,7 @@ function Tabs({camera}: TabsProps): JSX.Element {
       </div>
       <div className="tabs__content">
         <div className="tabs__element is-active">
-          {tab === TabType.Description ?
+          {tab === TabType.Features ?
             <TabFeatures
               camera={camera}
             />

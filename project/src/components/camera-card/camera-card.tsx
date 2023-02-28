@@ -68,7 +68,7 @@ function CameraCard({isActive, camera}: CameraCardProps): JSX.Element {
 
         <Link
           className="btn btn--transparent"
-          to={`${AppRoute.Product}/${id}/${TabType.Features as string}`}
+          to={`${AppRoute.Product}/${id}?tab=${TabType.Features}`}
         >
                       Подробнее
         </Link>
