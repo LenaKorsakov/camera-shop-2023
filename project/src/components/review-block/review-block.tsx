@@ -5,8 +5,8 @@ import ReviewModal from '../review-modal/review-modal';
 import ReviewsList from './review-list';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getSortedReviews } from '../../store/product-process/product-data-selectors';
-import { changeSuccessStatus } from '../../store/product-process/product-process';
+import { changeSuccessStatus } from '../../store/review-process/review-process';
+import { getSortedReviews } from '../../store/review-process/review-data-selectors';
 
 type ReviewBlockProps = {
   cameraId: number;

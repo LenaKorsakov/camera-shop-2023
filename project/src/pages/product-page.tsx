@@ -9,7 +9,7 @@ import LoadingPage from './loading-page';
 
 import { useAppSelector } from '../hooks';
 import { getProductLoadingStatus } from '../store/product-process/product-data-selectors';
-import { fetchReviewAction, fetchSimilarCamerasAction } from '../store/api-actions';
+import { fetchReviewAction, fetchSimilarCamerasAction, fetchCameraByIdAction } from '../store/api-actions';
 import { getAllCameras } from '../store/catalog-process/catalog-process-selectors';
 import { store } from '../store';
 
@@ -23,7 +23,7 @@ function ProductPage(): JSX.Element {
 
   useEffect(() => {
     if(selectedCamera !== null) {
-      //store.dispatch(fetchCameraByIdAction(selectedCamera.id));
+      store.dispatch(fetchCameraByIdAction(selectedCamera.id));
       store.dispatch(fetchSimilarCamerasAction(selectedCamera.id));
       store.dispatch(fetchReviewAction(selectedCamera.id));
     }
@@ -32,7 +32,7 @@ function ProductPage(): JSX.Element {
   const isDataLoading = useAppSelector(getProductLoadingStatus);
 
   if (selectedCamera === null) {
-    return (<NotFoundPage/>);
+    return (<NotFoundPage />);
   }
 
   return (

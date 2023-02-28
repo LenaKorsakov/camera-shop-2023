@@ -14,13 +14,16 @@ export type CatalogData = {
 
 export type ProductData = {
   camera: Camera;
-  reviews: ReviewsRaw;
   similarCameras: Cameras;
   isLoading: boolean;
-  isSuccess: boolean;
-  isSending: boolean;
 }
 
 export type BasketData = {
   inBasket: boolean;
+}
+
+export type ReviewData = {
+  reviews: ReviewsRaw;
+  isSuccess: boolean;
+  isSending: boolean;
 }

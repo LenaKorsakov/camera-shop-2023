@@ -5,9 +5,9 @@ import SuccessModal from './success-modal';
 
 import { useAppSelector } from '../../hooks';
 import useOnClickOutside from '../../hooks/use-on-click-outside';
-import { getSuccessStatus } from '../../store/product-process/product-data-selectors';
 import { useDisableBackground } from '../../hooks/use-disable-background';
 import { useKeydownEscClose } from '../../hooks/use-keydown-esc-close';
+import { getSuccessStatus } from '../../store/review-process/review-data-selectors';
 
 type ReviewModalProps = {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;

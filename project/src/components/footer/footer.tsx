@@ -1,8 +1,9 @@
-import FooterLogo from './footer-logo';
 import FooterItem from './footer-item';
 import SocialItem from './social-item';
+import Logo from '../logo/logo';
 
 import { FOOTER_ITEMS, SOCIAL_ITEMS } from '../../const/nav-items-titles';
+import { ComponentName } from '../../const/component-name';
 
 function Footer(): JSX.Element {
 
@@ -10,7 +11,7 @@ function Footer(): JSX.Element {
     <footer className="footer">
       <div className="container">
         <div className="footer__info">
-          <FooterLogo/>
+          <Logo currentComponent={ComponentName.Footer}/>
           <p className="footer__description">
       Интернет-магазин фото- и видеотехники
           </p>

@@ -1,6 +1,8 @@
 import { useNavigate } from 'react-router-dom';
+
 import { AppRoute } from '../../const/app-route';
-import { TabType } from '../../const/tabs-buttons';
+import { ComponentName } from '../../const/component-name';
+import { TABS_TYPE_DEFAULT } from '../../const/tabs-buttons';
 
 type SuccessModalProps = {
   cameraId: number;
@@ -9,8 +11,12 @@ type SuccessModalProps = {
 
 function SuccessModal ({cameraId, onButtonClick}: SuccessModalProps): JSX.Element {
   const navigate = useNavigate();
+
   const handleButtonClick = () => {
-    navigate(`${AppRoute.Product}/${cameraId}/${TabType.Features as string}`);
+    navigate({
+      pathname: `${AppRoute.Product}/${cameraId}`,
+      search: `?${ComponentName.Tab}=${TABS_TYPE_DEFAULT}`,
+    });
 
     onButtonClick();
   };

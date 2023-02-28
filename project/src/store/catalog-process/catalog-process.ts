@@ -1,8 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
+
+import { fetchAllCameraAction, fetchPromoAction } from '../api-actions';
+
+import { NameSpace } from '../../const/name-space';
+
 import { CatalogData } from '../../@types/store-types';
 import { Promo } from '../../@types/camera-types';
-import { NameSpace } from '../../const/name-space';
-import { fetchAllCameraAction, fetchPromoAction } from '../api-actions';
 
 const initialState: CatalogData = {
   cameras: [],

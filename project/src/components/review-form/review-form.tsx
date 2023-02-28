@@ -8,12 +8,12 @@ import ReviewFormInput from './review-form-input';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchReviewAction, sendReviewAction } from '../../store/api-actions';
 import { displayError } from '../../store/actions';
+import { getReviewSendingStatus } from '../../store/review-process/review-data-selectors';
 
 import { REVIEW_INPUTS } from '../../const/review-inputs';
 import { WarningMessage } from '../../const/warning-message';
 
 import { ReviewPost } from '../../@types/review-types';
-import { getReviewLoadingStatus } from '../../store/product-process/product-data-selectors';
 
 type ReviewFormProps = {
   cameraId: number;
@@ -79,7 +79,7 @@ function ReviewForm ({cameraId}: ReviewFormProps): JSX.Element {
       () => dispatch(displayError(WarningMessage.SendingError)));
   };
 
-  const isReviewSending = useAppSelector(getReviewLoadingStatus);
+  const isReviewSending = useAppSelector(getReviewSendingStatus);
 
   return(
     <>

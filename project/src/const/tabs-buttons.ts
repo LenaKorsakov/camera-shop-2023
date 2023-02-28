@@ -23,3 +23,5 @@ export enum FeaturesTitles {
   Type = 'Тип камеры',
   Level = 'Уровень'
 }
+
+export const TABS_TYPE_DEFAULT = TabType.Features;

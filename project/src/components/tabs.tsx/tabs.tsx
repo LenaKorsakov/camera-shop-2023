@@ -6,6 +6,7 @@ import TabFeatures from './tab-features';
 
 import { TabType, TUBS_BUTTONS } from '../../const/tabs-buttons';
 import { AppRoute } from '../../const/app-route';
+import { ComponentName } from '../../const/component-name';
 
 import { Camera } from '../../@types/camera-types';
 
@@ -30,7 +31,7 @@ function Tabs({camera}: TabsProps): JSX.Element {
 
     navigate({
       pathname: `${AppRoute.Product}/${id}`,
-      search: `?tab=${event.currentTarget.dataset.tab as string}`,
+      search: `?${ComponentName.Tab}=${event.currentTarget.dataset.tab as string}`,
     });
   };
 

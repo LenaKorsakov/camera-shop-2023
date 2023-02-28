@@ -1,5 +1,7 @@
-import FooterNavItem from './footer-nav-item';
+import NavItem from '../nav-item/nav-item';
+
 import { FooterColumn } from '../../const/nav-items-titles';
+import { ComponentName } from '../../const/component-name';
 
 type FooterItemProps = {
 navItem: FooterColumn;
@@ -13,9 +15,10 @@ function FooterItem({navItem}: FooterItemProps): JSX.Element {
       <p className="footer__title">{name}</p>
       <ul className="footer__list">
         {items.map(({title, route}) => (
-          <FooterNavItem
+          <NavItem
             title={title}
             route={route}
+            currentComponent={ComponentName.Footer}
             key={title}
           />
         ))}
