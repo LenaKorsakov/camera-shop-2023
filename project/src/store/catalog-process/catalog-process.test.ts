@@ -1,5 +1,5 @@
 import { fetchAllCameraAction, fetchPromoAction } from '../api-actions/api-actions';
-import { catalogData, initialState } from './catalog-process';
+import { catalogData, initialStateCatalog } from './catalog-process';
 import { fakeCameras, fakePromo, UNKNOWN_ACTION } from '../../utiles/mock';
 import { CatalogData } from '../../@types/store-types';
 
@@ -7,7 +7,7 @@ describe('Reducer: catalogData', () => {
   let state: CatalogData;
 
   beforeEach(() => {
-    state = initialState;
+    state = initialStateCatalog;
   });
   it('without additional parameters should return initial state', () => {
     expect(catalogData.reducer(undefined, UNKNOWN_ACTION))

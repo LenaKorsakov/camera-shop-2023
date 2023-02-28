@@ -11,5 +11,6 @@ export const Action = {
   SendCoupon: 'order/sendCoupon',
   SendOrder: 'order/sendOrder',
 
-  DisplayError: 'app/displayError'
+  DisplayError: 'app/displayError',
+  RedirectToRoute: 'app/redirectToRoute)'
 } as const;

@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 import BasketPage from '../../pages/basket-page';
 import MainPage from '../../pages/main-page';
@@ -9,35 +9,33 @@ import { AppRoute } from '../../const/app-route';
 
 function App(): JSX.Element {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path={AppRoute.Main}
-          element={<MainPage/>}
-        >
-        </Route>
-        <Route
-          path={`${AppRoute.Catalog}:pageNum`}
-          element={<MainPage/>}
-        >
-        </Route>
-        <Route
-          path={`${AppRoute.Product}/:id`}
-          element={<ProductPage/>}
-        >
-        </Route>
-        <Route
-          path={AppRoute.Basket}
-          element={<BasketPage/>}
-        >
-        </Route>
-        <Route
-          path={AppRoute.NotFound}
-          element={<NotFoundPage/>}
-        >
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route
+        path={AppRoute.Main}
+        element={<MainPage/>}
+      >
+      </Route>
+      <Route
+        path={`${AppRoute.Catalog}:pageNum`}
+        element={<MainPage/>}
+      >
+      </Route>
+      <Route
+        path={`${AppRoute.Product}/:id`}
+        element={<ProductPage/>}
+      >
+      </Route>
+      <Route
+        path={AppRoute.Basket}
+        element={<BasketPage/>}
+      >
+      </Route>
+      <Route
+        path={AppRoute.NotFound}
+        element={<NotFoundPage/>}
+      >
+      </Route>
+    </Routes>
   );
 }
 

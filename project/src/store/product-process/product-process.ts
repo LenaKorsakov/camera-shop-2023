@@ -7,7 +7,7 @@ import { NameSpace } from '../../const/name-space';
 import { ProductData } from '../../@types/store-types';
 import { Camera } from '../../@types/camera-types';
 
-export const initialState: ProductData = {
+export const initialStateProduct: ProductData = {
   camera: {} as Camera,
   similarCameras: [],
   isLoading: false,
@@ -15,7 +15,7 @@ export const initialState: ProductData = {
 
 export const productData = createSlice({
   name: NameSpace.ProductData,
-  initialState,
+  initialState: initialStateProduct,
   reducers: {},
   extraReducers(builder) {
     builder

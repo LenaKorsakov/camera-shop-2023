@@ -1,13 +1,13 @@
 import { ProductData } from '../../@types/store-types';
 import { fakeCamera, fakeCameras, UNKNOWN_ACTION } from '../../utiles/mock';
 import { fetchCameraByIdAction, fetchSimilarCamerasAction } from '../api-actions/api-actions';
-import { initialState, productData } from './product-process';
+import { initialStateProduct, productData } from './product-process';
 
 describe('Reducer: productData', () => {
   let state: ProductData;
 
   beforeEach(() => {
-    state = initialState;
+    state = initialStateProduct;
   });
   it('without additional parameters should return initial state', () => {
     expect(productData.reducer(undefined, UNKNOWN_ACTION))

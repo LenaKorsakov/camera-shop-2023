@@ -1,13 +1,13 @@
 import { fetchReviewAction, sendReviewAction } from '../api-actions/api-actions';
 import { fakeReviews, UNKNOWN_ACTION } from '../../utiles/mock';
 import { ReviewData } from '../../@types/store-types';
-import { changeSuccessStatus, initialState, reviewData } from './review-process';
+import { changeSuccessStatus, initialStateReview, reviewData } from './review-process';
 
 describe('Reducer: reviewData', () => {
   let state: ReviewData;
 
   beforeEach(() => {
-    state = initialState;
+    state = initialStateReview;
   });
   it('without additional parameters should return initial state', () => {
     expect(reviewData.reducer(undefined, UNKNOWN_ACTION))

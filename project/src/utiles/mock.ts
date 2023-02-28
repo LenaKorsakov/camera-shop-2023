@@ -8,6 +8,11 @@ import { createAPI } from '../services/api';
 import { State } from '../@types/store-types';
 import { Action, ThunkDispatch } from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
+import { NameSpace } from '../const/name-space';
+import { initialStateCatalog } from '../store/catalog-process/catalog-process';
+import { initialStateProduct } from '../store/product-process/product-process';
+import { initialStateReview } from '../store/review-process/review-process';
+import { initialStateBasket } from '../store/basket-process/basket-process';
 
 const makeFakeCamera = (): Camera => ({
   id: datatype.number(),
@@ -69,7 +74,7 @@ export const api = createAPI();
 export const mockApi = new MockAdapter(api);
 export const middlewares = [thunk.withExtraArgument(api)];
 
-export const mockStore = configureMockStore<
+export const getMockStore = configureMockStore<
 State,
 Action<string>,
 ThunkDispatch<State, typeof api, Action>
@@ -78,3 +83,13 @@ ThunkDispatch<State, typeof api, Action>
 
 export const fakeId = 5;
 export const UNKNOWN_ACTION = {type: 'UNKNOWN_ACTION'};
+
+const makeMockState = () => ({
+  [NameSpace.CatalogData]: {...initialStateCatalog},
+  [NameSpace.ProductData]: {...initialStateProduct},
+  [NameSpace.ReviewData]: {...initialStateReview},
+  [NameSpace.Order]: {...initialStateBasket},
+});
+
+const mockState = makeMockState();
+export const mockStore = getMockStore(mockState);

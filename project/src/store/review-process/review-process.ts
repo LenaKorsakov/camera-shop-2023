@@ -6,7 +6,7 @@ import { NameSpace } from '../../const/name-space';
 
 import { ReviewData } from '../../@types/store-types';
 
-export const initialState: ReviewData = {
+export const initialStateReview: ReviewData = {
   reviews: [],
   isSuccess: false,
   isSending: false,
@@ -15,7 +15,7 @@ export const initialState: ReviewData = {
 
 export const reviewData = createSlice({
   name: NameSpace.ProductData,
-  initialState,
+  initialState: initialStateReview,
   reducers: {
     changeSuccessStatus: (state, action: PayloadAction<boolean>) => {
       state.isSuccess = action.payload;
