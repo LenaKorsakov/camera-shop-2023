@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { fetchCameraByIdAction, fetchSimilarCamerasAction } from '../api-actions';
+import { fetchCameraByIdAction, fetchSimilarCamerasAction } from '../api-actions/api-actions';
 
 import { NameSpace } from '../../const/name-space';
 

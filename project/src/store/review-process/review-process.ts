@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction} from '@reduxjs/toolkit';
 
-import { fetchReviewAction, sendReviewAction } from '../api-actions';
+import { fetchReviewAction, sendReviewAction } from '../api-actions/api-actions';
 
 import { NameSpace } from '../../const/name-space';
 

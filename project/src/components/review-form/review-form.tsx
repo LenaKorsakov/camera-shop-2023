@@ -6,7 +6,7 @@ import ReviewFormTextArea from './review-form-textarea';
 import ReviewFormInput from './review-form-input';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchReviewAction, sendReviewAction } from '../../store/api-actions';
+import { fetchReviewAction, sendReviewAction } from '../../store/api-actions/api-actions';
 import { displayError } from '../../store/actions';
 import { getReviewSendingStatus } from '../../store/review-process/review-data-selectors';
 

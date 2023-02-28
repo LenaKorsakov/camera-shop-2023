@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import App from './components/app/app';
 
 import { store } from './store';
-import { fetchAllCameraAction, fetchPromoAction } from './store/api-actions';
+import { fetchAllCameraAction, fetchPromoAction } from './store/api-actions/api-actions';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,

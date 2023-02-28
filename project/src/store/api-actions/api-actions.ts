@@ -1,12 +1,12 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { Camera, Cameras, Promo } from '../@types/camera-types';
-import { AppDispatch, State } from '../@types/store-types';
+import { Camera, Cameras, Promo } from '../../@types/camera-types';
+import { AppDispatch, State } from '../../@types/store-types';
 
-import { Action } from '../const/action';
-import { ApiRoute } from '../const/api-route';
-import { ReviewPost, ReviewsRaw } from '../@types/review-types';
+import { Action } from '../../const/action';
+import { ApiRoute } from '../../const/api-route';
+import { ReviewPost, ReviewsRaw } from '../../@types/review-types';
 
 export const fetchAllCameraAction = createAsyncThunk<
 Cameras,
