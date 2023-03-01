@@ -14,7 +14,7 @@ import { initialStateProduct } from '../store/product-process/product-process';
 import { initialStateReview } from '../store/review-process/review-process';
 import { initialStateBasket } from '../store/basket-process/basket-process';
 
-const makeFakeCamera = (): Camera => ({
+export const makeFakeCamera = (): Camera => ({
   id: datatype.number(),
   name: commerce.productName(),
   vendorCode: datatype.string(),
@@ -30,8 +30,8 @@ const makeFakeCamera = (): Camera => ({
   previewImgWebp2x: image.imageUrl(),
   reviewCount: datatype.number(),
 });
-export const fakeCamera = makeFakeCamera();
 export const fakeCameras = Array.from({length: 20}, makeFakeCamera);
+export const fakeCamera = fakeCameras[0];
 
 export const makeFakeReview = (): ReviewRaw => ({
   id: datatype.string(),
@@ -85,8 +85,14 @@ export const fakeId = 5;
 export const UNKNOWN_ACTION = {type: 'UNKNOWN_ACTION'};
 
 const makeMockState = () => ({
-  [NameSpace.CatalogData]: {...initialStateCatalog},
-  [NameSpace.ProductData]: {...initialStateProduct},
+  [NameSpace.CatalogData]: {
+    ...initialStateCatalog,
+    cameras: fakeCameras
+  },
+  [NameSpace.ProductData]: {
+    ...initialStateProduct,
+    camera: fakeCamera
+  },
   [NameSpace.ReviewData]: {...initialStateReview},
   [NameSpace.Order]: {...initialStateBasket},
 });
