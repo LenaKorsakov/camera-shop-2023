@@ -30,11 +30,11 @@ export const NAV_ITEMS: NavigationItems = [
   {title: 'О компании', route: AppRoute.NotFound}
 ] ;
 
-export const SOCIAL_ITEMS = [
-  {title: 'Переход на страницу вконтакте', icon: '#icon-vk', link: AppRoute.NotFound},
-  {title: 'Переход на страницу pinterest', icon: '#icon-pinterest', link: AppRoute.NotFound},
-  {title: 'Переход на страницу reddit', icon: '#icon-reddit', link: AppRoute.NotFound}
-] ;
+export const SocialItems = {
+  Vk: 'vk',
+  Pinterest: 'pinterest',
+  Reddit: 'reddit'
+} as const;
 
 export const FOOTER_ITEMS: FooterColumn[] = [
   {name: 'Навигация', items: NAV_ITEMS},

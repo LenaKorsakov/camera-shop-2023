@@ -13,6 +13,7 @@ function Logo({currentComponent}: LogoProps): JSX.Element{
       to={AppRoute.Main}
       aria-label="Переход на главную"
       title="На главную"
+      data-testid="link"
     >
       <svg width={100} height={36} aria-hidden="true">
         <use xlinkHref={currentComponent === ComponentName.Header ? '#icon-logo' : '#icon-logo-mono' } />

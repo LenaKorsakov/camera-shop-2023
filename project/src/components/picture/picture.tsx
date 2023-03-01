@@ -10,8 +10,6 @@ type PictureProps = {
 }
 
 function Picture({ name, previewImg, previewImgWebp, previewImg2x, previewImgWebp2x, size }: PictureProps): JSX.Element {
-  //https://tpverstak.ru/cropping-images-css-svg/
-  //тег picture не используем
   return (
     <picture>
       <source

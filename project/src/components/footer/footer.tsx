@@ -1,8 +1,8 @@
 import FooterItem from './footer-item';
-import SocialItem from './social-item';
+import SocialList from './social-list';
 import Logo from '../logo/logo';
 
-import { FOOTER_ITEMS, SOCIAL_ITEMS } from '../../const/nav-items-titles';
+import { FOOTER_ITEMS } from '../../const/nav-items-titles';
 import { ComponentName } from '../../const/component-name';
 
 function Footer(): JSX.Element {
@@ -15,16 +15,7 @@ function Footer(): JSX.Element {
           <p className="footer__description">
       Интернет-магазин фото- и видеотехники
           </p>
-          <ul className="social">
-            {SOCIAL_ITEMS.map(({title, icon, link}) => (
-              <SocialItem
-                title={title}
-                icon={icon}
-                link={link}
-                key={`${title}-${icon}`}
-              />
-            ))}
-          </ul>
+          <SocialList/>
         </div>
         <ul className="footer__nav">
           {FOOTER_ITEMS.map((item, index) => {

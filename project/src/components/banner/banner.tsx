@@ -10,7 +10,7 @@ import { PictureSize } from '../../const/picture-size';
 import { ComponentName } from '../../const/component-name';
 import { DEFAULT_TABS_TYPE } from '../../const/tabs-buttons';
 
-function Bunner(): JSX.Element {
+function Banner(): JSX.Element {
 
   const promoCamera = useAppSelector(getPromo);
   const { name, previewImg, previewImgWebp, previewImg2x, previewImgWebp2x, id } = promoCamera;
@@ -34,6 +34,7 @@ function Bunner(): JSX.Element {
           Профессиональная камера от&nbsp;известного производителя
         </span>
         <Link
+          data-testid = "link"
           className="btn"
           to={`${AppRoute.Product}/${id}?${ComponentName.Tab}=${DEFAULT_TABS_TYPE}`}
         >
@@ -44,4 +45,4 @@ function Bunner(): JSX.Element {
   );
 }
 
-export default Bunner;
+export default Banner;

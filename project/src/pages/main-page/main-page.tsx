@@ -1,4 +1,4 @@
-import Bunner from '../../components/banner/banner';
+import Banner from '../../components/banner/banner';
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
@@ -18,7 +18,7 @@ function MainPage(): JSX.Element {
       <>
         <Header/>
         <main>
-          <Bunner/>
+          <Banner/>
           <div className="page-content">
             <Breadcrumbs
               isCatalogActive
