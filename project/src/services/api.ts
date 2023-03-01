@@ -2,6 +2,7 @@ import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 import { toast } from 'react-toastify';
 
 import { StatusCodes } from '../const/status-codes';
+import { WarningMessage } from '../const/warning-message';
 
 const BACKEND_URL = 'https://camera-shop.accelerator.pages.academy/';
 const REQUEST_TIMEOUT = 5000;
@@ -21,7 +22,7 @@ export const createAPI = (): AxiosInstance => {
     (response) => response,
     (error: AxiosError<{error: string}>) => {
       if(error.response && shouldDisplayError(error.response)) {
-        toast.warn(`${error.response.data.error}`);
+        toast.warn(WarningMessage.DataLoadingWarning);
       }
 
       throw error;
