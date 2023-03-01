@@ -3,7 +3,7 @@ import { memo, useState } from 'react';
 import ButtonToTop from '../button-to-top/button-to-top';
 import ReviewModal from '../review-modal/review-modal';
 import ReviewsList from './review-list';
-import LoadingPage from '../../pages/loading-page';
+import LoadingPage from '../../pages/loading-page/loading-page';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeSuccessStatus } from '../../store/review-process/review-process';

@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { AppRoute } from '../../const/app-route';
 import { ComponentName } from '../../const/component-name';
-import { TABS_TYPE_DEFAULT } from '../../const/tabs-buttons';
+import { DEFAULT_TABS_TYPE } from '../../const/tabs-buttons';
 
 type SuccessModalProps = {
   cameraId: number;
@@ -15,7 +15,7 @@ function SuccessModal ({cameraId, onButtonClick}: SuccessModalProps): JSX.Elemen
   const handleButtonClick = () => {
     navigate({
       pathname: `${AppRoute.Product}/${cameraId}`,
-      search: `?${ComponentName.Tab}=${TABS_TYPE_DEFAULT}`,
+      search: `?${ComponentName.Tab}=${DEFAULT_TABS_TYPE}`,
     });
 
     onButtonClick();

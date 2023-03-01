@@ -8,7 +8,7 @@ import { getPromo } from '../../store/catalog-process/catalog-process-selectors'
 import { AppRoute } from '../../const/app-route';
 import { PictureSize } from '../../const/picture-size';
 import { ComponentName } from '../../const/component-name';
-import { TABS_TYPE_DEFAULT } from '../../const/tabs-buttons';
+import { DEFAULT_TABS_TYPE } from '../../const/tabs-buttons';
 
 function Bunner(): JSX.Element {
 
@@ -35,7 +35,7 @@ function Bunner(): JSX.Element {
         </span>
         <Link
           className="btn"
-          to={`${AppRoute.Product}/${id}?${ComponentName.Tab}=${TABS_TYPE_DEFAULT}`}
+          to={`${AppRoute.Product}/${id}?${ComponentName.Tab}=${DEFAULT_TABS_TYPE}`}
         >
           Подробнее
         </Link>

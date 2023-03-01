@@ -1,9 +1,9 @@
 import { Route, Routes } from 'react-router-dom';
 
-import BasketPage from '../../pages/basket-page';
-import MainPage from '../../pages/main-page';
-import NotFoundPage from '../../pages/not-found-page';
-import ProductPage from '../../pages/product-page';
+import BasketPage from '../../pages/basket-page/basket-page';
+import MainPage from '../../pages/main-page/main-page';
+import NotFoundPage from '../../pages/not-found-page/not-found-page';
+import ProductPage from '../../pages/product-page/product-page';
 
 import { AppRoute } from '../../const/app-route';
 

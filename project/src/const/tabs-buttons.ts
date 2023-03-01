@@ -24,4 +24,4 @@ export enum FeaturesTitles {
   Level = 'Уровень'
 }
 
-export const TABS_TYPE_DEFAULT = TabType.Features;
+export const DEFAULT_TABS_TYPE = TabType.Features;

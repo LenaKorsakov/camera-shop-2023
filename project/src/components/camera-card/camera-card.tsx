@@ -9,7 +9,7 @@ import { AppRoute } from '../../const/app-route';
 import { capitalizeFirstLetter, formatPrice } from '../../utiles/format';
 import { PictureSize } from '../../const/picture-size';
 import { ComponentName } from '../../const/component-name';
-import { TABS_TYPE_DEFAULT } from '../../const/tabs-buttons';
+import { DEFAULT_TABS_TYPE } from '../../const/tabs-buttons';
 
 import { Camera } from '../../@types/camera-types';
 
@@ -69,7 +69,7 @@ function CameraCard({isActive, camera}: CameraCardProps): JSX.Element {
 
         <Link
           className="btn btn--transparent"
-          to={`${AppRoute.Product}/${id}?${ComponentName.Tab}=${TABS_TYPE_DEFAULT}`}
+          to={`${AppRoute.Product}/${id}?${ComponentName.Tab}=${DEFAULT_TABS_TYPE}`}
         >
                       Подробнее
         </Link>

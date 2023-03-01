@@ -1,17 +1,17 @@
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 
-import Header from '../components/header/header';
-import ProductContent from '../components/product-content/product-content';
-import Footer from '../components/footer/footer';
-import NotFoundPage from './not-found-page';
-import LoadingPage from './loading-page';
+import Header from '../../components/header/header';
+import ProductContent from '../../components/product-content/product-content';
+import Footer from '../../components/footer/footer';
+import NotFoundPage from '../not-found-page/not-found-page';
+import LoadingPage from '../loading-page/loading-page';
 
-import { useAppSelector } from '../hooks';
-import { getProductLoadingStatus } from '../store/product-process/product-data-selectors';
-import { fetchReviewAction, fetchSimilarCamerasAction, fetchCameraByIdAction } from '../store/api-actions/api-actions';
-import { getAllCameras } from '../store/catalog-process/catalog-process-selectors';
-import { store } from '../store';
+import { useAppSelector } from '../../hooks';
+import { getProductLoadingStatus } from '../../store/product-process/product-data-selectors';
+import { fetchReviewAction, fetchSimilarCamerasAction, fetchCameraByIdAction } from '../../store/api-actions/api-actions';
+import { getAllCameras } from '../../store/catalog-process/catalog-process-selectors';
+import { store } from '../../store';
 
 function ProductPage(): JSX.Element {
   const cameras = useAppSelector(getAllCameras);

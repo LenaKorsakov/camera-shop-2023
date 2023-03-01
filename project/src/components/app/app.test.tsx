@@ -6,7 +6,7 @@ import App from './app';
 import { fakeCamera, mockStore } from '../../utiles/mock';
 import { AppRoute } from '../../const/app-route';
 import { ComponentName } from '../../const/component-name';
-import { TABS_TYPE_DEFAULT, TabType } from '../../const/tabs-buttons';
+import { DEFAULT_TABS_TYPE, TabType } from '../../const/tabs-buttons';
 
 const history = createMemoryHistory();
 
@@ -21,8 +21,6 @@ const fakeApp = (
 );
 
 describe('Application Routing', () => {
-  window.scrollTo = jest.fn();
-
   afterAll(() => jest.clearAllMocks());
 
   it('should render "Catalog" when user navigate to "/"', () => {
@@ -47,7 +45,7 @@ describe('Application Routing', () => {
   });
 
   it('should render features when user navigate to product and features tab', () => {
-    history.push(`${AppRoute.Product}/${fakeCameraID}?${ComponentName.Tab}=${TABS_TYPE_DEFAULT}`);
+    history.push(`${AppRoute.Product}/${fakeCameraID}?${ComponentName.Tab}=${DEFAULT_TABS_TYPE}`);
     render(fakeApp);
 
     expect(screen.getByText(/Артикул/i)).toBeInTheDocument();
@@ -57,7 +55,7 @@ describe('Application Routing', () => {
     history.push(AppRoute.Basket);
     render(fakeApp);
 
-    expect(screen.getByText(/Корзина/i)).toBeInTheDocument();
+    expect(screen.getByText(/К оплате:/i)).toBeInTheDocument();
   });
 
   it('should render "NotFoundPage" when user navigate to non-existent route', () => {

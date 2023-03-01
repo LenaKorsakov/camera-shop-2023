@@ -3,7 +3,7 @@ import MockAdapter from 'axios-mock-adapter';
 import {configureMockStore} from '@jedmao/redux-mock-store';
 
 import { Camera, Promo } from '../@types/camera-types';
-import { ReviewPost, ReviewRaw } from '../@types/review-types';
+import { ReviewAdapt, ReviewPost, ReviewRaw } from '../@types/review-types';
 import { createAPI } from '../services/api';
 import { State } from '../@types/store-types';
 import { Action, ThunkDispatch } from '@reduxjs/toolkit';
@@ -43,10 +43,23 @@ export const makeFakeReview = (): ReviewRaw => ({
   cameraId: datatype.number(),
   createAt: datatype.string(),
 });
-
-export const fakeReview = makeFakeReview();
-
 export const fakeReviews = Array.from({length: 15}, makeFakeReview);
+export const fakeReview = fakeReviews[1];
+
+export const makeFakeReviewAdapt = (): ReviewAdapt => ({
+  id: datatype.string(),
+  userName: internet.userName(),
+  advantage: lorem.sentence(),
+  disadvantage: lorem.sentence(),
+  review: lorem.paragraph(),
+  rating: datatype.number({ min: 1, max: 5, precision: 0.01 }),
+  cameraId: datatype.number(),
+  createAt: datatype.datetime(),
+});
+
+export const fakeReviewsAdapt = Array.from({length: 15}, makeFakeReviewAdapt);
+export const fakeReviewAdapt = fakeReviewsAdapt[1];
+
 
 export const makeFakePromo = (): Promo => ({
   id: datatype.number(),
@@ -84,7 +97,7 @@ ThunkDispatch<State, typeof api, Action>
 export const fakeId = 5;
 export const UNKNOWN_ACTION = {type: 'UNKNOWN_ACTION'};
 
-const makeMockState = () => ({
+export const makeMockState = () => ({
   [NameSpace.CatalogData]: {
     ...initialStateCatalog,
     cameras: fakeCameras
@@ -93,9 +106,11 @@ const makeMockState = () => ({
     ...initialStateProduct,
     camera: fakeCamera
   },
-  [NameSpace.ReviewData]: {...initialStateReview},
+  [NameSpace.ReviewData]: {
+    ...initialStateReview,
+  },
   [NameSpace.Order]: {...initialStateBasket},
 });
 
-const mockState = makeMockState();
+export const mockState = makeMockState();
 export const mockStore = getMockStore(mockState);

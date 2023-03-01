@@ -1,7 +1,7 @@
-import Header from '../components/header/header';
-import Footer from '../components/footer/footer';
-import Breadcrumbs from '../components/breadcrumbs/breadcrumbs';
-import BasketItem from '../components/basket-item/basket-item';
+import Header from '../../components/header/header';
+import Footer from '../../components/footer/footer';
+import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
+import BasketItem from '../../components/basket-item/basket-item';
 
 function BasketPage(): JSX.Element {
   return (
