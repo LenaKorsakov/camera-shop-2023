@@ -1,6 +1,6 @@
 import { ChangeEvent } from 'react';
 import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
-import { InputErrorText, InputName, InputPlaceholder, InputTitle, REVIEW_MIN_LENGTH } from '../../const/review-inputs';
+import { InputErrorText, InputName, InputPlaceholder, InputTitle, REVIEW_MIN_LENGTH } from '../../../const/review-inputs';
 
 type ReiewTextareaProps = {
     onChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
@@ -12,7 +12,7 @@ type ReiewTextareaProps = {
 function ReviewFormTextArea ({ onChange, register, errors, disabled }: ReiewTextareaProps): JSX.Element {
 
   return(
-    <div className={`custom-textarea form-review__item ${errors.review ? 'is-invalid' : ''}`}>
+    <div className={`custom-textarea form-review__item ${errors.review ? 'is-invalid' : ''}`} data-testid='wrapper'>
       <label htmlFor={InputName.Review}>
         <span className="custom-textarea__label">
           {InputTitle.Review}
@@ -21,6 +21,7 @@ function ReviewFormTextArea ({ onChange, register, errors, disabled }: ReiewText
           </svg>
         </span>
         <textarea
+          data-testid = 'review'
           id={InputName.Review}
           disabled={disabled}
           placeholder={InputPlaceholder.Review}

@@ -1,9 +1,9 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import RatingPicker from './rating-picker';
-import ReviewFormTextArea from './review-form-textarea';
-import ReviewFormInput from './review-form-input';
+import RatingPicker from './rating-picker/rating-picker';
+import ReviewFormTextArea from './review-form-textarea/review-form-textarea';
+import ReviewFormInput from './rating-form-input/review-form-input';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchReviewAction, sendReviewAction } from '../../store/api-actions/api-actions';
@@ -37,7 +37,6 @@ function ReviewForm ({cameraId}: ReviewFormProps): JSX.Element {
     formState: { errors, isValid },
     reset
   } = useForm({mode: 'onBlur'});
-
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -88,6 +87,7 @@ function ReviewForm ({cameraId}: ReviewFormProps): JSX.Element {
         <form
           method="post"
           onSubmit={handleFormSubmit}
+          data-testid="form"
         >
           <div className="form-review__rate" onChange={handleInputChange}>
             <RatingPicker

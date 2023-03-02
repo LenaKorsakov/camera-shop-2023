@@ -25,8 +25,8 @@ function NavItem({title, route, currentComponent}: NavItemProps): JSX.Element{
     : NavItemClass.FooterLink;
 
   return(
-    <li className={itemsClassName}>
-      <Link className={linksClassName} to={route}>
+    <li className={itemsClassName} data-testid="nav">
+      <Link className={linksClassName} to={route} data-testid="link">
         {title}
       </Link>
     </li>

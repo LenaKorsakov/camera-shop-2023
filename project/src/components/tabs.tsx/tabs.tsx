@@ -23,12 +23,6 @@ function Tabs({camera}: TabsProps): JSX.Element {
   const navigate = useNavigate();
 
   const handleButtonClick = (event: SyntheticEvent<HTMLButtonElement>) => {
-    // const param = {tab: event.currentTarget.dataset.tab};
-    // navigate({
-    //   pathname: `${AppRoute.Product}/${id}`,
-    //   search: `?${new URLSearchParams(param)}`,
-    // });
-
     navigate({
       pathname: `${AppRoute.Product}/${id}`,
       search: `?${ComponentName.Tab}=${event.currentTarget.dataset.tab as string}`,

@@ -12,22 +12,40 @@ export type FooterColumn = {
   items: NavigationItems;
 }
 
+export const ResourcesItemsTitles = {
+  Learning: 'Курсы операторов',
+  Blog: 'Блог',
+  Comunity: 'Сообщество',
+} as const;
+
 export const RESOURCES_ITEMS: NavigationItems = [
-  {title: 'Курсы операторов', route: AppRoute.NotFound},
-  {title: 'Блог', route: AppRoute.NotFound},
-  {title: 'Сообщество', route: AppRoute.NotFound}
+  {title: ResourcesItemsTitles.Learning, route: AppRoute.NotFound},
+  {title: ResourcesItemsTitles.Blog, route: AppRoute.NotFound},
+  {title: ResourcesItemsTitles.Comunity, route: AppRoute.NotFound}
 ] ;
+
+export const SupportItemsTitles = {
+  FAQ: 'FAQ',
+  Question: 'Задать вопрос',
+} as const;
 
 export const SUPPORT_ITEMS: NavigationItems = [
-  {title: 'FAQ', route: AppRoute.NotFound},
-  {title: 'Задать вопрос', route: AppRoute.NotFound}
+  {title: SupportItemsTitles.FAQ, route: AppRoute.NotFound},
+  {title: SupportItemsTitles.Question, route: AppRoute.NotFound}
 ] ;
 
+export const NavItemsTitles = {
+  Catalog: 'Каталог',
+  Garanty: 'Гарантии',
+  Delivery: 'Доставка',
+  About: 'O компании'
+} as const;
+
 export const NAV_ITEMS: NavigationItems = [
-  {title: 'Каталог', route: AppRoute.Main},
-  {title: 'Гарантии', route: AppRoute.NotFound},
-  {title: 'Доставка', route: AppRoute.NotFound},
-  {title: 'О компании', route: AppRoute.NotFound}
+  {title: NavItemsTitles.Catalog, route: AppRoute.Main},
+  {title: NavItemsTitles.Garanty, route: AppRoute.NotFound},
+  {title: NavItemsTitles.Delivery, route: AppRoute.NotFound},
+  {title: NavItemsTitles.About, route: AppRoute.NotFound}
 ] ;
 
 export const SocialItems = {

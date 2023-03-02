@@ -1,8 +1,8 @@
 import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
 import { Fragment } from 'react';
 
-import { RATING_TITLES } from '../../const/rating-titles';
-import { InputErrorText, InputTitle } from '../../const/review-inputs';
+import { RATING_TITLES } from '../../../const/rating-titles';
+import { InputErrorText, InputTitle } from '../../../const/review-inputs';
 
 
 type RatingPickerProps = {
@@ -15,7 +15,7 @@ type RatingPickerProps = {
 function RatingPicker ({ rate, register, errors, disabled }: RatingPickerProps): JSX.Element {
 
   return(
-    <fieldset className={`rate form-review__item ${errors.rating ? 'is-invalid' : ''}`}>
+    <fieldset className={`rate form-review__item ${errors.rating ? 'is-invalid' : ''}`} data-testid="fieldset">
       <legend className="rate__caption">
         {InputTitle.Rating}
         <svg width={9} height={9} aria-hidden="true">
@@ -35,6 +35,7 @@ function RatingPicker ({ rate, register, errors, disabled }: RatingPickerProps):
                 value={rating}
                 {...register('rating', { required: true})}
                 disabled={disabled}
+                data-testid="star"
               />
               <label
                 className="rate__label"

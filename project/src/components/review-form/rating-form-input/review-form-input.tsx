@@ -12,7 +12,7 @@ type ReviewFormInputProps = {
 function ReviewFormInput ({ name, title, placeholder, errorText, register, errors, disabled }: ReviewFormInputProps): JSX.Element {
 
   return(
-    <div className={`custom-input form-review__item ${errors[name] ? 'is-invalid' : ''}`}>
+    <div className={`custom-input form-review__item ${errors[name] ? 'is-invalid' : ''}`} data-testid='wrapper'>
       <label>
         <span className="custom-input__label">
           {title}
@@ -21,6 +21,7 @@ function ReviewFormInput ({ name, title, placeholder, errorText, register, error
           </svg>
         </span>
         <input
+          data-testid='text'
           type="text"
           placeholder={placeholder}
           autoComplete={'off'}
