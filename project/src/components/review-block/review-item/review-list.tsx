@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 
 import ReviewItem from './review-item';
 
-import { REVIEWS_PER_PAGE } from '../../const/const';
+import { REVIEWS_PER_PAGE } from '../../../const/const';
 
-import { ReviewsAdapt } from '../../@types/review-types';
+import { ReviewsAdapt } from '../../../@types/review-types';
 
 type ReviewListProps = {
   reviews: ReviewsAdapt;

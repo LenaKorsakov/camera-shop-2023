@@ -1,8 +1,8 @@
 import { memo, SyntheticEvent } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
-import TabDescription from './tab-description';
-import TabFeatures from './tab-features';
+import TabDescription from './tab-description/tab-description';
+import TabFeatures from './tab-features/tab-features';
 
 import { TabType, TUBS_BUTTONS } from '../../const/tabs-buttons';
 import { AppRoute } from '../../const/app-route';

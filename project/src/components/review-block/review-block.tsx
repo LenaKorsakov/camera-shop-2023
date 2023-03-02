@@ -2,7 +2,7 @@ import { memo, useState } from 'react';
 
 import ButtonToTop from '../button-to-top/button-to-top';
 import ReviewModal from '../review-modal/review-modal';
-import ReviewsList from './review-list';
+import ReviewsList from './review-item/review-list';
 import LoadingPage from '../../pages/loading-page/loading-page';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -28,7 +28,7 @@ function ReviewBlock({ cameraId }: ReviewBlockProps): JSX.Element {
 
   return (
     <>
-      <section className="review-block">
+      <section className="review-block" data-testid="reviewBlock">
         <div className="container">
 
           <div className="page-content__headed">

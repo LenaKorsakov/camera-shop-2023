@@ -1,7 +1,7 @@
 import { memo } from 'react';
 
-import { Camera } from '../../@types/camera-types';
-import { FeaturesTitles } from '../../const/tabs-buttons';
+import { Camera } from '../../../@types/camera-types';
+import { FeaturesTitles } from '../../../const/tabs-buttons';
 
 type TabFeaturesProps = {
   camera: Camera;

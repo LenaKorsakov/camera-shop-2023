@@ -104,7 +104,8 @@ export const makeMockState = () => ({
   },
   [NameSpace.ProductData]: {
     ...initialStateProduct,
-    camera: fakeCamera
+    camera: fakeCamera,
+    similarCameras: fakeCameras
   },
   [NameSpace.ReviewData]: {
     ...initialStateReview,
