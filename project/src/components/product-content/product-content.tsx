@@ -3,7 +3,7 @@ import { memo } from 'react';
 import Breadcrumbs from '../breadcrumbs/breadcrumbs';
 import CameraInfo from '../camera-info/camera-info';
 import ReviewBlock from '../review-block/review-block';
-import SimilarCamerasList from '../similar-cameras-list/similar-cameras-list';
+import SimilarCamerasList from '../similar-cameras-block/similar-cameras-block';
 
 import { getSimilarCameras } from '../../store/product-process/product-data-selectors';
 

@@ -41,6 +41,7 @@ function Slider({cameras}: SliderProps): JSX.Element {
   return (
     <div className="product-similar__slider-list">
       <button
+        data-testid="prev"
         className="slider-controls slider-controls--prev"
         type="button"
         aria-label="Предыдущий слайд"
@@ -62,6 +63,7 @@ function Slider({cameras}: SliderProps): JSX.Element {
       ))}
 
       <button
+        data-testid="next"
         className="slider-controls slider-controls--next"
         type="button"
         aria-label="Следующий слайд"

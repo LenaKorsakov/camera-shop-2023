@@ -8,7 +8,7 @@ type SimilarCameraListProps = {
   cameras: Cameras;
 }
 
-function SimilarCamerasList({cameras}: SimilarCameraListProps): JSX.Element {
+function SimilarCamerasBlock({cameras}: SimilarCameraListProps): JSX.Element {
   return (
     <div className="container">
       <h2 className="title title--h3">Похожие товары</h2>
@@ -21,4 +21,4 @@ function SimilarCamerasList({cameras}: SimilarCameraListProps): JSX.Element {
   );
 }
 
-export default memo(SimilarCamerasList);
+export default memo(SimilarCamerasBlock);
