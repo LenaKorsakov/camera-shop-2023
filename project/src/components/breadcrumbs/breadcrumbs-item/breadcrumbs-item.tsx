@@ -1,7 +1,7 @@
 import BreadcrumbsLink from './breadcrumbs-link';
 
-import { AppRoute } from '../../const/app-route';
-import { BreadcrumbsNames } from '../../const/breadcrumbs-names';
+import { AppRoute } from '../../../const/app-route';
+import { BreadcrumbsNames } from '../../../const/breadcrumbs-names';
 import BreadcrumbsActiveItem from './breadscrumbs-active-item';
 
 type BreadcrumbsItemProps = {

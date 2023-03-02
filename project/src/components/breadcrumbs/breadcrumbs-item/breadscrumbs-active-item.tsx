@@ -1,4 +1,4 @@
-import { BreadcrumbsNames } from '../../const/breadcrumbs-names';
+import { BreadcrumbsNames } from '../../../const/breadcrumbs-names';
 
 type BreadcrumbsActiveItemProps = {
   title: BreadcrumbsNames | string | undefined;

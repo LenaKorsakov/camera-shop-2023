@@ -1,10 +1,10 @@
 import FooterItem from './footer-item';
-import { FOOTER_ITEMS } from '../../const/nav-items-titles';
+import { FOOTER_ITEMS } from '../../../const/nav-items-titles';
 import { MemoryRouter } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
 import { Provider} from 'react-redux';
-import { mockStore } from '../../utiles/mock';
-import { NavItemsTitles } from '../../const/nav-items-titles';
+import { mockStore } from '../../../utiles/mock';
+import { NavItemsTitles } from '../../../const/nav-items-titles';
 
 
 describe('Component: Footer Item', () => {

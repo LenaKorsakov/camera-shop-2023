@@ -1,5 +1,4 @@
 import { STAR_MAX } from '../../const/const';
-import IconStar from '../icon-star/icon-star';
 
 type StarsRatingProps = {
   rating: number;
@@ -10,10 +9,9 @@ function StarsRating({ rating }: StarsRatingProps): JSX.Element {
 
   for(let i = 0; i < STAR_MAX; i++) {
     stars.push(
-      <IconStar
-        isFull={i < rating}
-        key={i}
-      />);
+      <svg width={17} height={16} aria-hidden="true" data-testid="star" key={i}>
+        <use xlinkHref={ i < rating ? '#icon-full-star' : '#icon-star'}/>
+      </svg>);
   }
 
   return <div>{stars}</div> ;

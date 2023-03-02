@@ -1,9 +1,9 @@
 import { memo } from 'react';
 import { AppRoute } from '../../const/app-route';
 import { BreadcrumbsNames } from '../../const/breadcrumbs-names';
-import BreadcrumbsItem from './breadcrumbs-item';
-import BreadcrumbsLink from './breadcrumbs-link';
-import BreadcrumbsActiveItem from './breadscrumbs-active-item';
+import BreadcrumbsItem from './breadcrumbs-item/breadcrumbs-item';
+import BreadcrumbsLink from './breadcrumbs-item/breadcrumbs-link';
+import BreadcrumbsActiveItem from './breadcrumbs-item/breadscrumbs-active-item';
 
 type BreadcrumbsProps = {
   isCatalogActive: boolean;

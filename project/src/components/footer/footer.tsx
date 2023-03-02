@@ -1,5 +1,5 @@
-import FooterItem from './footer-item';
-import SocialList from './social-list';
+import FooterItem from './footer-item/footer-item';
+import SocialList from './footer-item/social-list';
 import Logo from '../logo/logo';
 
 import { FOOTER_ITEMS } from '../../const/nav-items-titles';

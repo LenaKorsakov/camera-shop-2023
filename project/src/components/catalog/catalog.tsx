@@ -5,7 +5,7 @@ import Filters from '../filters/filters';
 import Sort from '../sort/sort';
 import CameraCard from '../camera-card/camera-card';
 import PaginationItem from '../pagination-item/pagination-item';
-import PaginationButton from '../pagination-item/pagination-button';
+import PaginationButton from '../pagination-button/pagination-button';
 
 import usePagination from '../../hooks/use-pagination';
 

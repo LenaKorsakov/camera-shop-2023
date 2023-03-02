@@ -31,7 +31,7 @@ function CameraCard({isActive, camera}: CameraCardProps): JSX.Element {
 
   return (
     <div
-      className={`product-card ${isActive ? 'is-active' : ''}`}
+      className={`product-card ${isActive ? 'is-active' : ''}`} data-testid ="card"
     >
       <div className="product-card__img">
         <Picture
