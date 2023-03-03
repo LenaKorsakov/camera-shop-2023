@@ -4,11 +4,13 @@ import ReactDOM from 'react-dom/client';
 import { ToastContainer } from 'react-toastify';
 import { Provider } from 'react-redux';
 
+import './style.css';
+
 import App from './components/app/app';
 
 import { store } from './store';
 import { fetchAllCameraAction, fetchPromoAction } from './store/api-actions/api-actions';
-import HistoryRoute from './components/history-route/history-route';
+import HistoryRouter from './components/history-route/history-router';
 import browserHistory from './browser-history';
 
 const root = ReactDOM.createRoot(
@@ -21,10 +23,10 @@ store.dispatch(fetchPromoAction());
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <HistoryRoute history={browserHistory}>
+      <HistoryRouter history={browserHistory} basename={process.env.PUBLIC_URL}>
         <ToastContainer/>
         <App />
-      </HistoryRoute>
+      </HistoryRouter>
     </Provider>
   </React.StrictMode>,
 );

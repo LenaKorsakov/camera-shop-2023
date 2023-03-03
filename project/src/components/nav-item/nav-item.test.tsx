@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
 import { Provider} from 'react-redux';
 
-import HistoryRoute from '../history-route/history-route';
+import HistoryRouter from '../history-route/history-router';
 import NavItem from './nav-item';
 
 import { mockStore } from '../../utiles/mock';
@@ -65,7 +65,7 @@ describe('Component: Nav Item', () => {
     history.push('/nav');
 
     render(
-      <HistoryRoute history={history}>
+      <HistoryRouter history={history}>
         <Routes>
           <Route
             path='/nav'
@@ -82,7 +82,7 @@ describe('Component: Nav Item', () => {
             element={<h1>Main screen!</h1>}
           />
         </Routes>
-      </HistoryRoute>
+      </HistoryRouter>
     );
 
     await userEvent.click(screen.getByTestId('link'));

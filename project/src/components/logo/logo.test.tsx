@@ -5,7 +5,7 @@ import { render, screen } from '@testing-library/react';
 import { Provider} from 'react-redux';
 
 import Logo from './logo';
-import HistoryRoute from '../history-route/history-route';
+import HistoryRouter from '../history-route/history-router';
 
 import { mockStore } from '../../utiles/mock';
 import { ComponentName } from '../../const/component-name';
@@ -48,7 +48,7 @@ describe('Component: Logo', () => {
     history.push('/logo');
 
     render(
-      <HistoryRoute history={history}>
+      <HistoryRouter history={history}>
         <Routes>
           <Route
             path='/logo'
@@ -59,7 +59,7 @@ describe('Component: Logo', () => {
             element={<h1>Main screen!</h1>}
           />
         </Routes>
-      </HistoryRoute>
+      </HistoryRouter>
     );
 
     await userEvent.click(screen.getByTestId('link'));

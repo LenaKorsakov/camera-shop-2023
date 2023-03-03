@@ -2,7 +2,7 @@ import { createMemoryHistory } from 'history';
 import {render, screen} from '@testing-library/react';
 import { Provider } from 'react-redux';
 
-import HistoryRoute from '../history-route/history-route';
+import HistoryRouter from '../history-route/history-router';
 import App from './app';
 
 import { fakeCamera, mockStore } from '../../utiles/mock';
@@ -16,9 +16,9 @@ const fakeCameraID = fakeCamera.id;
 
 const fakeApp = (
   <Provider store={mockStore}>
-    <HistoryRoute history={history}>
+    <HistoryRouter history={history}>
       <App />
-    </HistoryRoute>
+    </HistoryRouter>
   </Provider>
 );
 
