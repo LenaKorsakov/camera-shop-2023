@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/camera-shop-2023/static/css/main.b8223ad2.css",
+    "main.js": "/camera-shop-2023/static/js/main.fbd21bfd.js",
+    "index.html": "/camera-shop-2023/index.html",
+    "main.b8223ad2.css.map": "/camera-shop-2023/static/css/main.b8223ad2.css.map",
+    "main.fbd21bfd.js.map": "/camera-shop-2023/static/js/main.fbd21bfd.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b8223ad2.css",
+    "static/js/main.fbd21bfd.js"
+  ]
+}
