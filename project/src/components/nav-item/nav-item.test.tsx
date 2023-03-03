@@ -8,7 +8,7 @@ import HistoryRoute from '../history-route/history-route';
 import { AppRoute } from '../../const/app-route';
 import userEvent from '@testing-library/user-event';
 import NavItem from './nav-item';
-import { NavItemsTitles } from '../../const/nav-items-titles';
+import { NavItemsTitles } from '../../const/nav-items';
 
 const history = createMemoryHistory();
 

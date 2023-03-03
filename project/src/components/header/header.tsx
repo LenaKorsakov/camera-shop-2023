@@ -3,7 +3,7 @@ import FormSearch from './form-search';
 import Logo from '../logo/logo';
 import NavItem from '../nav-item/nav-item';
 
-import { NAV_ITEMS } from '../../const/nav-items-titles';
+import { NAV_ITEMS } from '../../const/nav-items';
 import { ComponentName } from '../../const/component-name';
 
 function Header(): JSX.Element {

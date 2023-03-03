@@ -2,7 +2,7 @@ import FooterItem from './footer-item/footer-item';
 import SocialList from './footer-item/social-list';
 import Logo from '../logo/logo';
 
-import { FOOTER_ITEMS } from '../../const/nav-items-titles';
+import { FOOTER_ITEMS } from '../../const/nav-items';
 import { ComponentName } from '../../const/component-name';
 
 function Footer(): JSX.Element {

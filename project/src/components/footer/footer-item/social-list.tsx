@@ -1,4 +1,4 @@
-import { SocialItems } from '../../../const/nav-items-titles';
+import { SocialItems } from '../../../const/nav-items';
 
 
 function SocialList(): JSX.Element {

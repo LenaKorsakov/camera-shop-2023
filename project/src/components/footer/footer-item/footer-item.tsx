@@ -1,6 +1,6 @@
 import NavItem from '../../nav-item/nav-item';
 
-import { FooterColumn } from '../../../const/nav-items-titles';
+import { FooterColumn } from '../../../const/nav-items';
 import { ComponentName } from '../../../const/component-name';
 
 type FooterItemProps = {

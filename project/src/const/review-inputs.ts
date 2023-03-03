@@ -40,7 +40,7 @@ export enum InputErrorText {
 
 export const REVIEW_INPUTS: ReviewInput[] = [
   {name: InputName.Name, title: InputTitle.Name, placeholder: InputPlaceholder.Name, errorText: InputErrorText.Name},
-  {name: InputName.Advantage, title: InputTitle.Name, placeholder: InputPlaceholder.Advantage, errorText: InputErrorText.Advantage},
+  {name: InputName.Advantage, title: InputTitle.Advantage, placeholder: InputPlaceholder.Advantage, errorText: InputErrorText.Advantage},
   {name: InputName.Disadvantage, title: InputTitle.Disadvantage, placeholder: InputPlaceholder.Disadvantage, errorText: InputErrorText.Disadvantage}
 ];
 

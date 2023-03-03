@@ -1,4 +1,5 @@
 import { AppRoute } from './app-route';
+import { DEFAULT_CATALOG_PAGE } from './const';
 
 type NavigationItem = {
   title: string;
@@ -42,7 +43,7 @@ export const NavItemsTitles = {
 } as const;
 
 export const NAV_ITEMS: NavigationItems = [
-  {title: NavItemsTitles.Catalog, route: AppRoute.Main},
+  {title: NavItemsTitles.Catalog, route: `${AppRoute.Catalog}${DEFAULT_CATALOG_PAGE}`},
   {title: NavItemsTitles.Garanty, route: AppRoute.NotFound},
   {title: NavItemsTitles.Delivery, route: AppRoute.NotFound},
   {title: NavItemsTitles.About, route: AppRoute.NotFound}

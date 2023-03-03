@@ -4,7 +4,7 @@ import {Provider} from 'react-redux';
 
 import { fakeCamera, mockStore } from '../../utiles/mock';
 import ReviewForm from './review-form';
-import { InputPlaceholder } from '../../const/review-inputs';
+import { InputPlaceholder, InputTitle } from '../../const/review-inputs';
 
 describe('Component: Review Form', () => {
   it('should render correctly', () => {
@@ -18,6 +18,11 @@ describe('Component: Review Form', () => {
 
     expect(screen.getByRole('button')).toHaveTextContent(/Отправить отзыв/i);
     expect(screen.getByTestId('review')).toBeInTheDocument();
+
     expect(screen.getByPlaceholderText(InputPlaceholder.Disadvantage)).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(InputPlaceholder.Advantage)).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(InputPlaceholder.Name)).toBeInTheDocument();
+
+    expect(screen.getByText(InputTitle.Name)).toBeInTheDocument();
   });
 });
