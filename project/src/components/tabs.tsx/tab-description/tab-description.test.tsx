@@ -1,7 +1,8 @@
 import {render, screen} from '@testing-library/react';
-import { fakeCamera } from '../../../utiles/mock';
 
 import TabDescription from './tab-description';
+
+import { fakeCamera } from '../../../utiles/mock';
 
 describe('Component: Description Tab', () => {
   it('should render correctly', () => {

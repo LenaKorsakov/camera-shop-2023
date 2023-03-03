@@ -1,8 +1,10 @@
 import { MemoryRouter } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
 import { Provider} from 'react-redux';
-import { mockStore } from '../../utiles/mock';
+
 import Footer from './footer';
+
+import { mockStore } from '../../utiles/mock';
 
 describe('Component: Footer', () => {
   it('should render correctly', () => {

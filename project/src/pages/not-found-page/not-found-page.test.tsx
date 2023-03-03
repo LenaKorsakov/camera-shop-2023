@@ -1,8 +1,10 @@
 import { MemoryRouter } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
 import { Provider} from 'react-redux';
-import { mockStore } from '../../utiles/mock';
+
 import NotFoundPage from './not-found-page';
+
+import { mockStore } from '../../utiles/mock';
 
 
 describe('Component: ProductPage', () => {

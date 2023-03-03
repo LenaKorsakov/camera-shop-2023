@@ -1,13 +1,15 @@
 import { MemoryRouter } from 'react-router-dom';
+import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
 import { Provider} from 'react-redux';
-import { fakeCamera, mockStore } from '../../utiles/mock';
-import userEvent from '@testing-library/user-event';
+
 import SuccessModal from './success-modal';
+
+import { fakeCamera, mockStore } from '../../utiles/mock';
 
 const handleButtonClick = jest.fn();
 
-describe('Component: SuccessModal', () => {
+describe('Component: Success Modal', () => {
 
   it('should render correctly', () => {
 

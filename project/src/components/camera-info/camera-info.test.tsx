@@ -1,8 +1,10 @@
 import { MemoryRouter } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
 import { Provider} from 'react-redux';
-import { fakeCamera, mockStore } from '../../utiles/mock';
+
 import CameraInfo from './camera-info';
+
+import { fakeCamera, mockStore } from '../../utiles/mock';
 
 describe('Component: Camera Info', () => {
   it('should render correctly', () => {

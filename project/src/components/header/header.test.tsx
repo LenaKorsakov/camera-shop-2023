@@ -1,8 +1,9 @@
 import { MemoryRouter } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
 import { Provider} from 'react-redux';
-import { mockStore } from '../../utiles/mock';
+
 import Header from './header';
+import { mockStore } from '../../utiles/mock';
 
 describe('Component: Header', () => {
   it('should render correctly', () => {

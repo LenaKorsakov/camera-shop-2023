@@ -1,8 +1,10 @@
 import { createMemoryHistory } from 'history';
 import {render, screen} from '@testing-library/react';
 import { Provider } from 'react-redux';
+
 import HistoryRoute from '../history-route/history-route';
 import App from './app';
+
 import { fakeCamera, mockStore } from '../../utiles/mock';
 import { AppRoute } from '../../const/app-route';
 import { ComponentName } from '../../const/component-name';

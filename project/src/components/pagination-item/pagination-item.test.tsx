@@ -1,11 +1,11 @@
 import { MemoryRouter } from 'react-router-dom';
+import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
 import { Provider} from 'react-redux';
-import { fakeCamera, mockStore } from '../../utiles/mock';
 
-import userEvent from '@testing-library/user-event';
 import PaginationItem from './pagination-item';
 
+import { fakeCamera, mockStore } from '../../utiles/mock';
 
 describe('Component: Pagination Item', () => {
   const handlePaganationItemClick = jest.fn();

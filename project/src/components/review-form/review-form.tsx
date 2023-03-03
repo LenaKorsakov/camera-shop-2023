@@ -83,7 +83,7 @@ function ReviewForm ({cameraId}: ReviewFormProps): JSX.Element {
   return(
     <>
       <p className="title title--h4">Оставить отзыв</p>
-      <div className="form-review">
+      <div className="form-review" data-testid="reviewForm">
         <form
           method="post"
           onSubmit={handleFormSubmit}

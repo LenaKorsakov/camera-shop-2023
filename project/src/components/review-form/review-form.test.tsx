@@ -2,8 +2,9 @@ import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import {Provider} from 'react-redux';
 
-import { fakeCamera, mockStore } from '../../utiles/mock';
 import ReviewForm from './review-form';
+
+import { fakeCamera, mockStore } from '../../utiles/mock';
 import { InputPlaceholder, InputTitle } from '../../const/review-inputs';
 
 describe('Component: Review Form', () => {

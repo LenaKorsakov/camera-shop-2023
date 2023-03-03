@@ -1,11 +1,13 @@
 import { render, screen } from '@testing-library/react';
+
+import Picture from './picture';
+
 import { fakeCamera } from '../../utiles/mock';
 import { PictureSize } from '../../const/picture-size';
-import Picture from './picture';
 
 
 describe('Component: Picture', () => {
-  it('should render correctly in header component', () => {
+  it('should render correctly component', () => {
     const { name, previewImg, previewImgWebp, previewImg2x, previewImgWebp2x } = fakeCamera;
 
     render(

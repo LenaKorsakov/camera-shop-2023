@@ -1,13 +1,15 @@
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { createMemoryHistory } from 'history';
+import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
 import { Provider} from 'react-redux';
-import { mockStore } from '../../utiles/mock';
+
 import Logo from './logo';
-import { ComponentName } from '../../const/component-name';
-import { createMemoryHistory } from 'history';
 import HistoryRoute from '../history-route/history-route';
+
+import { mockStore } from '../../utiles/mock';
+import { ComponentName } from '../../const/component-name';
 import { AppRoute } from '../../const/app-route';
-import userEvent from '@testing-library/user-event';
 
 const history = createMemoryHistory();
 

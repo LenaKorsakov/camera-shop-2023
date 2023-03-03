@@ -1,9 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-
 import { useForm } from 'react-hook-form';
-import { InputTitle, InputErrorText } from '../../../const/review-inputs';
+
 import ReviewFormTextArea from './review-form-textarea';
+
+import { InputTitle, InputErrorText } from '../../../const/review-inputs';
 
 
 describe('Component: Review Form Textarea', () => {

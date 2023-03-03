@@ -1,8 +1,9 @@
 import {render, screen} from '@testing-library/react';
 import {MemoryRouter} from 'react-router-dom';
 
-import Tabs from './tabs';
 import { fakeCamera } from '../../utiles/mock';
+
+import Tabs from './tabs';
 
 describe('Component: Tabs', () => {
   it ('should render correctly', () => {

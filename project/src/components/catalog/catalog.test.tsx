@@ -1,9 +1,11 @@
 import { MemoryRouter } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
 import { Provider} from 'react-redux';
+
+import Catalog from './catalog';
+
 import {fakePromo, mockState, getMockStore, fakeCameras} from '../../utiles/mock';
 import { NameSpace } from '../../const/name-space';
-import Catalog from './catalog';
 import { CONTENT_PAR_PAGE } from '../../const/const';
 
 const fakeStore = getMockStore({...mockState,

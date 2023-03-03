@@ -1,9 +1,11 @@
 import { MemoryRouter } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
 import { Provider} from 'react-redux';
+
+import ButtonToTop from './button-to-top';
+
 import {fakePromo, mockState, getMockStore, fakeCameras} from '../../utiles/mock';
 import { NameSpace } from '../../const/name-space';
-import ButtonToTop from './button-to-top';
 
 
 const fakeStore = getMockStore({...mockState,

@@ -1,10 +1,11 @@
 import { MemoryRouter } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
 import { Provider} from 'react-redux';
-import { mockStore } from '../../utiles/mock';
-
 import userEvent from '@testing-library/user-event';
+
 import PaginationButton from './pagination-button';
+
+import { mockStore } from '../../utiles/mock';
 import { AppRoute } from '../../const/app-route';
 import { PaginationButtonName } from '../../const/pagination-buttons-name';
 

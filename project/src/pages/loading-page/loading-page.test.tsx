@@ -1,9 +1,11 @@
 import { MemoryRouter } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
 import { Provider} from 'react-redux';
+
+import LoadingPage from './loading-page';
+
 import { fakeCameras, getMockStore, mockState } from '../../utiles/mock';
 import { NameSpace } from '../../const/name-space';
-import LoadingPage from './loading-page';
 
 const loadingStore = getMockStore({...mockState,
   [NameSpace.CatalogData]: {
@@ -12,7 +14,7 @@ const loadingStore = getMockStore({...mockState,
   }
 });
 
-describe('Component: LoadingPage', () => {
+describe('Component: Loading Page', () => {
   it('should render correctly', () => {
 
     render(

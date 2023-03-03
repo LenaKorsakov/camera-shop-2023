@@ -24,7 +24,7 @@ function SuccessModal ({cameraId, onButtonClick}: SuccessModalProps): JSX.Elemen
   return(
     <>
       <p className="title title--h4">Спасибо за отзыв</p>
-      <svg className="modal__icon" width={80} height={78} aria-hidden="true">
+      <svg className="modal__icon" width={80} height={78} aria-hidden="true" data-testid='success'>
         <use xlinkHref="#icon-review-success" />
       </svg>
       <div className="modal__buttons">

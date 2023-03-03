@@ -1,9 +1,12 @@
 import { MemoryRouter } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
 import { Provider} from 'react-redux';
+
+import Slider from './slider';
+
 import { mockState, getMockStore, fakeCameras, fakeCamera} from '../../utiles/mock';
 import { NameSpace } from '../../const/name-space';
-import Slider from './slider';
+
 
 const fakeStore = getMockStore({...mockState,
   [NameSpace.ProductData]: {
