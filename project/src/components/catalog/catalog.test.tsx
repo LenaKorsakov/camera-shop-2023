@@ -6,7 +6,7 @@ import Catalog from './catalog';
 
 import {fakePromo, mockState, getMockStore, fakeCameras} from '../../utiles/mock';
 import { NameSpace } from '../../const/name-space';
-import { CONTENT_PAR_PAGE } from '../../const/const';
+import { ContentPerItem } from '../../const/content-per-item';
 
 const fakeStore = getMockStore({...mockState,
   [NameSpace.CatalogData]: {
@@ -33,9 +33,9 @@ describe('Component: Catalog', () => {
     expect(screen.getByText(/Каталог фото- и видеотехники/i)).toBeInTheDocument();
 
     const cameraCardsQty = screen.getAllByTestId('card').length;
-    expect(cameraCardsQty).toBe(CONTENT_PAR_PAGE);
+    expect(cameraCardsQty).toBe(ContentPerItem.Pagination);
 
-    const paginationPagesQty = Math.ceil(camerasQty / CONTENT_PAR_PAGE);
+    const paginationPagesQty = Math.ceil(camerasQty / ContentPerItem.Pagination);
     expect(screen.getAllByTestId('pagination').length).toBe(paginationPagesQty);
   });
 });

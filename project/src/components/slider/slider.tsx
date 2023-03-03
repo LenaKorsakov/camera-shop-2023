@@ -2,7 +2,8 @@ import { useState } from 'react';
 
 import CameraCard from '../camera-card/camera-card';
 
-import { CONTENT_PAR_SLIDE, MIN_SLIDE_ITEM_INDEX } from '../../const/const';
+import { MIN_SLIDE_ITEM_INDEX } from '../../const/const';
+import { ContentPerItem } from '../../const/content-per-item';
 
 import { Cameras } from '../../@types/camera-types';
 
@@ -14,7 +15,7 @@ function Slider({cameras}: SliderProps): JSX.Element {
   const [firstContentIndex, setFirstContentIndex] = useState<number>(MIN_SLIDE_ITEM_INDEX);
   const productQty = cameras.length;
 
-  const lastContentIndex = firstContentIndex + CONTENT_PAR_SLIDE;
+  const lastContentIndex = firstContentIndex + ContentPerItem.Slider;
 
   const changeSlide = (direction: boolean) => {
     setFirstContentIndex((prevState) => {

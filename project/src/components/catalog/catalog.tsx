@@ -11,9 +11,10 @@ import usePagination from '../../hooks/use-pagination';
 
 import { Cameras } from '../../@types/camera-types';
 
-import { CONTENT_PAR_PAGE as CONTENT_PER_PAGE, MIN_PAGE_NUMBER } from '../../const/const';
 import { PaginationButtonName } from '../../const/pagination-buttons-name';
 import { AppRoute } from '../../const/app-route';
+import { ContentPerItem } from '../../const/content-per-item';
+import { MIN_PAGE_NUMBER } from '../../const/const';
 
 type CatalogProps = {
   cameras: Cameras;
@@ -30,7 +31,7 @@ function Catalog({cameras}: CatalogProps): JSX.Element {
     pagesNumbers,
     totalPages,
   } = usePagination({
-    contentPerPage: CONTENT_PER_PAGE,
+    contentPerPage: ContentPerItem.Pagination,
     productQty: cameras.length,
   });
 

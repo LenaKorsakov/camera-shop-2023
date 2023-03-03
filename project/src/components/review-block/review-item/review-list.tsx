@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import ReviewItem from './review-item';
 
-import { REVIEWS_PER_PAGE } from '../../../const/const';
+import { ContentPerItem } from '../../../const/content-per-item';
 
 import { ReviewsAdapt } from '../../../@types/review-types';
 
@@ -12,14 +12,14 @@ type ReviewListProps = {
 }
 
 function ReviewsList({reviews, cameraId}: ReviewListProps): JSX.Element {
-  const [reviewQty, setReviewQty] = useState<number>(REVIEWS_PER_PAGE);
+  const [reviewQty, setReviewQty] = useState<number>(ContentPerItem.Review);
 
-  useEffect(() => setReviewQty(REVIEWS_PER_PAGE), [cameraId]);
+  useEffect(() => setReviewQty(ContentPerItem.Review), [cameraId]);
 
   const visibleReviews = reviews.slice(0, reviewQty);
   const isButtonVisible = reviewQty < reviews.length;
 
-  const handleButtonClick = () => setReviewQty((prevState) => prevState + REVIEWS_PER_PAGE);
+  const handleButtonClick = () => setReviewQty((prevState) => prevState + ContentPerItem.Review);
 
   return (
     <>
