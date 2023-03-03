@@ -4,8 +4,6 @@ import ReactDOM from 'react-dom/client';
 import { ToastContainer } from 'react-toastify';
 import { Provider } from 'react-redux';
 
-import './style.css';
-
 import App from './components/app/app';
 
 import { store } from './store';

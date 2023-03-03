@@ -17,7 +17,7 @@
     "react-toastify": "^9.1.1",
     "spinners-react": "^1.0.7"
   },
-  "homepage": "https://lenakorsakov.github.io/camera-shop-2023/",
+
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
