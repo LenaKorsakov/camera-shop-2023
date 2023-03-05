@@ -4,11 +4,10 @@ import { useEffect, useState } from 'react';
 import Header from '../../components/header/header';
 import ProductContent from '../../components/product-content/product-content';
 import Footer from '../../components/footer/footer';
-import NotFoundPage from '../not-found-page/not-found-page';
+//import NotFoundPage from '../not-found-page/not-found-page';
 import LoadingPage from '../loading-page/loading-page';
 
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getProductLoadingStatus } from '../../store/product-process/product-data-selectors';
+import { useAppDispatch } from '../../hooks';
 import { fetchReviewAction, fetchSimilarCamerasAction, fetchCameraByIdAction } from '../../store/api-actions/api-actions';
 import { store } from '../../store';
 import { displayError } from '../../store/actions';
@@ -17,7 +16,7 @@ import { WarningMessage } from '../../const/warning-message';
 
 import { Camera } from '../../@types/camera-types';
 
-function ProductPage(): JSX.Element {
+function ProductPage() {
   const [selectedCamera, setSelectedCamera] = useState<Camera | null>(null);
   const dispatch = useAppDispatch();
 
@@ -28,6 +27,8 @@ function ProductPage(): JSX.Element {
     store.dispatch(fetchCameraByIdAction(propId)).unwrap().then(
       (quest) => {
         setSelectedCamera(quest);
+
+        store.dispatch(fetchCameraByIdAction(propId));
         store.dispatch(fetchSimilarCamerasAction(propId));
         store.dispatch(fetchReviewAction(propId));
       },
@@ -36,14 +37,13 @@ function ProductPage(): JSX.Element {
       });
   }, [dispatch, propId]);
 
-  const isDataLoading = useAppSelector(getProductLoadingStatus);
 
-  if (selectedCamera === null) {
-    return (<NotFoundPage />);
-  }
+  // if (selectedCamera === null) {
+  //   return (<NotFoundPage />);
+  // }
 
   return (
-    isDataLoading ? <LoadingPage/>
+    !selectedCamera ? <LoadingPage/>
       :
       <>
         <Header/>

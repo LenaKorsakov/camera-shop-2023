@@ -4,7 +4,7 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import TabDescription from './tab-description/tab-description';
 import TabFeatures from './tab-features/tab-features';
 
-import { TabType, TUBS_BUTTONS } from '../../const/tabs-buttons';
+import { TabType, TABS_BUTTONS, DEFAULT_TABS_TITLE } from '../../const/tabs-buttons';
 import { AppRoute } from '../../const/app-route';
 import { ComponentName } from '../../const/component-name';
 
@@ -19,7 +19,10 @@ function Tabs({camera}: TabsProps): JSX.Element {
 
   const [searchParams] = useSearchParams();
   const tab = searchParams.get('tab');
+  // eslint-disable-next-line no-console
+  console.log(tab);
 
+  const isTab = tab === null || (tab !== TabType.Features && tab !== TabType.Description);
   const navigate = useNavigate();
 
   const handleButtonClick = (event: SyntheticEvent<HTMLButtonElement>) => {
@@ -33,12 +36,12 @@ function Tabs({camera}: TabsProps): JSX.Element {
     <div className="tabs product__tabs">
       <div className="tabs__controls product__tabs-controls">
 
-        {TUBS_BUTTONS.map(({title, type}) => {
+        {TABS_BUTTONS.map(({title, type}) => {
           const isActive = type === tab;
 
           return (
             <button
-              className={`tabs__control ${isActive ? 'is-active' : ''}`}
+              className={`tabs__control ${isActive || (isTab && title === DEFAULT_TABS_TITLE ) ? 'is-active' : ''}`}
               type="button"
               onClick={handleButtonClick}
               data-tab={type}

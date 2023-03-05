@@ -12,7 +12,7 @@ export enum TabType {
   Features = 'features',
   Description = 'description'
 }
-export const TUBS_BUTTONS: TabsButton[] = [
+export const TABS_BUTTONS: TabsButton[] = [
   {title: TabsButtonsTitles.Features, type: TabType.Features},
   {title: TabsButtonsTitles.Description, type: TabType.Description},
 ];
@@ -25,3 +25,4 @@ export enum FeaturesTitles {
 }
 
 export const DEFAULT_TABS_TYPE = TabType.Features;
+export const DEFAULT_TABS_TITLE = TabsButtonsTitles.Description;

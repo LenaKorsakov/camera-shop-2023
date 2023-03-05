@@ -5,14 +5,14 @@ import { Provider } from 'react-redux';
 import HistoryRouter from '../history-route/history-router';
 import App from './app';
 
-import { fakeCamera, mockStore } from '../../utiles/mock';
+import { mockStore } from '../../utiles/mock';
 import { AppRoute } from '../../const/app-route';
 import { ComponentName } from '../../const/component-name';
 import { DEFAULT_TABS_TYPE, TabType } from '../../const/tabs-buttons';
 
 const history = createMemoryHistory();
 
-const fakeCameraID = fakeCamera.id;
+const fakeCameraID = 2;
 
 const fakeApp = (
   <Provider store={mockStore}>
