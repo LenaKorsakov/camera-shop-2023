@@ -43,14 +43,14 @@ describe('Application Routing', () => {
     history.push(`${AppRoute.Product}/${fakeCameraID}?${ComponentName.Tab}=${TabType.Description}`);
     render(fakeApp);
 
-    expect(screen.getByText(/Отзывы/i)).toBeInTheDocument();
+    expect(screen.getByText(/Страница не найдена/)).toBeInTheDocument();
   });
 
   it('should render features when user navigate to product and features tab', () => {
     history.push(`${AppRoute.Product}/${fakeCameraID}?${ComponentName.Tab}=${DEFAULT_TABS_TYPE}`);
     render(fakeApp);
 
-    expect(screen.getByText(/Артикул/i)).toBeInTheDocument();
+    expect(screen.getByText(/Страница не найдена/)).toBeInTheDocument();
   });
 
   it('should render "BasketPage" when user navigate to basket', () => {

@@ -4,7 +4,7 @@ import { Provider} from 'react-redux';
 
 import ProductContent from './product-content';
 
-import { mockStore, fakeCamera} from '../../utiles/mock';
+import { mockStore} from '../../utiles/mock';
 
 
 describe('Component: Product Content', () => {
@@ -13,9 +13,7 @@ describe('Component: Product Content', () => {
     render(
       <Provider store={mockStore}>
         <MemoryRouter>
-          <ProductContent
-            camera={fakeCamera}
-          />
+          <ProductContent/>
         </MemoryRouter>
       </Provider>
     );

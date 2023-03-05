@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import Header from '../../components/header/header';
 import ProductContent from '../../components/product-content/product-content';
@@ -7,27 +7,34 @@ import Footer from '../../components/footer/footer';
 import NotFoundPage from '../not-found-page/not-found-page';
 import LoadingPage from '../loading-page/loading-page';
 
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getProductLoadingStatus } from '../../store/product-process/product-data-selectors';
 import { fetchReviewAction, fetchSimilarCamerasAction, fetchCameraByIdAction } from '../../store/api-actions/api-actions';
-import { getAllCameras } from '../../store/catalog-process/catalog-process-selectors';
 import { store } from '../../store';
+import { displayError } from '../../store/actions';
+
+import { WarningMessage } from '../../const/warning-message';
+
+import { Camera } from '../../@types/camera-types';
 
 function ProductPage(): JSX.Element {
-  const cameras = useAppSelector(getAllCameras);
+  const [selectedCamera, setSelectedCamera] = useState<Camera | null>(null);
+  const dispatch = useAppDispatch();
 
   const { id } = useParams() as { id: string };
-  const propId = +id;
-
-  const selectedCamera = cameras.find((item) => item.id === propId) ?? null;
+  const propId = Number(id);
 
   useEffect(() => {
-    if(selectedCamera !== null) {
-      store.dispatch(fetchCameraByIdAction(selectedCamera.id));
-      store.dispatch(fetchSimilarCamerasAction(selectedCamera.id));
-      store.dispatch(fetchReviewAction(selectedCamera.id));
-    }
-  }, [propId, selectedCamera]);
+    store.dispatch(fetchCameraByIdAction(propId)).unwrap().then(
+      (quest) => {
+        setSelectedCamera(quest);
+        store.dispatch(fetchSimilarCamerasAction(propId));
+        store.dispatch(fetchReviewAction(propId));
+      },
+      () => {
+        dispatch(displayError(WarningMessage.DataLoadingWarning));
+      });
+  }, [dispatch, propId]);
 
   const isDataLoading = useAppSelector(getProductLoadingStatus);
 
@@ -40,9 +47,7 @@ function ProductPage(): JSX.Element {
       :
       <>
         <Header/>
-        <ProductContent
-          camera={selectedCamera}
-        />
+        <ProductContent/>
         <Footer/>
       </>);
 }

@@ -6,7 +6,7 @@ import ReviewFormTextArea from './review-form-textarea/review-form-textarea';
 import ReviewFormInput from './rating-form-input/review-form-input';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchReviewAction, sendReviewAction } from '../../store/api-actions/api-actions';
+import { fetchCameraByIdAction, fetchReviewAction, sendReviewAction } from '../../store/api-actions/api-actions';
 import { displayError } from '../../store/actions';
 import { getReviewSendingStatus } from '../../store/review-process/review-data-selectors';
 
@@ -43,7 +43,7 @@ function ReviewForm ({cameraId}: ReviewFormProps): JSX.Element {
 
     setFormData({
       ...formData,
-      [name]: name === 'rating' ? +value : value
+      [name]: name === 'rating' ? Number(value) : value
     });
   };
 
@@ -71,6 +71,7 @@ function ReviewForm ({cameraId}: ReviewFormProps): JSX.Element {
     })).unwrap().then(
       () => {
         dispatch(fetchReviewAction(cameraId));
+        dispatch(fetchCameraByIdAction(cameraId));
 
         reset();
         setFormData(INITIAL_FORM_DATA);

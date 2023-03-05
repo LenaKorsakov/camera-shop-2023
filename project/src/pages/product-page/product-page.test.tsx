@@ -6,7 +6,7 @@ import ProductPage from './product-page';
 
 import { mockStore } from '../../utiles/mock';
 
-describe('Component: Review Block', () => {
+describe('Component: Product Page', () => {
   it('should render correctly', () => {
 
     render(

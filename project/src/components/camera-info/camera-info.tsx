@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import Tabs from '../tabs.tsx/tabs';
 import Picture from '../picture/picture';
 import CameraRating from '../camera-rating/camera-rating';
@@ -6,11 +7,11 @@ import { PictureSize } from '../../const/picture-size';
 import { capitalizeFirstLetter, formatPrice } from '../../utiles/format';
 
 import { Camera } from '../../@types/camera-types';
-import { memo } from 'react';
 
 type CameraInfoProps = {
   camera: Camera;
 }
+
 function CameraInfo({camera}: CameraInfoProps): JSX.Element {
   const { name, reviewCount, rating, price, previewImg, previewImgWebp, previewImg2x, previewImgWebp2x, category } = camera;
   //TODO кнопка добавить в корзину будет реагировать на состояние inBasket

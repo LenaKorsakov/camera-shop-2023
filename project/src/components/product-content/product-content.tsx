@@ -5,20 +5,15 @@ import CameraInfo from '../camera-info/camera-info';
 import ReviewBlock from '../review-block/review-block';
 import SimilarCamerasBlock from '../similar-cameras-block/similar-cameras-block';
 
-import { getSimilarCameras } from '../../store/product-process/product-data-selectors';
+import { getSelectedCamera, getSimilarCameras } from '../../store/product-process/product-data-selectors';
 
 import { useAppSelector } from '../../hooks';
 
 import { capitalizeFirstLetter } from '../../utiles/format';
 
-import { Camera } from '../../@types/camera-types';
-
-type ProductContentProps = {
-  camera: Camera;
-}
-
-function ProductContent({camera}: ProductContentProps): JSX.Element {
+function ProductContent(): JSX.Element {
   const similarCameras = useAppSelector(getSimilarCameras);
+  const camera = useAppSelector(getSelectedCamera);
 
   return (
     <main>
