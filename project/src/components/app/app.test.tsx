@@ -5,14 +5,10 @@ import { Provider } from 'react-redux';
 import HistoryRouter from '../history-route/history-router';
 import App from './app';
 
-import { mockStore } from '../../utiles/mock';
+import { fakeCamera, mockStore } from '../../utiles/mock';
 import { AppRoute } from '../../const/app-route';
-import { ComponentName } from '../../const/component-name';
-import { DEFAULT_TABS_TYPE, TabType } from '../../const/tabs-buttons';
 
 const history = createMemoryHistory();
-
-const fakeCameraID = 2;
 
 const fakeApp = (
   <Provider store={mockStore}>
@@ -40,22 +36,19 @@ describe('Application Routing', () => {
   });
 
   it('should render "ProductPage" when user navigate to product', () => {
-    history.push(`${AppRoute.Product}/${fakeCameraID}?${ComponentName.Tab}=${TabType.Description}`);
+    history.push(`${AppRoute.Product}/${fakeCamera.id}`);
     render(fakeApp);
 
-    expect(screen.getByText(/Страница не найдена/)).toBeInTheDocument();
-  });
-
-  it('should render features when user navigate to product and features tab', () => {
-    history.push(`${AppRoute.Product}/${fakeCameraID}?${ComponentName.Tab}=${DEFAULT_TABS_TYPE}`);
-    render(fakeApp);
-
-    expect(screen.getByText(/Страница не найдена/)).toBeInTheDocument();
+    expect(screen.getByText(/Интернет-магазин фото- и видеотехники/)).toBeInTheDocument();
+    expect(screen.getByText(/Отзывы/i)).toBeInTheDocument();
   });
 
   it('should render "BasketPage" when user navigate to basket', () => {
     history.push(AppRoute.Basket);
     render(fakeApp);
+
+    const element = screen.getByRole('heading', {level: 1});
+    expect(element.innerHTML).toBe('Корзина');
 
     expect(screen.getByText(/К оплате:/i)).toBeInTheDocument();
   });

@@ -5,17 +5,29 @@ import CameraInfo from '../camera-info/camera-info';
 import ReviewBlock from '../review-block/review-block';
 import SimilarCamerasBlock from '../similar-cameras-block/similar-cameras-block';
 
-import { getSelectedCamera, getSimilarCameras } from '../../store/product-process/product-data-selectors';
+import { getProductFetchingStatus, getSimilarCameras } from '../../store/product-process/product-data-selectors';
 
 import { useAppSelector } from '../../hooks';
 
 import { capitalizeFirstLetter } from '../../utiles/format';
+import { Camera } from '../../@types/camera-types';
+import { FetchStatus } from '../../const/fetch-status';
+import LoadingPage from '../../pages/loading-page/loading-page';
+import NotFoundPage from '../../pages/not-found-page/not-found-page';
 
-function ProductContent(): JSX.Element {
+type ProductContentProps = {
+  camera: Camera;
+}
+
+function ProductContent({camera}: ProductContentProps): JSX.Element {
+  const cameraFetchingStatus = useAppSelector(getProductFetchingStatus);
   const similarCameras = useAppSelector(getSimilarCameras);
-  const camera = useAppSelector(getSelectedCamera);
 
   return (
+    <>
+      {cameraFetchingStatus === FetchStatus.Loading && <LoadingPage />}
+      {cameraFetchingStatus === FetchStatus.Error && <NotFoundPage />}
+      {cameraFetchingStatus === FetchStatus.Success && camera &&
     <main>
       <div className="page-content">
         <Breadcrumbs
@@ -38,7 +50,8 @@ function ProductContent(): JSX.Element {
           <ReviewBlock cameraId = {camera.id}/>
         </div>
       </div>
-    </main>
+    </main>}
+    </>
   );
 }
 

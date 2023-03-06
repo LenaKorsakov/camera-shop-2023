@@ -1,3 +1,4 @@
+import { FetchStatus } from '../const/fetch-status';
 import { store } from '../store/index';
 import { Camera, Cameras, Promo } from './camera-types';
 import { ReviewsRaw } from './review-types';
@@ -15,7 +16,7 @@ export type CatalogData = {
 export type ProductData = {
   camera: Camera;
   similarCameras: Cameras;
-  isLoading: boolean;
+  fetchStatus: FetchStatus;
 }
 
 export type BasketData = {

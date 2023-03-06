@@ -17,7 +17,6 @@ describe('Component: Product Page', () => {
       </Provider>
     );
 
-    expect(screen.getByText(/Страница не найдена/)).toBeInTheDocument();
-    //тест отрабатывает корректно - ищет камеру по id в списке камер, не находит и выдает пустой экран
+    expect(screen.getByTestId('reviewBlock')).toBeInTheDocument();
   });
 });

@@ -1,6 +1,4 @@
 import Banner from '../../components/banner/banner';
-import Header from '../../components/header/header';
-import Footer from '../../components/footer/footer';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 import LoadingPage from '../loading-page/loading-page';
 import Catalog from '../../components/catalog/catalog';
@@ -15,20 +13,16 @@ function MainPage(): JSX.Element {
 
   return (
     isLoading ? <LoadingPage/> :
-      <>
-        <Header/>
-        <main>
-          <Banner/>
-          <div className="page-content">
-            <Breadcrumbs
-              isCatalogActive
-              isProductPage={false}
-            />
-            <Catalog cameras={cameras}/>
-          </div>
-        </main>
-        <Footer/>
-      </>
+      <main>
+        <Banner/>
+        <div className="page-content">
+          <Breadcrumbs
+            isCatalogActive
+            isProductPage={false}
+          />
+          <Catalog cameras={cameras}/>
+        </div>
+      </main>
   );
 }
 

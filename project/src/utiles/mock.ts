@@ -13,6 +13,7 @@ import { initialStateCatalog } from '../store/catalog-process/catalog-process';
 import { initialStateProduct } from '../store/product-process/product-process';
 import { initialStateReview } from '../store/review-process/review-process';
 import { initialStateBasket } from '../store/basket-process/basket-process';
+import { FetchStatus } from '../const/fetch-status';
 
 export const makeFakeCamera = (): Camera => ({
   id: datatype.number(),
@@ -105,6 +106,7 @@ export const makeMockState = () => ({
   [NameSpace.ProductData]: {
     ...initialStateProduct,
     camera: fakeCamera,
+    fetchStatus: FetchStatus.Success,
     similarCameras: fakeCameras
   },
   [NameSpace.ReviewData]: {
