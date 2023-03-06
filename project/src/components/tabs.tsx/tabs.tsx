@@ -19,10 +19,11 @@ function Tabs({camera}: TabsProps): JSX.Element {
 
   const [searchParams] = useSearchParams();
   const tab = searchParams.get('tab');
-  // eslint-disable-next-line no-console
-  console.log(tab);
 
-  const isTab = tab === null || (tab !== TabType.Features && tab !== TabType.Description);
+  const isTabExist = Object.values(TabType).some((type) => type === tab);
+
+  const isTab = tab === null || !isTabExist;
+
   const navigate = useNavigate();
 
   const handleButtonClick = (event: SyntheticEvent<HTMLButtonElement>) => {
