@@ -72,7 +72,6 @@ function ReviewForm ({cameraId}: ReviewFormProps): JSX.Element {
     })).unwrap().then(
       () => {
         dispatch(fetchReviewsByIdAction(cameraId));
-        // dispatch(fetchCameraByIdAction(cameraId));
         dispatch(fetchAllCameraAction());
 
         reset();

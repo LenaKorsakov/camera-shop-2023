@@ -2,6 +2,7 @@ import { fetchReviewsByIdAction, sendReviewAction } from '../api-actions/api-act
 import { fakeReviews, UNKNOWN_ACTION } from '../../utiles/mock';
 import { ReviewData } from '../../@types/store-types';
 import { changeSuccessStatus, initialStateReview, reviewData } from './review-process';
+import { FetchStatus } from '../../const/fetch-status';
 
 describe('Reducer: reviewData', () => {
   let state: ReviewData;
@@ -13,33 +14,33 @@ describe('Reducer: reviewData', () => {
     expect(reviewData.reducer(undefined, UNKNOWN_ACTION))
       .toEqual(state);
   });
-  it('should update reviews and change loading status if fetchReviewAction fulfiled', () => {
+  it('should update reviews and change fetching status if fetchReviewAction fulfiled', () => {
     expect(reviewData.reducer(state, {type: fetchReviewsByIdAction.fulfilled.type, payload: fakeReviews}))
-      .toEqual({...state, reviews: fakeReviews, isLoading: false });
+      .toEqual({...state, reviews: fakeReviews, fetchStatus: FetchStatus.Success });
   });
-  it('should change loading status to true if reviews loading', () => {
+  it('should change fetching status to loading if reviews loading', () => {
     expect(reviewData.reducer(state, {type: fetchReviewsByIdAction.pending.type}))
-      .toEqual({...state, isLoading: true });
+      .toEqual({...state, fetchStatus: FetchStatus.Loading });
   });
-  it('should change loading status to false if fetchReviewAction rejected', () => {
+  it('should change fetching status to error if fetchReviewAction rejected', () => {
     expect(reviewData.reducer(state, {type: fetchReviewsByIdAction.rejected.type}))
-      .toEqual({...state, isLoading: false});
+      .toEqual({...state, fetchStatus: FetchStatus.Error});
   });
-  it('should update success status to true and sending status to false and if sendReviewAction fulfiled', () => {
+  it('should update success status to true and sending status to success and if sendReviewAction fulfiled', () => {
     expect(reviewData.reducer(state, {type: sendReviewAction.fulfilled.type}))
-      .toEqual({...state, isSuccess: true, isSending: false});
+      .toEqual({...state, isSendSuccess: true, sendingStatus: FetchStatus.Success});
   });
-  it('should update success status and sending status to false and if sendReviewAction rejected', () => {
+  it('should update success status and sending status to error and if sendReviewAction rejected', () => {
     expect(reviewData.reducer(state, {type: sendReviewAction.rejected.type}))
-      .toEqual({...state, isSuccess: false, isSending: false});
+      .toEqual({...state, isSendSuccess: false, sendingStatus: FetchStatus.Error});
   });
   it('should update sending status to true and if sendReviewAction pending', () => {
     expect(reviewData.reducer(state, {type: sendReviewAction.pending.type}))
-      .toEqual({...state, isSending: true});
+      .toEqual({...state, sendingStatus: FetchStatus.Loading});
   });
   it('should change success status', () => {
     expect(reviewData.reducer(state, {type: changeSuccessStatus, payload: true}))
-      .toEqual({...state, isSuccess: true});
+      .toEqual({...state, isSendSuccess: true});
   });
 });
 

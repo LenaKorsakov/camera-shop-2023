@@ -21,9 +21,6 @@ function SuccessModal ({cameraId, onButtonClick}: SuccessModalProps): JSX.Elemen
     onButtonClick();
   };
 
-  // eslint-disable-next-line no-console
-  console.log('ptp');
-
   return(
     <>
       <p className="title title--h4">Спасибо за отзыв</p>
