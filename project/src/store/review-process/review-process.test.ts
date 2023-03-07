@@ -1,4 +1,4 @@
-import { fetchReviewAction, sendReviewAction } from '../api-actions/api-actions';
+import { fetchReviewsByIdAction, sendReviewAction } from '../api-actions/api-actions';
 import { fakeReviews, UNKNOWN_ACTION } from '../../utiles/mock';
 import { ReviewData } from '../../@types/store-types';
 import { changeSuccessStatus, initialStateReview, reviewData } from './review-process';
@@ -14,15 +14,15 @@ describe('Reducer: reviewData', () => {
       .toEqual(state);
   });
   it('should update reviews and change loading status if fetchReviewAction fulfiled', () => {
-    expect(reviewData.reducer(state, {type: fetchReviewAction.fulfilled.type, payload: fakeReviews}))
+    expect(reviewData.reducer(state, {type: fetchReviewsByIdAction.fulfilled.type, payload: fakeReviews}))
       .toEqual({...state, reviews: fakeReviews, isLoading: false });
   });
   it('should change loading status to true if reviews loading', () => {
-    expect(reviewData.reducer(state, {type: fetchReviewAction.pending.type}))
+    expect(reviewData.reducer(state, {type: fetchReviewsByIdAction.pending.type}))
       .toEqual({...state, isLoading: true });
   });
   it('should change loading status to false if fetchReviewAction rejected', () => {
-    expect(reviewData.reducer(state, {type: fetchReviewAction.rejected.type}))
+    expect(reviewData.reducer(state, {type: fetchReviewsByIdAction.rejected.type}))
       .toEqual({...state, isLoading: false});
   });
   it('should update success status to true and sending status to false and if sendReviewAction fulfiled', () => {

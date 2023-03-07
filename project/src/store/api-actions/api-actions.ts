@@ -72,7 +72,7 @@ number,
   }
 );
 
-export const fetchReviewAction = createAsyncThunk<
+export const fetchReviewsByIdAction = createAsyncThunk<
 ReviewsRaw,
 number,
 {

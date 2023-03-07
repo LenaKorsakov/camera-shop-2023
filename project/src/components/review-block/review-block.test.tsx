@@ -6,11 +6,12 @@ import ReviewBlock from './review-block';
 
 import { fakeCamera, fakeReviews, getMockStore, mockState, mockStore } from '../../utiles/mock';
 import { NameSpace } from '../../const/name-space';
+import { FetchStatus } from '../../const/fetch-status';
 
 const loadingStore = getMockStore({...mockState,
   [NameSpace.ReviewData]: {
     reviews: fakeReviews,
-    isLoading: true
+    fetchStatus: FetchStatus.Loading
   }
 });
 

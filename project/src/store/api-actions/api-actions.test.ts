@@ -1,4 +1,4 @@
-import { fetchAllCameraAction, fetchCameraByIdAction, fetchPromoAction, fetchReviewAction, fetchSimilarCamerasAction, sendReviewAction } from './api-actions';
+import { fetchAllCameraAction, fetchCameraByIdAction, fetchPromoAction, fetchReviewsByIdAction, fetchSimilarCamerasAction, sendReviewAction } from './api-actions';
 import { ApiRoute } from '../../const/api-route';
 import { fakeCamera, fakeCameras, fakeId, fakePromo, fakeReviewPost, fakeReviews, getMockStore, mockApi } from '../../utiles/mock';
 
@@ -139,13 +139,13 @@ describe('Asynk actions: test', () => {
     const store = getMockStore();
     expect(store.getActions()).toEqual([]);
 
-    const { payload } = await store.dispatch(fetchReviewAction(fakeId));
+    const { payload } = await store.dispatch(fetchReviewsByIdAction(fakeId));
 
     const actions = store.getActions().map(({type}) => type);
 
     expect(actions).toEqual([
-      fetchReviewAction.pending.type,
-      fetchReviewAction.fulfilled.type
+      fetchReviewsByIdAction.pending.type,
+      fetchReviewsByIdAction.fulfilled.type
     ]);
 
     expect(payload).toEqual(fakeReviews);
@@ -158,13 +158,13 @@ describe('Asynk actions: test', () => {
     const store = getMockStore();
     expect(store.getActions()).toEqual([]);
 
-    await store.dispatch(fetchReviewAction(fakeId));
+    await store.dispatch(fetchReviewsByIdAction(fakeId));
 
     const actions = store.getActions().map(({type}) => type);
 
     expect(actions).toEqual([
-      fetchReviewAction.pending.type,
-      fetchReviewAction.rejected.type
+      fetchReviewsByIdAction.pending.type,
+      fetchReviewsByIdAction.rejected.type
     ]);
   });
   it('sendReviewAction should send review if server return 200', async() => {

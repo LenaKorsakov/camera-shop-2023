@@ -25,7 +25,8 @@ export type BasketData = {
 
 export type ReviewData = {
   reviews: ReviewsRaw;
-  isSuccess: boolean;
-  isSending: boolean;
-  isLoading: boolean;
+  fetchStatus: FetchStatus;
+  sendingStatus: FetchStatus;
+  isSendSuccess: boolean;
 }
+

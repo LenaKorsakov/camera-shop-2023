@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import ProductContent from '../../components/product-content/product-content';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchReviewAction, fetchSimilarCamerasAction, fetchCameraByIdAction } from '../../store/api-actions/api-actions';
+import { fetchReviewsByIdAction, fetchSimilarCamerasAction, fetchCameraByIdAction } from '../../store/api-actions/api-actions';
 
 import { getSelectedCamera } from '../../store/product-process/product-data-selectors';
 
@@ -21,7 +21,7 @@ function ProductPage() {
 
       dispatch(fetchCameraByIdAction(propId));
       dispatch(fetchSimilarCamerasAction(propId));
-      dispatch(fetchReviewAction(propId));
+      dispatch(fetchReviewsByIdAction(propId));
     }
   }, [dispatch, id]);
 

@@ -6,12 +6,13 @@ import ReviewFormTextArea from './review-form-textarea/review-form-textarea';
 import ReviewFormInput from './rating-form-input/review-form-input';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchAllCameraAction, fetchCameraByIdAction, fetchReviewAction, sendReviewAction } from '../../store/api-actions/api-actions';
+import { sendReviewAction, fetchReviewsByIdAction, fetchAllCameraAction } from '../../store/api-actions/api-actions';
 import { displayError } from '../../store/actions';
 import { getReviewSendingStatus } from '../../store/review-process/review-data-selectors';
 
 import { REVIEW_INPUTS } from '../../const/review-inputs';
 import { WarningMessage } from '../../const/warning-message';
+import { FetchStatus } from '../../const/fetch-status';
 
 import { ReviewPost } from '../../@types/review-types';
 
@@ -70,8 +71,8 @@ function ReviewForm ({cameraId}: ReviewFormProps): JSX.Element {
       cameraId: cameraId
     })).unwrap().then(
       () => {
-        dispatch(fetchReviewAction(cameraId));
-        dispatch(fetchCameraByIdAction(cameraId));
+        dispatch(fetchReviewsByIdAction(cameraId));
+        // dispatch(fetchCameraByIdAction(cameraId));
         dispatch(fetchAllCameraAction());
 
         reset();
@@ -80,7 +81,7 @@ function ReviewForm ({cameraId}: ReviewFormProps): JSX.Element {
       () => dispatch(displayError(WarningMessage.SendingError)));
   };
 
-  const isReviewSending = useAppSelector(getReviewSendingStatus);
+  const isReviewSending = useAppSelector(getReviewSendingStatus) === FetchStatus.Loading;
 
   return(
     <>

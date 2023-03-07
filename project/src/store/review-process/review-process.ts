@@ -1,16 +1,17 @@
 import { createSlice, PayloadAction} from '@reduxjs/toolkit';
 
-import { fetchReviewAction, sendReviewAction } from '../api-actions/api-actions';
+import { fetchReviewsByIdAction, sendReviewAction } from '../api-actions/api-actions';
 
 import { NameSpace } from '../../const/name-space';
 
 import { ReviewData } from '../../@types/store-types';
+import { FetchStatus } from '../../const/fetch-status';
 
 export const initialStateReview: ReviewData = {
   reviews: [],
-  isSuccess: false,
-  isSending: false,
-  isLoading: false,
+  fetchStatus: FetchStatus.Default,
+  sendingStatus: FetchStatus.Default,
+  isSendSuccess: false
 };
 
 export const reviewData = createSlice({
@@ -18,31 +19,31 @@ export const reviewData = createSlice({
   initialState: initialStateReview,
   reducers: {
     changeSuccessStatus: (state, action: PayloadAction<boolean>) => {
-      state.isSuccess = action.payload;
+      state.isSendSuccess = action.payload;
     },
   },
   extraReducers(builder) {
     builder
-      .addCase(fetchReviewAction.fulfilled, (state, action) => {
+      .addCase(fetchReviewsByIdAction.fulfilled, (state, action) => {
         state.reviews = action.payload;
-        state.isLoading = false;
+        state.fetchStatus = FetchStatus.Success;
       })
-      .addCase(fetchReviewAction.pending, (state) => {
-        state.isLoading = true;
+      .addCase(fetchReviewsByIdAction.pending, (state) => {
+        state.fetchStatus = FetchStatus.Loading;
       })
-      .addCase(fetchReviewAction.rejected, (state) => {
-        state.isLoading = false;
+      .addCase(fetchReviewsByIdAction.rejected, (state) => {
+        state.fetchStatus = FetchStatus.Error;
       })
       .addCase(sendReviewAction.fulfilled, (state) => {
-        state.isSuccess = true;
-        state.isSending = false;
+        state.isSendSuccess = true;
+        state.sendingStatus = FetchStatus.Success;
       })
       .addCase(sendReviewAction.pending, (state) => {
-        state.isSending = true;
+        state.sendingStatus = FetchStatus.Loading;
       })
       .addCase(sendReviewAction.rejected, (state) => {
-        state.isSending = false;
-        state.isSuccess = false;
+        state.sendingStatus = FetchStatus.Error;
+        state.isSendSuccess = false;
       });
   }
 });
