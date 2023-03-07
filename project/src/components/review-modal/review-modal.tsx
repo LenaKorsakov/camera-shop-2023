@@ -7,10 +7,8 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import useOnClickOutside from '../../hooks/use-on-click-outside';
 import { useDisableBackground } from '../../hooks/use-disable-background';
 import { useKeydownEscClose } from '../../hooks/use-keydown-esc-close';
-import { getReviewSendingStatus } from '../../store/review-process/review-data-selectors';
+import { getSuccessStatus } from '../../store/review-process/review-data-selectors';
 import { fetchCameraByIdAction } from '../../store/api-actions/api-actions';
-
-import { FetchStatus } from '../../const/fetch-status';
 
 type ReviewModalProps = {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -34,7 +32,7 @@ function ReviewModal({ setIsOpen, cameraId }: ReviewModalProps): JSX.Element {
   const handleButtonCloseClick = () => closeModal();
 
   const modalRef = useRef(null);
-  const isReviewSendSuccess = useAppSelector(getReviewSendingStatus) === FetchStatus.Success;
+  const isReviewSendSuccess = useAppSelector(getSuccessStatus);
 
   useOnClickOutside(modalRef, closeModal);
   useDisableBackground();
