@@ -7,6 +7,7 @@ import { AppDispatch, State } from '../../@types/store-types';
 import { Action } from '../../const/action';
 import { ApiRoute } from '../../const/api-route';
 import { ReviewPost, ReviewsRaw } from '../../@types/review-types';
+import { Query } from '../../const/query';
 
 export const fetchAllCameraAction = createAsyncThunk<
 Cameras,
@@ -24,6 +25,24 @@ undefined,
   }
 );
 
+export const fetchSearchCameraAction = createAsyncThunk<
+Cameras,
+string,
+{
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}
+>(Action.FetchSearchCameras,
+  async (value, {extra: api}) => {
+    const params = {[Query.Search]: value};
+
+    const { data } = await api.get<Cameras>(ApiRoute.Cameras, {params});
+
+    return data;
+  }
+);
+
 export const fetchPromoAction = createAsyncThunk<
 Promo,
 undefined,
@@ -32,7 +51,7 @@ undefined,
   state: State;
   extra: AxiosInstance;
 }
->(Action.FetchBanner,
+>(Action.FetchPromo,
   async (_arg, {extra: api}) => {
     const { data } = await api.get<Promo>(ApiRoute.Promo);
 

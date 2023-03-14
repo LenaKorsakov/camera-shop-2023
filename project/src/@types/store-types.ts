@@ -11,6 +11,8 @@ export type CatalogData = {
   cameras: Cameras;
   promo: Promo;
   isLoading: boolean;
+  searchCameras: Cameras;
+  fetchingStatus: FetchStatus;
 }
 
 export type ProductData = {

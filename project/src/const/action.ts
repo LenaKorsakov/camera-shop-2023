@@ -1,6 +1,7 @@
 export const Action = {
   FetchAllCameras: 'catalog/fetchAllCameras',
-  FetchBanner: 'catalog/fetchBanner',
+  FetchSearchCameras: 'catalog/fetchSearchCameras',
+  FetchPromo: 'catalog/fetchPromo',
 
   FetchCameraById: 'product/fetchCameraById',
   FetchSimilarCameras: 'product/fetchSimilarCameras',

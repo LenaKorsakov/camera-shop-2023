@@ -11,10 +11,10 @@ import { displayError } from '../../store/actions';
 import { getReviewSendingStatus } from '../../store/review-process/review-data-selectors';
 
 import { REVIEW_INPUTS } from '../../const/review-inputs';
-import { WarningMessage } from '../../const/warning-message';
 import { FetchStatus } from '../../const/fetch-status';
 
 import { ReviewPost } from '../../@types/review-types';
+import { ErrorMessage } from '../../const/error-message';
 
 type ReviewFormProps = {
   cameraId: number;
@@ -77,7 +77,7 @@ function ReviewForm ({cameraId}: ReviewFormProps): JSX.Element {
         reset();
         setFormData(INITIAL_FORM_DATA);
       },
-      () => dispatch(displayError(WarningMessage.SendingError)));
+      () => dispatch(displayError(ErrorMessage.SendingError)));
   };
 
   const isReviewSending = useAppSelector(getReviewSendingStatus) === FetchStatus.Loading;

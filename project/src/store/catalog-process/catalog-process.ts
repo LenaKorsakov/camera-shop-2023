@@ -1,16 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { fetchAllCameraAction, fetchPromoAction } from '../api-actions/api-actions';
+import { fetchAllCameraAction, fetchPromoAction, fetchSearchCameraAction } from '../api-actions/api-actions';
 
 import { NameSpace } from '../../const/name-space';
 
 import { CatalogData } from '../../@types/store-types';
 import { Promo } from '../../@types/camera-types';
+import { FetchStatus } from '../../const/fetch-status';
 
 export const initialStateCatalog: CatalogData = {
   cameras: [],
   promo: {} as Promo,
-  isLoading: false
+  isLoading: false,
+  searchCameras: [],
+  fetchingStatus: FetchStatus.Default
 };
 
 export const catalogData = createSlice({
@@ -31,6 +34,16 @@ export const catalogData = createSlice({
       })
       .addCase(fetchPromoAction.fulfilled, (state, action) => {
         state.promo = action.payload;
+      })
+      .addCase(fetchSearchCameraAction.fulfilled, (state, action) => {
+        state.searchCameras = action.payload;
+        state.fetchingStatus = FetchStatus.Success;
+      })
+      .addCase(fetchSearchCameraAction.pending, (state) => {
+        state.fetchingStatus = FetchStatus.Loading;
+      })
+      .addCase(fetchSearchCameraAction.rejected, (state) => {
+        state.fetchingStatus = FetchStatus.Error;
       });
   }
 });
