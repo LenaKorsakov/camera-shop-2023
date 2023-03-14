@@ -1,4 +1,5 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useMemo, useState } from 'react';
+import { debounce } from 'lodash';
 
 import LoadingPage from '../../pages/loading-page/loading-page';
 
@@ -10,17 +11,18 @@ import { FetchStatus } from '../../const/fetch-status';
 import { WarningMessage } from '../../const/warning-message';
 import { ErrorMessage } from '../../const/error-message';
 
+import { SEARCH_DELAY } from '../../const/const';
+
 function FormSearch(): JSX.Element {
   const dispatch = useAppDispatch();
 
   const [isDropdownOpened, setDropdownIsOpened] = useState<boolean>(false);
   const [searchValue, setSearchValue] = useState<string>('');
 
-  useEffect(() => {
-    if(searchValue !== '') {
-      dispatch(fetchSearchCameraAction(searchValue));
-    }
-  }, [searchValue, dispatch]);
+  const debouncedFetchCameras = useMemo(
+    () => debounce((value: string) => {
+      dispatch(fetchSearchCameraAction(value));
+    }, SEARCH_DELAY), [dispatch]);
 
   const searchedCameras = useAppSelector(getSearchedCameras);
   const fetchingStatus = useAppSelector(getSearchedCamerasStatus);
@@ -31,7 +33,10 @@ function FormSearch(): JSX.Element {
     }
 
     setSearchValue(event.target.value);
+    debouncedFetchCameras(event.target.value);
   };
+
+  useEffect(() => () => debouncedFetchCameras.cancel());
 
   return(
     <div className={`form-search ${isDropdownOpened ? 'list-opened' : ''}`}>

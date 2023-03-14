@@ -8,3 +8,5 @@ export const PURCHASES = ['пр 1', 'пр 2', 'пр 3'];
 
 export const DEFAULT_CATALOG_PAGE = 1;
 
+export const SEARCH_DELAY = 300;
+
