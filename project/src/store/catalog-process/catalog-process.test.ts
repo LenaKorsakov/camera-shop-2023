@@ -1,7 +1,8 @@
-import { fetchAllCameraAction, fetchPromoAction } from '../api-actions/api-actions';
+import { fetchAllCameraAction, fetchPromoAction, fetchSearchCameraAction } from '../api-actions/api-actions';
 import { catalogData, initialStateCatalog } from './catalog-process';
 import { fakeCameras, fakePromo, UNKNOWN_ACTION } from '../../utiles/mock';
 import { CatalogData } from '../../@types/store-types';
+import { FetchStatus } from '../../const/fetch-status';
 
 describe('Reducer: catalogData', () => {
   let state: CatalogData;
@@ -28,6 +29,18 @@ describe('Reducer: catalogData', () => {
   it('should return promo if fetchPromoAction fulfiled', () => {
     expect(catalogData.reducer(state, {type: fetchPromoAction.fulfilled.type, payload: fakePromo}))
       .toEqual({...state, promo: fakePromo});
+  });
+  it('should update searchCameras and change status to success if fetchSearchCameraAction fulfiled', () => {
+    expect(catalogData.reducer(state, {type: fetchSearchCameraAction.fulfilled.type, payload: fakeCameras}))
+      .toEqual({...state, searchCameras: fakeCameras, fetchingStatus: FetchStatus.Success });
+  });
+  it('should change status to error if fetchSearchCameraAction rejected', () => {
+    expect(catalogData.reducer(state, {type: fetchSearchCameraAction.rejected.type}))
+      .toEqual({...state, fetchingStatus: FetchStatus.Error });
+  });
+  it('should change status to loading if fetchSearchCameraAction pending', () => {
+    expect(catalogData.reducer(state, {type: fetchSearchCameraAction.pending.type}))
+      .toEqual({...state, fetchingStatus: FetchStatus.Loading });
   });
 });
 

@@ -1,4 +1,4 @@
-import { fetchAllCameraAction, fetchCameraByIdAction, fetchPromoAction, fetchReviewsByIdAction, fetchSimilarCamerasAction, sendReviewAction } from './api-actions';
+import { fetchAllCameraAction, fetchCameraByIdAction, fetchPromoAction, fetchReviewsByIdAction, fetchSearchCameraAction, fetchSimilarCamerasAction, sendReviewAction } from './api-actions';
 import { ApiRoute } from '../../const/api-route';
 import { fakeCamera, fakeCameras, fakeId, fakePromo, fakeReviewPost, fakeReviews, getMockStore, mockApi } from '../../utiles/mock';
 
@@ -25,7 +25,7 @@ describe('Asynk actions: test', () => {
   it('fetchAllCameraAction should not return cameras if server return 400', async() => {
     mockApi
       .onGet(ApiRoute.Cameras)
-      .reply(400, fakeCameras);
+      .reply(400);
 
     const store = getMockStore();
     expect(store.getActions()).toEqual([]);
@@ -37,6 +37,43 @@ describe('Asynk actions: test', () => {
     expect(actions).toEqual([
       fetchAllCameraAction.pending.type,
       fetchAllCameraAction.rejected.type
+    ]);
+  });
+
+  it('fetchSearchCameraAction should return cameras if server return 200', async() => {
+    mockApi
+      .onGet(ApiRoute.Cameras)
+      .reply(200, fakeCameras);
+
+    const store = getMockStore();
+    expect(store.getActions()).toEqual([]);
+
+    const { payload } = await store.dispatch(fetchSearchCameraAction('a'));
+
+    const actions = store.getActions().map(({type}) => type);
+
+    expect(actions).toEqual([
+      fetchSearchCameraAction.pending.type,
+      fetchSearchCameraAction.fulfilled.type
+    ]);
+
+    expect(payload).toEqual(fakeCameras);
+  });
+  it('fetchSearchCameraAction should not return cameras if server return 400', async() => {
+    mockApi
+      .onGet(ApiRoute.Cameras)
+      .reply(400);
+
+    const store = getMockStore();
+    expect(store.getActions()).toEqual([]);
+
+    await store.dispatch(fetchSearchCameraAction('a'));
+
+    const actions = store.getActions().map(({type}) => type);
+
+    expect(actions).toEqual([
+      fetchSearchCameraAction.pending.type,
+      fetchSearchCameraAction.rejected.type
     ]);
   });
   it('fetchSimilarCameras  should return similar cameras if server return 200', async() => {

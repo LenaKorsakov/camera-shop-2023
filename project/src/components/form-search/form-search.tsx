@@ -78,7 +78,7 @@ function FormSearch(): JSX.Element {
   };
 
   const handleListItemKeydown = (event: KeyboardEvent) => {
-    if (event.key === 'Enter') {
+    if (event.code === 'Enter') {
       goToProductPage(event);
     }
   };
@@ -120,6 +120,7 @@ function FormSearch(): JSX.Element {
               data-id={item.id}
               onClick={handleListItemClick}
               onKeyDown={handleListItemKeydown}
+              data-testid='list-item'
             >
               {item.name}
             </li>
