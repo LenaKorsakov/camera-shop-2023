@@ -1,5 +1,5 @@
 export enum Query {
-  Search = 'name',
+  Search = 'name_like',
   FilterType = 'type',
   FilterCategory = 'category'
 }

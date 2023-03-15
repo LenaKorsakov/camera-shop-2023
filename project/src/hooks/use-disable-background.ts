@@ -1,7 +1,6 @@
 import {useEffect} from 'react';
 import {createFocusTrap} from 'focus-trap';
 
-
 export const useDisableBackground = () => {
   useEffect(() => {
     const focusModalTrap = createFocusTrap('.modal', {tabbableOptions: {displayCheck: 'none'}});

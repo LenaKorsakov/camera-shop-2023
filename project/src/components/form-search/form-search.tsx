@@ -1,4 +1,5 @@
 import { ChangeEvent, SyntheticEvent, useMemo, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { debounce } from 'lodash';
 
 import LoadingPage from '../../pages/loading-page/loading-page';
@@ -6,14 +7,14 @@ import LoadingPage from '../../pages/loading-page/loading-page';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchCameraByIdAction, fetchSearchCameraAction } from '../../store/api-actions/api-actions';
 import { getSearchedCameras, getSearchedCamerasStatus } from '../../store/catalog-process/catalog-process-selectors';
+import { displayError } from '../../store/actions';
 import useOnClickOutside from '../../hooks/use-on-click-outside';
+import { useKeydownEscClose } from '../../hooks/use-keydown-esc-close';
 
 import { FetchStatus } from '../../const/fetch-status';
 import { WarningMessage } from '../../const/warning-message';
 import { ErrorMessage } from '../../const/error-message';
-
 import { SEARCH_DELAY } from '../../const/const';
-import { useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../const/app-route';
 import { ComponentName } from '../../const/component-name';
 import { DEFAULT_TABS_TYPE } from '../../const/tabs-buttons';
@@ -24,7 +25,7 @@ function FormSearch(): JSX.Element {
   const navigate = useNavigate();
 
   const [isDropdownOpened, setDropdownIsOpened] = useState<boolean>(false);
-  const [searchValue, setSearchValue] = useState<string>('');
+  const [searchedValue, setSearchValue] = useState<string>('');
 
   const debouncedFetchCameras = useMemo(
     () => debounce((value: string) => {
@@ -34,35 +35,44 @@ function FormSearch(): JSX.Element {
   const searchedCameras = useAppSelector(getSearchedCameras);
   const fetchingStatus = useAppSelector(getSearchedCamerasStatus);
 
-  const cleanDropdown = () => {
+  const hideDropdown = () => {
     setSearchValue('');
     setDropdownIsOpened(false);
   };
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const currentValue = event.target.value;
+
     if (!isDropdownOpened) {
       setDropdownIsOpened(true);
     }
 
-    setSearchValue(event.target.value);
-    debouncedFetchCameras(event.target.value);
+    setSearchValue(currentValue);
+
+    if (currentValue !== '') {
+      debouncedFetchCameras(currentValue);
+    }
   };
 
   const handleResetButtonClick = () => {
-    cleanDropdown();
+    hideDropdown();
   };
 
   const handleListItemClick = (event: SyntheticEvent) => {
     const product = event.target as HTMLInputElement;
     const productId = Number(product.dataset.id);
 
-    dispatch(fetchCameraByIdAction(productId)).unwrap().then(() => {
-      navigate(`${AppRoute.Product}/${productId}?${ComponentName.Tab}=${DEFAULT_TABS_TYPE}`);
-      cleanDropdown();
-    });
+    dispatch(fetchCameraByIdAction(productId)).unwrap().then(
+      () => {
+        navigate(`${AppRoute.Product}/${productId}?${ComponentName.Tab}=${DEFAULT_TABS_TYPE}`);
+        hideDropdown();
+      },
+      () => dispatch(displayError(ErrorMessage.FetchingError))
+    );
   };
 
-  useOnClickOutside(searchRef, cleanDropdown);
+  useOnClickOutside(searchRef, hideDropdown);
+  useKeydownEscClose(hideDropdown);
 
   return(
     <div className={`form-search ${isDropdownOpened ? 'list-opened' : ''}`} ref={searchRef}>
@@ -82,15 +92,15 @@ function FormSearch(): JSX.Element {
             autoComplete="off"
             placeholder="Поиск по сайту"
             onChange={handleInputChange}
-            value={searchValue}
+            value={searchedValue}
           />
         </label>
         <ul className="form-search__select-list scroller">
           {fetchingStatus === FetchStatus.Error && <li className="form-search__select-item" tabIndex={0}> {ErrorMessage.FetchingError} </li> }
           {fetchingStatus === FetchStatus.Loading && <LoadingPage />}
-          {fetchingStatus === FetchStatus.Success && !searchedCameras.length && searchValue !== ''
+          {fetchingStatus === FetchStatus.Success && !searchedCameras.length && searchedValue !== ''
             && <li className="form-search__select-item" tabIndex={0}> {WarningMessage.DataSearchingWarning} </li> }
-          { searchedCameras.map((item) => (
+          {fetchingStatus === FetchStatus.Success && searchedCameras.map((item) => (
             <li
               tabIndex={0}
               className="form-search__select-item"
