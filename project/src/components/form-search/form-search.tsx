@@ -1,4 +1,4 @@
-import { ChangeEvent, SyntheticEvent, useMemo, useRef, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, SyntheticEvent, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { debounce } from 'lodash';
 
@@ -11,13 +11,13 @@ import { displayError } from '../../store/actions';
 import useOnClickOutside from '../../hooks/use-on-click-outside';
 import { useKeydownEscClose } from '../../hooks/use-keydown-esc-close';
 
+import { DEFAULT_TABS_TYPE } from '../../const/tabs-buttons';
+import { SEARCH_DELAY } from '../../const/const';
 import { FetchStatus } from '../../const/fetch-status';
 import { WarningMessage } from '../../const/warning-message';
 import { ErrorMessage } from '../../const/error-message';
-import { SEARCH_DELAY } from '../../const/const';
 import { AppRoute } from '../../const/app-route';
 import { ComponentName } from '../../const/component-name';
-import { DEFAULT_TABS_TYPE } from '../../const/tabs-buttons';
 
 function FormSearch(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -35,7 +35,7 @@ function FormSearch(): JSX.Element {
   const searchedCameras = useAppSelector(getSearchedCameras);
   const fetchingStatus = useAppSelector(getSearchedCamerasStatus);
 
-  const hideDropdown = () => {
+  const resetDropdown = () => {
     setSearchValue('');
     setDropdownIsOpened(false);
   };
@@ -51,28 +51,40 @@ function FormSearch(): JSX.Element {
 
     if (currentValue !== '') {
       debouncedFetchCameras(currentValue);
+    } else {
+      setDropdownIsOpened(false);
     }
   };
 
   const handleResetButtonClick = () => {
-    hideDropdown();
+    resetDropdown();
   };
 
-  const handleListItemClick = (event: SyntheticEvent) => {
+  const goToProductPage = (event: SyntheticEvent | KeyboardEvent) => {
     const product = event.target as HTMLInputElement;
     const productId = Number(product.dataset.id);
 
     dispatch(fetchCameraByIdAction(productId)).unwrap().then(
       () => {
         navigate(`${AppRoute.Product}/${productId}?${ComponentName.Tab}=${DEFAULT_TABS_TYPE}`);
-        hideDropdown();
+        resetDropdown();
       },
       () => dispatch(displayError(ErrorMessage.FetchingError))
     );
   };
 
-  useOnClickOutside(searchRef, hideDropdown);
-  useKeydownEscClose(hideDropdown);
+  const handleListItemClick = (event: SyntheticEvent) => {
+    goToProductPage(event);
+  };
+
+  const handleListItemKeydown = (event: KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      goToProductPage(event);
+    }
+  };
+
+  useOnClickOutside(searchRef, resetDropdown);
+  useKeydownEscClose(resetDropdown);
 
   return(
     <div className={`form-search ${isDropdownOpened ? 'list-opened' : ''}`} ref={searchRef}>
@@ -107,6 +119,7 @@ function FormSearch(): JSX.Element {
               key={item.id}
               data-id={item.id}
               onClick={handleListItemClick}
+              onKeyDown={handleListItemKeydown}
             >
               {item.name}
             </li>
