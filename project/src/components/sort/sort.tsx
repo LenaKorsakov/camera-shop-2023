@@ -1,15 +1,20 @@
-import { ChangeEvent, useEffect } from 'react';
+/* eslint-disable no-console */
+import { ChangeEvent, memo } from 'react';
 import { useSearchParams } from 'react-router-dom';
+//import { AppRoute } from '../../const/app-route';
+//import { MIN_PAGE_NUMBER } from '../../const/const';
 import { Query } from '../../const/query';
 import { ServerOrderValue, SORT_ORDER } from '../../const/sort-order';
 import { ServerTypeValue, SORT_TYPE } from '../../const/sort-type';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changeSortOrder, changeSortType, resetSort } from '../../store/sort-process/sort-process';
+import { fetchAllCameraAction } from '../../store/api-actions/api-actions';
+import { changeSortOrder, changeSortType } from '../../store/sort-process/sort-process';
 import { getCurrentSortOrder, getCurrentSortType } from '../../store/sort-process/sort-process-selectors';
 
 function Sort(): JSX.Element {
   const [searchParams, setSearchParams] = useSearchParams();
   const dispatch = useAppDispatch();
+  //const navigate = useNavigate();
 
   const currentSortType = useAppSelector(getCurrentSortType);
   const currentOrderType = useAppSelector(getCurrentSortOrder);
@@ -25,6 +30,9 @@ function Sort(): JSX.Element {
       currentOrderType
         ? setSearchParams({[Query.SortType]: selectedType, [Query.SortOrder]: currentOrderType })
         : setSearchParams({[Query.SortType]: selectedType, [Query.SortOrder]: ServerOrderValue.OrderUp});
+
+      dispatch(fetchAllCameraAction());
+      //navigate(`${AppRoute.Catalog}${MIN_PAGE_NUMBER}?${searchParams.toString()}`);
     }
   };
 
@@ -39,14 +47,20 @@ function Sort(): JSX.Element {
       currentSortType
         ? setSearchParams({[Query.SortType]: currentSortType, [Query.SortOrder]: selectedOrder})
         : setSearchParams({[Query.SortType]: ServerTypeValue.Price, [Query.SortOrder]: selectedOrder});
+
+      console.log(searchParams.toString());
+
+      dispatch(fetchAllCameraAction());
+
+      //navigate(`${AppRoute.Catalog}${MIN_PAGE_NUMBER}?${searchParams.toString()}`);
     }
   };
 
-  useEffect(() => () => {
-    dispatch(resetSort());
-    searchParams.delete(Query.SortOrder);
-    searchParams.delete(Query.SortType);
-  }, []);
+  // useEffect(() => () => {
+  //   dispatch(resetSort());
+  //   searchParams.delete(Query.SortOrder);
+  //   searchParams.delete(Query.SortType);
+  // }, []);
 
   return (
     <div className="catalog-sort">
@@ -75,7 +89,6 @@ function Sort(): JSX.Element {
                   type="radio"
                   id={id}
                   name="sort-icon"
-                  defaultChecked
                   aria-label={title}
                   data-value={value}
                   checked={value === currentOrderType}
@@ -95,4 +108,4 @@ function Sort(): JSX.Element {
   );
 }
 
-export default Sort;
+export default memo(Sort);

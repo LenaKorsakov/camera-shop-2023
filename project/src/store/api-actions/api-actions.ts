@@ -9,6 +9,11 @@ import { ApiRoute } from '../../const/api-route';
 import { ReviewPost, ReviewsRaw } from '../../@types/review-types';
 import { Query } from '../../const/query';
 
+const getParams = (state: State) => ({
+  [Query.SortOrder]: state.SORT.currentSortOrder,
+  [Query.SortType]: state.SORT.currentSortType
+});
+
 export const fetchAllCameraAction = createAsyncThunk<
 Cameras,
 undefined,
@@ -18,8 +23,12 @@ undefined,
   extra: AxiosInstance;
 }
 >(Action.FetchAllCameras,
-  async (_arg, {extra: api}) => {
-    const { data } = await api.get<Cameras>(ApiRoute.Cameras);
+  async (_arg, {getState, extra: api}) => {
+    const state = getState();
+    const params = getParams(state);
+    // eslint-disable-next-line no-console
+    console.log(params);
+    const { data } = await api.get<Cameras>(ApiRoute.Cameras, {params});
 
     return data;
   }
