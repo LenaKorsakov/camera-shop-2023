@@ -1,14 +1,19 @@
 enum SortOrderTitle {
-  Up = 'По возрастанию',
-  Down = 'По убыванию'
+  OrderUp = 'По возрастанию',
+  OrderDown = 'По убыванию'
 }
 
 enum SortOrderID {
-  Up = 'up',
-  Down = 'down'
+  OrderUp = 'up',
+  OrderDown = 'down'
+}
+
+export enum ServerOrderValue {
+  OrderUp= 'asc',
+  OrderDown='desc'
 }
 
 export const SORT_ORDER = [
-  {title: SortOrderTitle.Up, id: SortOrderID.Up},
-  {title: SortOrderID.Up, id: SortOrderID.Down},
+  {title: SortOrderTitle.OrderUp, id: SortOrderID.OrderUp, value: ServerOrderValue.OrderUp},
+  {title: SortOrderID.OrderUp, id: SortOrderID.OrderDown, value: ServerOrderValue.OrderDown},
 ];

@@ -1,5 +1,9 @@
-import { FetchStatus } from '../const/fetch-status';
 import { store } from '../store/index';
+
+import { FetchStatus } from '../const/fetch-status';
+import { ServerOrderValue } from '../const/sort-order';
+
+import { ServerTypeValue } from '../const/sort-type';
 import { Camera, Cameras, Promo } from './camera-types';
 import { ReviewsRaw } from './review-types';
 
@@ -32,3 +36,7 @@ export type ReviewData = {
   isSendSuccess: boolean;
 }
 
+export type Sort = {
+  currentSortType: null | ServerTypeValue;
+  currentSortOrder: null | ServerOrderValue;
+}
