@@ -1,58 +1,67 @@
-/* eslint-disable no-console */
 import { ChangeEvent, memo } from 'react';
-import { useSearchParams } from 'react-router-dom';
-//import { AppRoute } from '../../const/app-route';
-//import { MIN_PAGE_NUMBER } from '../../const/const';
-import { Query } from '../../const/query';
-import { ServerOrderValue, SORT_ORDER } from '../../const/sort-order';
-import { ServerTypeValue, SORT_TYPE } from '../../const/sort-type';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchAllCameraAction } from '../../store/api-actions/api-actions';
 import { changeSortOrder, changeSortType } from '../../store/sort-process/sort-process';
 import { getCurrentSortOrder, getCurrentSortType } from '../../store/sort-process/sort-process-selectors';
 
+import { AppRoute } from '../../const/app-route';
+import { MIN_PAGE_NUMBER } from '../../const/const';
+import { Query } from '../../const/query';
+import { ServerOrderValue, SORT_ORDER } from '../../const/sort-order';
+import { ServerTypeValue, SORT_TYPE } from '../../const/sort-type';
+
+type ParamsType = [Query.SortType, ServerTypeValue];
+type ParamsOrder = [Query.SortOrder, ServerOrderValue];
+
 function Sort(): JSX.Element {
   const [searchParams, setSearchParams] = useSearchParams();
   const dispatch = useAppDispatch();
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const currentSortType = useAppSelector(getCurrentSortType);
   const currentOrderType = useAppSelector(getCurrentSortOrder);
 
+  const updateSearchParams = (typeParams: ParamsType, orderParams: ParamsOrder) => {
+    searchParams.set(...typeParams);
+    searchParams.set(...orderParams);
+
+    setSearchParams(searchParams);
+
+    navigate({
+      pathname: `${AppRoute.Catalog}${MIN_PAGE_NUMBER}`,
+      search: searchParams.toString(),
+    });
+  };
+
   const handleInputSortTypeChange = (event: ChangeEvent<HTMLInputElement>) => {
     const element = event.target;
-
-    const selectedType = element.dataset.value;
+    const selectedType = element.dataset.value as ServerTypeValue;
 
     if (selectedType) {
-      dispatch(changeSortType(selectedType as ServerTypeValue));
+      dispatch(changeSortType(selectedType));
 
       currentOrderType
-        ? setSearchParams({[Query.SortType]: selectedType, [Query.SortOrder]: currentOrderType })
-        : setSearchParams({[Query.SortType]: selectedType, [Query.SortOrder]: ServerOrderValue.OrderUp});
+        ? updateSearchParams ([Query.SortType, selectedType], [Query.SortOrder, currentOrderType])
+        : updateSearchParams ([Query.SortType, selectedType], [Query.SortOrder, ServerOrderValue.OrderUp]);
 
       dispatch(fetchAllCameraAction());
-      //navigate(`${AppRoute.Catalog}${MIN_PAGE_NUMBER}?${searchParams.toString()}`);
     }
   };
 
   const handleInputSortOrderChange = (event: ChangeEvent<HTMLInputElement>) => {
     const element = event.target;
 
-    const selectedOrder = element.dataset.value;
+    const selectedOrder = element.dataset.value as ServerOrderValue;
 
     if (selectedOrder) {
-      dispatch(changeSortOrder(selectedOrder as ServerOrderValue));
+      dispatch(changeSortOrder(selectedOrder));
 
       currentSortType
-        ? setSearchParams({[Query.SortType]: currentSortType, [Query.SortOrder]: selectedOrder})
-        : setSearchParams({[Query.SortType]: ServerTypeValue.Price, [Query.SortOrder]: selectedOrder});
-
-      console.log(searchParams.toString());
+        ? updateSearchParams([Query.SortType, currentSortType], [Query.SortOrder, selectedOrder])
+        : updateSearchParams([Query.SortType, ServerTypeValue.Price], [Query.SortOrder, selectedOrder]);
 
       dispatch(fetchAllCameraAction());
-
-      //navigate(`${AppRoute.Catalog}${MIN_PAGE_NUMBER}?${searchParams.toString()}`);
     }
   };
 
@@ -60,7 +69,8 @@ function Sort(): JSX.Element {
   //   dispatch(resetSort());
   //   searchParams.delete(Query.SortOrder);
   //   searchParams.delete(Query.SortType);
-  // }, []);
+  //   setSearchParams('');
+  // }, [searchParams]);
 
   return (
     <div className="catalog-sort">
