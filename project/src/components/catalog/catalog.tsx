@@ -1,26 +1,30 @@
 import { memo, useEffect} from 'react';
 import { useParams } from 'react-router-dom';
 
-import Filters from '../filters/filters';
 import Sort from '../sort/sort';
 import CameraCard from '../camera-card/camera-card';
 import PaginationItem from '../pagination-item/pagination-item';
 import PaginationButton from '../pagination-button/pagination-button';
+import LoadingPage from '../../pages/loading-page/loading-page';
+import NotFoundPage from '../../pages/not-found-page/not-found-page';
 
+import { getCurrentParams } from '../../store/app-process/app-process-selectors';
+import { getAllCameras, getCatalogLoadingStatus } from '../../store/catalog-process/catalog-process-selectors';
 import usePagination from '../../hooks/use-pagination';
-
-import { Cameras } from '../../@types/camera-types';
+import { useAppSelector } from '../../hooks';
 
 import { PaginationButtonName } from '../../const/pagination-buttons-name';
 import { AppRoute } from '../../const/app-route';
 import { ContentPerItem } from '../../const/content-per-item';
 import { MIN_PAGE_NUMBER } from '../../const/const';
+import { FetchStatus } from '../../const/fetch-status';
 
-type CatalogProps = {
-  cameras: Cameras;
-}
 
-function Catalog({cameras}: CatalogProps): JSX.Element {
+function Catalog(): JSX.Element {
+  const cameras = useAppSelector(getAllCameras);
+  const loadingStatus = useAppSelector(getCatalogLoadingStatus);
+  const currentParams = useAppSelector(getCurrentParams);
+
   const {
     firstContentIndex,
     lastContentIndex,
@@ -54,57 +58,53 @@ function Catalog({cameras}: CatalogProps): JSX.Element {
 
   const handleButtonPrevClick = () => prevPage();
 
-
   const handleButtonNextClick = () => nextPage();
 
   return (
-    <section className="catalog">
-      <div className="container">
-        <h1 className="title title--h2">Каталог фото- и видеотехники</h1>
-        <div className="page-content__columns">
-          <Filters/>
-          <div className="catalog__content">
-            <Sort/>
-            <div className="cards catalog__cards">
-              {contentCameras.map((camera) => (
-                <CameraCard
-                  camera={camera}
-                  isActive={false}
-                  key={camera.id}
-                />
-              ))}
-            </div>
-            <div className="pagination">
-              <ul className="pagination__list">
+    <div className="catalog__content">
+      <Sort/>
+      {loadingStatus === FetchStatus.Loading && <LoadingPage/>}
+      {loadingStatus === FetchStatus.Error && <NotFoundPage/>}
+      {loadingStatus === FetchStatus.Success &&
+      <>
+        <div className="cards catalog__cards">
+          {contentCameras.map((camera) => (
+            <CameraCard
+              camera={camera}
+              isActive={false}
+              key={camera.id}
+            />
+          ))}
+        </div>
+        <div className="pagination">
+          <ul className="pagination__list">
 
-                {!isFirstPage &&
+            {!isFirstPage &&
                 <PaginationButton
                   name={PaginationButtonName.Prev}
                   onPaginationButtonClick={handleButtonPrevClick}
-                  linkProp={`${AppRoute.Catalog}${page - 1}`}
+                  linkProp={`${AppRoute.Catalog}${page - 1}?${currentParams}`}
                 />}
 
-                {pagesNumbers.map((number) => (
-                  <PaginationItem
-                    pageNum={number}
-                    onPaginationItemClick={handlePaginationItemClick}
-                    key={number}
-                    isActive={number === page}
-                  />
-                ))}
+            {pagesNumbers.map((number) => (
+              <PaginationItem
+                pageNum={number}
+                onPaginationItemClick={handlePaginationItemClick}
+                key={number}
+                isActive={number === page}
+              />
+            ))}
 
-                {!isLastPage &&
-                  <PaginationButton
-                    name={PaginationButtonName.Next}
-                    onPaginationButtonClick={handleButtonNextClick}
-                    linkProp={`${AppRoute.Catalog}${page + 1}`}
-                  />}
-              </ul>
-            </div>
-          </div>
+            {!isLastPage &&
+                <PaginationButton
+                  name={PaginationButtonName.Next}
+                  onPaginationButtonClick={handleButtonNextClick}
+                  linkProp={`${AppRoute.Catalog}${page + 1}?${currentParams}`}
+                />}
+          </ul>
         </div>
-      </div>
-    </section>
+      </>}
+    </div>
   );
 }
 

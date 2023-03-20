@@ -26,9 +26,8 @@ undefined,
   async (_arg, {getState, extra: api}) => {
     const state = getState();
     const params = getParams(state);
-    // eslint-disable-next-line no-console
-    console.log(params);
-    const { data } = await api.get<Cameras>(ApiRoute.Cameras, {params});
+
+    const {data} = await api.get<Cameras>(ApiRoute.Cameras, {params});
 
     return data;
   }

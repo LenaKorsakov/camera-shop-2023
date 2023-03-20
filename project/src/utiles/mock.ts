@@ -101,7 +101,8 @@ export const UNKNOWN_ACTION = {type: 'UNKNOWN_ACTION'};
 export const makeMockState = () => ({
   [NameSpace.CatalogData]: {
     ...initialStateCatalog,
-    cameras: fakeCameras
+    cameras: fakeCameras,
+    loadingStatus: FetchStatus.Success
   },
   [NameSpace.ProductData]: {
     ...initialStateProduct,

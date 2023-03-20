@@ -14,7 +14,7 @@ export type AppDispatch = typeof store.dispatch;
 export type CatalogData = {
   cameras: Cameras;
   promo: Promo;
-  isLoading: boolean;
+  loadingStatus: FetchStatus;
   searchCameras: Cameras;
   fetchingStatus: FetchStatus;
 }
@@ -39,4 +39,9 @@ export type ReviewData = {
 export type Sort = {
   currentSortType: null | ServerTypeValue;
   currentSortOrder: null | ServerOrderValue;
+}
+
+export type AppData = {
+  currentParams: string;
+  camerasCount: number;
 }

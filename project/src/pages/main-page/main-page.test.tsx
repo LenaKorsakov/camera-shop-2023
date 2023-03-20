@@ -6,11 +6,12 @@ import MainPage from './main-page';
 
 import { NameSpace } from '../../const/name-space';
 import { fakeCameras, getMockStore, mockState, mockStore } from '../../utiles/mock';
+import { FetchStatus } from '../../const/fetch-status';
 
 const loadingStore = getMockStore({...mockState,
   [NameSpace.CatalogData]: {
     cameras: fakeCameras,
-    isLoading: true
+    loadingStatus: FetchStatus.Loading
   }
 });
 

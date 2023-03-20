@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import App from './components/app/app';
 
 import { store } from './store';
-import { fetchAllCameraAction, fetchPromoAction } from './store/api-actions/api-actions';
+import { fetchPromoAction } from './store/api-actions/api-actions';
 import HistoryRouter from './components/history-route/history-router';
 import browserHistory from './browser-history';
 
@@ -15,7 +15,7 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
 
-store.dispatch(fetchAllCameraAction());
+// store.dispatch(fetchAllCameraAction());
 store.dispatch(fetchPromoAction());
 
 root.render(

@@ -16,15 +16,15 @@ describe('Reducer: catalogData', () => {
   });
   it('should update cameras and change loading status if fetchAllCameraAction fulfiled', () => {
     expect(catalogData.reducer(state, {type: fetchAllCameraAction.fulfilled.type, payload: fakeCameras}))
-      .toEqual({...state, cameras: fakeCameras, isLoading: false });
+      .toEqual({...state, cameras: fakeCameras, loadingStatus: FetchStatus.Success });
   });
-  it('should change loading status to true if cameras loading', () => {
+  it('should change loading status to loading if cameras loading', () => {
     expect(catalogData.reducer(state, {type: fetchAllCameraAction.pending.type}))
-      .toEqual({...state, isLoading: true });
+      .toEqual({...state, loadingStatus: FetchStatus.Loading });
   });
-  it('should change loading status to false if fetchAllCameraAction rejected', () => {
+  it('should change loading status to error if fetchAllCameraAction rejected', () => {
     expect(catalogData.reducer(state, {type: fetchAllCameraAction.rejected.type}))
-      .toEqual({...state, isLoading: false});
+      .toEqual({...state, loadingStatus: FetchStatus.Error});
   });
   it('should return promo if fetchPromoAction fulfiled', () => {
     expect(catalogData.reducer(state, {type: fetchPromoAction.fulfilled.type, payload: fakePromo}))

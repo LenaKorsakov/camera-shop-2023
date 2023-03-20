@@ -7,11 +7,12 @@ import Catalog from './catalog';
 import {fakePromo, mockState, getMockStore, fakeCameras} from '../../utiles/mock';
 import { NameSpace } from '../../const/name-space';
 import { ContentPerItem } from '../../const/content-per-item';
+import { FetchStatus } from '../../const/fetch-status';
 
 const fakeStore = getMockStore({...mockState,
   [NameSpace.CatalogData]: {
     cameras: fakeCameras,
-    isLoading: false,
+    loadingStatus: FetchStatus.Success,
     promo: fakePromo
   }
 });
@@ -24,9 +25,7 @@ describe('Component: Catalog', () => {
     render(
       <Provider store={fakeStore}>
         <MemoryRouter>
-          <Catalog
-            cameras={fakeCameras}
-          />
+          <Catalog/>
         </MemoryRouter>
       </Provider>
     );

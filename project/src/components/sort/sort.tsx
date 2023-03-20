@@ -1,8 +1,6 @@
-import { ChangeEvent, memo, useEffect } from 'react';
+import { ChangeEvent, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchAllCameraAction } from '../../store/api-actions/api-actions';
-import { changeSortOrder, changeSortType } from '../../store/sort-process/sort-process';
 import { getCurrentSortOrder, getCurrentSortType } from '../../store/sort-process/sort-process-selectors';
 
 import { AppRoute } from '../../const/app-route';
@@ -10,14 +8,14 @@ import { MIN_PAGE_NUMBER } from '../../const/const';
 import { Query } from '../../const/query';
 import { ServerOrderValue, SORT_ORDER } from '../../const/sort-order';
 import { ServerTypeValue, SORT_TYPE } from '../../const/sort-type';
+import { resetSort } from '../../store/sort-process/sort-process';
 
 type ParamsType = [Query.SortType, ServerTypeValue];
 type ParamsOrder = [Query.SortOrder, ServerOrderValue];
 
 function Sort(): JSX.Element {
   const [searchParams, setSearchParams] = useSearchParams();
-  // eslint-disable-next-line no-console
-  console.log(searchParams.toString());
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -32,7 +30,7 @@ function Sort(): JSX.Element {
 
     navigate({
       pathname: `${AppRoute.Catalog}${MIN_PAGE_NUMBER}`,
-      search: searchParams.toString(),
+      search: searchParams.toString()
     });
   };
 
@@ -41,13 +39,9 @@ function Sort(): JSX.Element {
     const selectedType = element.dataset.value as ServerTypeValue;
 
     if (selectedType) {
-      dispatch(changeSortType(selectedType));
-
       currentOrderType
         ? updateSearchParams ([Query.SortType, selectedType], [Query.SortOrder, currentOrderType])
         : updateSearchParams ([Query.SortType, selectedType], [Query.SortOrder, ServerOrderValue.OrderUp]);
-
-      dispatch(fetchAllCameraAction());
     }
   };
 
@@ -57,22 +51,17 @@ function Sort(): JSX.Element {
     const selectedOrder = element.dataset.value as ServerOrderValue;
 
     if (selectedOrder) {
-      dispatch(changeSortOrder(selectedOrder));
-
       currentSortType
         ? updateSearchParams([Query.SortType, currentSortType], [Query.SortOrder, selectedOrder])
         : updateSearchParams([Query.SortType, ServerTypeValue.Price], [Query.SortOrder, selectedOrder]);
-
-      dispatch(fetchAllCameraAction());
     }
   };
 
-  useEffect(() => {
-    //dispatch(resetSort());
+  useEffect(() => () => {
+    dispatch(resetSort());
     searchParams.delete(Query.SortOrder);
     searchParams.delete(Query.SortType);
-    //setSearchParams('');
-  }, [searchParams]);
+  }, [searchParams, dispatch]);
 
   return (
     <div className="catalog-sort">
@@ -120,4 +109,4 @@ function Sort(): JSX.Element {
   );
 }
 
-export default memo(Sort);
+export default Sort;

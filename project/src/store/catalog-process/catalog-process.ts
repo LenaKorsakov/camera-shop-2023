@@ -11,9 +11,9 @@ import { FetchStatus } from '../../const/fetch-status';
 export const initialStateCatalog: CatalogData = {
   cameras: [],
   promo: {} as Promo,
-  isLoading: false,
+  loadingStatus: FetchStatus.Default,
   searchCameras: [],
-  fetchingStatus: FetchStatus.Default
+  fetchingStatus: FetchStatus.Default,
 };
 
 export const catalogData = createSlice({
@@ -24,13 +24,13 @@ export const catalogData = createSlice({
     builder
       .addCase(fetchAllCameraAction.fulfilled, (state, action) => {
         state.cameras = action.payload;
-        state.isLoading = false;
+        state.loadingStatus = FetchStatus.Success;
       })
       .addCase(fetchAllCameraAction.pending, (state) => {
-        state.isLoading = true;
+        state.loadingStatus = FetchStatus.Success;
       })
       .addCase(fetchAllCameraAction.rejected, (state) => {
-        state.isLoading = false;
+        state.loadingStatus = FetchStatus.Error;
       })
       .addCase(fetchPromoAction.fulfilled, (state, action) => {
         state.promo = action.payload;
@@ -40,7 +40,7 @@ export const catalogData = createSlice({
         state.fetchingStatus = FetchStatus.Success;
       })
       .addCase(fetchSearchCameraAction.pending, (state) => {
-        state.fetchingStatus = FetchStatus.Loading;
+        state.fetchingStatus = FetchStatus.Success;
       })
       .addCase(fetchSearchCameraAction.rejected, (state) => {
         state.fetchingStatus = FetchStatus.Error;

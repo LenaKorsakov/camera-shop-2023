@@ -11,7 +11,6 @@ import { NameSpace } from '../../const/name-space';
 const fakeStore = getMockStore({...mockState,
   [NameSpace.CatalogData]: {
     cameras: fakeCameras,
-    isLoading: false,
     promo: fakePromo
   }
 });

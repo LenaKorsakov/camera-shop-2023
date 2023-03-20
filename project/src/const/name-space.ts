@@ -3,5 +3,6 @@ export enum NameSpace {
   ProductData = 'PRODUCT_DATA',
   ReviewData = 'REVIEW_DATA',
   Order = 'ORDER',
-  Sort = 'SORT'
+  Sort = 'SORT',
+  APP ='APP'
 }
