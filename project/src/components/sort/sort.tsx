@@ -1,4 +1,4 @@
-import { ChangeEvent, memo } from 'react';
+import { ChangeEvent, memo, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchAllCameraAction } from '../../store/api-actions/api-actions';
@@ -16,6 +16,8 @@ type ParamsOrder = [Query.SortOrder, ServerOrderValue];
 
 function Sort(): JSX.Element {
   const [searchParams, setSearchParams] = useSearchParams();
+  // eslint-disable-next-line no-console
+  console.log(searchParams.toString());
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -65,12 +67,12 @@ function Sort(): JSX.Element {
     }
   };
 
-  // useEffect(() => () => {
-  //   dispatch(resetSort());
-  //   searchParams.delete(Query.SortOrder);
-  //   searchParams.delete(Query.SortType);
-  //   setSearchParams('');
-  // }, [searchParams]);
+  useEffect(() => {
+    //dispatch(resetSort());
+    searchParams.delete(Query.SortOrder);
+    searchParams.delete(Query.SortType);
+    //setSearchParams('');
+  }, [searchParams]);
 
   return (
     <div className="catalog-sort">
