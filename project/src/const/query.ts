@@ -3,5 +3,8 @@ export enum Query {
   SortOrder = '_order',
   SortType = '_sort',
   FilterType = 'type',
-  FilterCategory = 'category'
+  FilterCategory = 'category',
+  FilterLevel = 'level',
+  MinPrice = 'price_gte',
+  MaxPrice = 'price_lte'
 }

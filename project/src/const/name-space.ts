@@ -4,5 +4,6 @@ export enum NameSpace {
   ReviewData = 'REVIEW_DATA',
   Order = 'ORDER',
   Sort = 'SORT',
+  Filter = 'FILTER',
   APP ='APP'
 }

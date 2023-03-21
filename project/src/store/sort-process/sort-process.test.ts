@@ -4,10 +4,10 @@ import { ServerTypeValue } from '../../const/sort-type';
 import { UNKNOWN_ACTION } from '../../utiles/mock';
 import { ServerOrderValue } from '../../const/sort-order';
 
-import { Sort } from '../../@types/store-types';
+import { SortData } from '../../@types/store-types';
 
 describe('Reducer: sort', () => {
-  let state: Sort;
+  let state: SortData;
 
   beforeEach(() => {
     state = initialStateSort;

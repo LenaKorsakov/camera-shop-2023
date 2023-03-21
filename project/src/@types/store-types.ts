@@ -2,8 +2,9 @@ import { store } from '../store/index';
 
 import { FetchStatus } from '../const/fetch-status';
 import { ServerOrderValue } from '../const/sort-order';
-
 import { ServerTypeValue } from '../const/sort-type';
+import { Query } from '../const/query';
+
 import { Camera, Cameras, Promo } from './camera-types';
 import { ReviewsRaw } from './review-types';
 
@@ -36,7 +37,7 @@ export type ReviewData = {
   isSendSuccess: boolean;
 }
 
-export type Sort = {
+export type SortData = {
   currentSortType: null | ServerTypeValue;
   currentSortOrder: null | ServerOrderValue;
 }
@@ -44,4 +45,17 @@ export type Sort = {
 export type AppData = {
   currentParams: string;
   camerasCount: number;
+}
+
+export type FilterData = {
+  currentFilterCategory: string;
+  currentFilterTypes: string[];
+  currentFilterLevels: string[];
+  minPrice: number;
+  maxPrice: number;
+}
+
+export type CurrentFilter = {
+  key: Query;
+  value: string;
 }

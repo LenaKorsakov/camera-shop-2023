@@ -5,9 +5,9 @@ import { NameSpace } from '../../const/name-space';
 import { ServerTypeValue } from '../../const/sort-type';
 import { ServerOrderValue } from '../../const/sort-order';
 
-import { Sort } from '../../@types/store-types';
+import { SortData } from '../../@types/store-types';
 
-export const initialStateSort: Sort = {
+export const initialStateSort: SortData = {
   currentSortType: null,
   currentSortOrder: null
 };
