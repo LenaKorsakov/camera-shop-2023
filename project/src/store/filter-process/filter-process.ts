@@ -17,13 +17,13 @@ export const filterProcess = createSlice({
   name: NameSpace.Filter,
   initialState: initialStateFilter,
   reducers: {
-    changeCurrentFilterCategory: (state, action: PayloadAction<string>) => {
+    setCurrentFilterCategory: (state, action: PayloadAction<string>) => {
       state.currentFilterCategory = action.payload;
     },
-    changeCurrentFilterTypes: (state, action: PayloadAction<string>) => {
+    setCurrentFilterTypes: (state, action: PayloadAction<string>) => {
       state.currentFilterTypes = [...state.currentFilterTypes, action.payload];
     },
-    changeCurrentFilterLevels: (state, action: PayloadAction<string>) => {
+    setCurrentFilterLevels: (state, action: PayloadAction<string>) => {
       state.currentFilterLevels = [...state.currentFilterLevels, action.payload];
     },
     deleteCurrentFilter: (state, action: PayloadAction<CurrentFilter>) => {
@@ -52,4 +52,4 @@ export const filterProcess = createSlice({
   }
 });
 
-export const {changeCurrentFilterCategory, changeCurrentFilterTypes, changeCurrentFilterLevels, resetFilters} = filterProcess.actions;
+export const {setCurrentFilterCategory, setCurrentFilterTypes, setCurrentFilterLevels, resetFilters} = filterProcess.actions;

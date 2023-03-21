@@ -1,8 +1,10 @@
 import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-import { useAppDispatch } from './index';
+import { useAppDispatch, useAppSelector } from './index';
 import { changeSortOrder, changeSortType } from '../store/sort-process/sort-process';
+import { getCurrentFilterCategory, getCurrentFilterLevels, getCurrentFilterTypes } from '../store/filter-process/filter-process-selectors';
+import { setCurrentFilterCategory, setCurrentFilterLevels, setCurrentFilterTypes } from '../store/filter-process/filter-process';
 
 import { Query } from '../const/query';
 import { ServerOrderValue } from '../const/sort-order';
@@ -11,6 +13,10 @@ import { ServerTypeValue } from '../const/sort-type';
 
 const useCheckSearchParams = () => {
   const dispatch = useAppDispatch();
+  const currentFilterCategory = useAppSelector(getCurrentFilterCategory);
+  const currentFilterTypes = useAppSelector(getCurrentFilterTypes);
+  const currentFilterLevels = useAppSelector(getCurrentFilterLevels);
+
   const [searchParams] = useSearchParams();
 
   useEffect (() => {
@@ -24,7 +30,38 @@ const useCheckSearchParams = () => {
       dispatch(changeSortOrder(searchParams.get(Query.SortOrder) as ServerOrderValue));
     }
 
-  },[dispatch, searchParams]);
+    if(isQueryParamExists(Query.FilterCategory)) {
+      const paramsCategory = searchParams.get(Query.FilterCategory) as string;
+      const isAlreadySelected = currentFilterCategory === paramsCategory;
+
+      if (!isAlreadySelected) {
+        dispatch(setCurrentFilterCategory(paramsCategory));
+      }
+    }
+
+    if(isQueryParamExists(Query.FilterType)) {
+      const paramsType = searchParams.getAll(Query.FilterType);
+      paramsType.forEach((value) => {
+        const isAlreadySelected = currentFilterTypes.some((type) => type === value);
+
+        if (!isAlreadySelected) {
+          dispatch(setCurrentFilterTypes(value));
+        }
+      });
+    }
+
+    if(isQueryParamExists(Query.FilterLevel)) {
+      const paramsLevel = searchParams.getAll(Query.FilterLevel);
+      paramsLevel.forEach((value) => {
+        const isAlreadySelected = currentFilterLevels.some((level) => level === value);
+
+        if (!isAlreadySelected) {
+          dispatch(setCurrentFilterLevels(value));
+        }
+      });
+    }
+
+  },[dispatch, searchParams, currentFilterCategory, currentFilterTypes, currentFilterLevels]);
 };
 
 export default useCheckSearchParams;
