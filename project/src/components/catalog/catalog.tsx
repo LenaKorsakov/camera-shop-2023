@@ -7,6 +7,7 @@ import PaginationItem from '../pagination-item/pagination-item';
 import PaginationButton from '../pagination-button/pagination-button';
 import LoadingPage from '../../pages/loading-page/loading-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
+import EmptyPage from '../../pages/empty-page/empty-page';
 
 import { getCurrentParams } from '../../store/app-process/app-process-selectors';
 import { getAllCameras, getCatalogLoadingStatus } from '../../store/catalog-process/catalog-process-selectors';
@@ -49,8 +50,8 @@ function Catalog(): JSX.Element {
 
   const contentCameras = cameras.slice(firstContentIndex, lastContentIndex);
 
-  const isFirstPage = page === MIN_PAGE_NUMBER;
-  const isLastPage = page === totalPages;
+  const isFirstPage = page === MIN_PAGE_NUMBER || cameras.length === 0;
+  const isLastPage = page === totalPages || totalPages === MIN_PAGE_NUMBER;
 
   const handlePaginationItemClick = (pageNumber: number) => {
     setPage(pageNumber);
@@ -65,10 +66,11 @@ function Catalog(): JSX.Element {
       <Sort/>
       {loadingStatus === FetchStatus.Loading && <LoadingPage/>}
       {loadingStatus === FetchStatus.Error && <NotFoundPage/>}
+      {loadingStatus === FetchStatus.Success && cameras.length === 0 && <EmptyPage/>}
       {loadingStatus === FetchStatus.Success &&
       <>
         <div className="cards catalog__cards">
-          {contentCameras.map((camera) => (
+          {contentCameras.length > 0 && contentCameras.map((camera) => (
             <CameraCard
               camera={camera}
               isActive={false}
