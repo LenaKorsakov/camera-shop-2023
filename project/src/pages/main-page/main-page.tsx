@@ -1,4 +1,4 @@
-import { memo, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import Banner from '../../components/banner/banner';
@@ -43,4 +43,4 @@ function MainPage(): JSX.Element {
   );
 }
 
-export default memo(MainPage);
+export default MainPage;

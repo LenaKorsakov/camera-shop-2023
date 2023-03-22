@@ -6,7 +6,7 @@ import { CurrentFilter, FilterData } from '../../@types/store-types';
 import { Query } from '../../const/query';
 
 export const initialStateFilter: FilterData = {
-  currentFilterCategory: '',
+  currentFilterCategory: null,
   currentFilterTypes: [],
   currentFilterLevels: [],
   minPrice: 0,
@@ -52,4 +52,4 @@ export const filterProcess = createSlice({
   }
 });
 
-export const {setCurrentFilterCategory, setCurrentFilterTypes, setCurrentFilterLevels, resetFilters} = filterProcess.actions;
+export const {setCurrentFilterCategory, setCurrentFilterTypes, setCurrentFilterLevels, resetFilters, deleteCurrentFilter} = filterProcess.actions;

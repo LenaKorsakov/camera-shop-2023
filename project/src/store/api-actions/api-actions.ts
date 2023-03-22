@@ -8,10 +8,14 @@ import { Action } from '../../const/action';
 import { ApiRoute } from '../../const/api-route';
 import { ReviewPost, ReviewsRaw } from '../../@types/review-types';
 import { Query } from '../../const/query';
+//import { FilterCategory, ServerFilterValue } from '../../const/filter-category';
 
 const getParams = (state: State) => ({
   [Query.SortOrder]: state.SORT.currentSortOrder,
-  [Query.SortType]: state.SORT.currentSortType
+  [Query.SortType]: state.SORT.currentSortType,
+  [Query.FilterLevel]: state.FILTER.currentFilterLevels,
+  [Query.FilterType]: state.FILTER.currentFilterTypes,
+  [Query.FilterCategory]: state.FILTER.currentFilterCategory
 });
 
 export const fetchAllCameraAction = createAsyncThunk<

@@ -1,17 +1,18 @@
+/* eslint-disable no-console */
 import { ChangeEvent, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getCurrentFilterCategory, getCurrentFilterLevels, getCurrentFilterTypes } from '../../store/filter-process/filter-process-selectors';
+import { deleteCurrentFilter, resetFilters } from '../../store/filter-process/filter-process';
 
 import FilterPrice from '../filter-price/filter-price';
 import { AppRoute } from '../../const/app-route';
 import { MIN_PAGE_NUMBER } from '../../const/const';
-import { FilterCategory, ServerFilterValue } from '../../const/filter-category';
+import { FilterCategory } from '../../const/filter-category';
 import { FilterLevel } from '../../const/filter-level';
 import { FilterType } from '../../const/filter-type';
 import { Query } from '../../const/query';
-import { resetFilters } from '../../store/filter-process/filter-process';
 
 function Filters(): JSX.Element {
   const currentFilterTypes = useAppSelector(getCurrentFilterTypes);
@@ -31,25 +32,110 @@ function Filters(): JSX.Element {
     return filtres.some((value) => value === filter);
   };
 
+  const excludeParams = (params: URLSearchParams, excludedValues: string[]) => {
+    //удаление из параметров поиска ненужных параметров
+    const cleanedParams = [...params.entries()].filter(([_arg, value]) => {
+
+      if (excludedValues.length === 1) {
+        return value !== excludedValues[0];
+      }
+
+      if (excludedValues.length > 1) {
+        return excludedValues.some((item) => item !== value);
+      }
+
+      return value;
+    });
+
+    return new URLSearchParams(cleanedParams);
+  };
+
+  const getVideocameraSearchParams = (queryKey: Query, queryValue: string): URLSearchParams => {
+    dispatch(deleteCurrentFilter({key: Query.FilterType, value: FilterType.Film}));
+    dispatch(deleteCurrentFilter({key: Query.FilterType, value: FilterType.Snapshot}));
+    dispatch(deleteCurrentFilter({key: Query.FilterCategory, value: FilterCategory.Photocamera}));
+
+    const videocameraSearchParams = excludeParams(searchParams, [FilterType.Film, FilterType.Snapshot, FilterCategory.Photocamera]);
+    videocameraSearchParams.append(queryKey, queryValue);
+    console.log(videocameraSearchParams.toString());
+
+    return videocameraSearchParams;
+  };
+
+  const getPhotocameraSearchParams = (queryKey: Query, queryValue: string): URLSearchParams => {
+    dispatch(deleteCurrentFilter({key: Query.FilterCategory, value: FilterCategory.Videocamera}));
+
+    const photocameraSearchParams = excludeParams(searchParams, [FilterCategory.Videocamera]);
+    photocameraSearchParams.append(queryKey, queryValue);
+
+    return photocameraSearchParams;
+  };
+
+  const getSearchParams = (queryKey: Query, queryValue: string): URLSearchParams => {
+    if (queryValue === FilterCategory.Photocamera) {
+      return getPhotocameraSearchParams(queryKey, queryValue);
+    }
+
+    if (queryValue === FilterCategory.Videocamera) {
+      return getVideocameraSearchParams(queryKey, queryValue);
+    }
+
+    const params = new URLSearchParams([...searchParams.entries(), [queryKey, queryValue]]);
+    console.log(params.toString());
+    console.log(queryKey, queryValue);
+
+    return params;
+  };
+
+  const getUncheckedSearchParams = (queryKey: Query, queryValue: string) => {
+    dispatch(deleteCurrentFilter({key: queryKey, value: queryValue}));
+
+    return excludeParams(searchParams, [queryValue]);
+  };
+
   const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
     const checkbox = event.target;
     const queryKey = checkbox.dataset.query as Query;
     const value = checkbox.dataset.value as string;
 
-    //здесь надо предусмотреть сброс
+    let updatedSearchParams;
 
-    value === FilterCategory.Photocamera ? searchParams.append(queryKey, ServerFilterValue.Photocamera) : searchParams.append(queryKey, value);
+    //предусмотреть сброс чекбокса
+    if (!checkbox.checked && value) {
+      updatedSearchParams = getUncheckedSearchParams(queryKey, value);
+    }
 
-    setSearchParams(searchParams);
+    if(checkbox.checked && value) {
+      updatedSearchParams = getSearchParams(queryKey, value);
+    }
 
-    navigate({
-      pathname: `${AppRoute.Catalog}${MIN_PAGE_NUMBER}`,
-      search: searchParams.toString()
+    if (updatedSearchParams) {
+      console.log(updatedSearchParams.toString());
+      //level=%D0%9B%D1%8E%D0%B1%D0%B8%D1%82%D0%B5%D0%BB%D1%8C%D1%81%D0%BA%D0%B8%D0%B9
+
+
+      setSearchParams(updatedSearchParams);
+
+      navigate({
+        pathname: `${AppRoute.Catalog}${MIN_PAGE_NUMBER}`,
+        search: searchParams.toString()
+      });
+    }
+  };
+
+  const deleteSearchParams = () => {
+    Object.values(Query).forEach((key) => {
+      if(key === Query.SortOrder || key === Query.SortType) {
+        return;
+      }
+      searchParams.delete(key);
     });
   };
 
   const handleFormReset = () => {
     dispatch(resetFilters());
+    deleteSearchParams();
+    setSearchParams(searchParams);
   };
 
   useEffect(() => () => {

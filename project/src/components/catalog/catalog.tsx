@@ -1,4 +1,4 @@
-import { memo, useEffect} from 'react';
+import { useEffect} from 'react';
 import { useParams } from 'react-router-dom';
 
 import Sort from '../sort/sort';
@@ -108,4 +108,4 @@ function Catalog(): JSX.Element {
   );
 }
 
-export default memo(Catalog);
+export default Catalog;

@@ -48,7 +48,7 @@ export type AppData = {
 }
 
 export type FilterData = {
-  currentFilterCategory: string;
+  currentFilterCategory: string | null;
   currentFilterTypes: string[];
   currentFilterLevels: string[];
   minPrice: number;

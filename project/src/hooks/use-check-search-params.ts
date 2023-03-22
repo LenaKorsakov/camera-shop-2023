@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from './index';
 import { changeSortOrder, changeSortType } from '../store/sort-process/sort-process';
 import { getCurrentFilterCategory, getCurrentFilterLevels, getCurrentFilterTypes } from '../store/filter-process/filter-process-selectors';
 import { setCurrentFilterCategory, setCurrentFilterLevels, setCurrentFilterTypes } from '../store/filter-process/filter-process';
+import { getCurrentSortOrder, getCurrentSortType } from '../store/sort-process/sort-process-selectors';
 
 import { Query } from '../const/query';
 import { ServerOrderValue } from '../const/sort-order';
@@ -16,6 +17,8 @@ const useCheckSearchParams = () => {
   const currentFilterCategory = useAppSelector(getCurrentFilterCategory);
   const currentFilterTypes = useAppSelector(getCurrentFilterTypes);
   const currentFilterLevels = useAppSelector(getCurrentFilterLevels);
+  const currentSortType = useAppSelector(getCurrentSortType);
+  const currentSortOrder = useAppSelector(getCurrentSortOrder);
 
   const [searchParams] = useSearchParams();
 
@@ -23,11 +26,21 @@ const useCheckSearchParams = () => {
     const isQueryParamExists = (param: Query) => searchParams && searchParams.has(param);
 
     if(isQueryParamExists(Query.SortType)) {
-      dispatch(changeSortType(searchParams.get(Query.SortType) as ServerTypeValue));
+      const paramsSortType = searchParams.get(Query.SortType) as ServerTypeValue;
+      const isAlreadySelected = currentSortType === paramsSortType;
+
+      if(!isAlreadySelected) {
+        dispatch(changeSortType(searchParams.get(Query.SortType) as ServerTypeValue));
+      }
     }
 
     if(isQueryParamExists(Query.SortOrder)) {
-      dispatch(changeSortOrder(searchParams.get(Query.SortOrder) as ServerOrderValue));
+      const paramsSortOrder = searchParams.get(Query.SortOrder) as ServerOrderValue;
+      const isAlreadySelected = currentSortOrder === paramsSortOrder;
+
+      if(!isAlreadySelected) {
+        dispatch(changeSortOrder(searchParams.get(Query.SortOrder) as ServerOrderValue));
+      }
     }
 
     if(isQueryParamExists(Query.FilterCategory)) {
@@ -61,7 +74,7 @@ const useCheckSearchParams = () => {
       });
     }
 
-  },[dispatch, searchParams, currentFilterCategory, currentFilterTypes, currentFilterLevels]);
+  },[dispatch, searchParams, currentFilterCategory, currentFilterTypes, currentFilterLevels, currentSortOrder, currentSortType]);
 };
 
 export default useCheckSearchParams;

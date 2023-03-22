@@ -59,7 +59,9 @@ function Sort(): JSX.Element {
 
   useEffect(() => () => {
     dispatch(resetSort());
-  }, [dispatch]);
+    searchParams.delete(Query.SortOrder);
+    searchParams.delete(Query.SortType);
+  }, [dispatch, searchParams]);
 
   return (
     <div className="catalog-sort">
