@@ -59,3 +59,5 @@ export type CurrentFilter = {
   key: QueryKey;
   value: string;
 }
+
+export type UserInput = '' | number;

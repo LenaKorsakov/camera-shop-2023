@@ -29,7 +29,7 @@ export const filterProcess = createSlice({
     deleteCurrentFilter: (state, action: PayloadAction<CurrentFilter>) => {
       switch(action.payload.key) {
         case (QueryKey.FilterCategory): {
-          state.currentFilterCategory = '';
+          state.currentFilterCategory = null;
           break;
         }
         case (QueryKey.FilterType): {
@@ -43,7 +43,7 @@ export const filterProcess = createSlice({
       }
     },
     resetFilters: (state) => {
-      state.currentFilterCategory = '';
+      state.currentFilterCategory = null;
       state.currentFilterTypes = [];
       state.currentFilterLevels = [];
       state.minPrice = 0;

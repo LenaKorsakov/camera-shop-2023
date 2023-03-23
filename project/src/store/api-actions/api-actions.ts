@@ -8,15 +8,22 @@ import { Action } from '../../const/action';
 import { ApiRoute } from '../../const/api-route';
 import { ReviewPost, ReviewsRaw } from '../../@types/review-types';
 import { QueryKey } from '../../const/query-key';
-//import { FilterCategory, ServerFilterValue } from '../../const/filter-category';
+import { FilterCategory, ServerFilterValue } from '../../const/filter-category';
+//import { sortCamerasByPrice } from '../../utiles/sort-compare';
 
-const getParams = (state: State) => ({
-  [QueryKey.SortOrder]: state.SORT.currentSortOrder,
-  [QueryKey.SortType]: state.SORT.currentSortType,
-  [QueryKey.FilterLevel]: state.FILTER.currentFilterLevels,
-  [QueryKey.FilterType]: state.FILTER.currentFilterTypes,
-  [QueryKey.FilterCategory]: state.FILTER.currentFilterCategory
-});
+const getParams = (state: State) => {
+  const categoryParams = state.FILTER.currentFilterCategory === FilterCategory.Photocamera
+    ? ServerFilterValue.Photocamera
+    : state.FILTER.currentFilterCategory;
+
+  return ( {
+    [QueryKey.SortOrder]: state.SORT.currentSortOrder,
+    [QueryKey.SortType]: state.SORT.currentSortType,
+    [QueryKey.FilterLevel]: state.FILTER.currentFilterLevels,
+    [QueryKey.FilterType]: state.FILTER.currentFilterTypes,
+    [QueryKey.FilterCategory]: categoryParams
+  });
+};
 
 export const fetchAllCameraAction = createAsyncThunk<
 Cameras,
@@ -31,8 +38,9 @@ undefined,
     const state = getState();
     const params = getParams(state);
 
-    const {data} = await api.get<Cameras>(ApiRoute.Cameras, {params});
+    const { data } = await api.get<Cameras>(ApiRoute.Cameras, {params});
 
+    //const sortCameras = data.sort(sortCamerasByPrice);
     return data;
   }
 );

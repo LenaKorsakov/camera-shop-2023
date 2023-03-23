@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { ChangeEvent, useEffect } from 'react';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -13,27 +13,15 @@ import { FilterCategory } from '../../const/filter-category';
 import { FilterLevel } from '../../const/filter-level';
 import { FilterType } from '../../const/filter-type';
 import { QueryKey } from '../../const/query-key';
-
-const VIDEOCAMERA_PARAMS = {key: QueryKey.FilterCategory, value: FilterCategory.Videocamera};
-const PHOTOCAMERA_PARAMS = {key: QueryKey.FilterCategory, value: FilterCategory.Photocamera};
+import { UserInput } from '../../@types/store-types';
 
 const SNAPSHOT_PARAMS = {key: QueryKey.FilterType, value: FilterType.Snapshot};
 const FILM_PARAMS = {key: QueryKey.FilterType, value: FilterType.Film};
 
 const excludeParams = (params: URLSearchParams, excludedValues: string[]) => {
   //удаление из строки запроса ненужных параметров
-  const cleanedParams = [...params.entries()].filter(([_arg, value]) => {
-
-    if (excludedValues.length === 1) {
-      return value !== excludedValues[0];
-    }
-
-    if (excludedValues.length > 1) {
-      return excludedValues.some((item) => item !== value);
-    }
-
-    return value;
-  });
+  const cleanedParams = [...params.entries()]
+    .filter(([_arg, value]) => !excludedValues.includes(value));
 
   return new URLSearchParams(cleanedParams);
 };
@@ -48,18 +36,14 @@ function Filters(): JSX.Element {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const isChecked = (filter: string, filtres: string[]) => {
-    if ((filter === FilterType.Film || filter === FilterType.Snapshot) && isVideocamera) {
-      return false;
-    }
+  const [priceFrom, setPriceFrom] = useState<UserInput>('');
+  const [priceTo, setPriceTo] = useState<UserInput>('');
 
-    return filtres.some((value) => value === filter);
-  };
+  const isChecked = (filter: string, filtres: string[]) => filtres.some((value) => value === filter);
 
-  const getVideocameraSearchParams = (queryKey: QueryKey, queryValue: string): URLSearchParams => {
+  const getVideocameraSearchParams = (queryKey: QueryKey, queryValue: string) => {
     dispatch(deleteCurrentFilter(FILM_PARAMS));
     dispatch(deleteCurrentFilter(SNAPSHOT_PARAMS));
-    dispatch(deleteCurrentFilter(PHOTOCAMERA_PARAMS));
 
     const videocameraSearchParams = excludeParams(searchParams, [FilterType.Film, FilterType.Snapshot, FilterCategory.Photocamera]);
     videocameraSearchParams.append(queryKey, queryValue);
@@ -68,8 +52,6 @@ function Filters(): JSX.Element {
   };
 
   const getPhotocameraSearchParams = (queryKey: QueryKey, queryValue: string): URLSearchParams => {
-    dispatch(deleteCurrentFilter(VIDEOCAMERA_PARAMS));
-
     const photocameraSearchParams = excludeParams(searchParams, [FilterCategory.Videocamera]);
     photocameraSearchParams.append(queryKey, queryValue);
 
@@ -86,9 +68,6 @@ function Filters(): JSX.Element {
     }
 
     const params = new URLSearchParams([...searchParams.entries(), [queryKey, queryValue]]);
-    console.log(params.toString());
-    console.log(queryKey, queryValue);
-
     return params;
   };
 
@@ -103,55 +82,54 @@ function Filters(): JSX.Element {
     const queryKey = checkbox.dataset.query as QueryKey;
     const value = checkbox.dataset.value as string;
 
-    let updatedSearchParams;
+    if (value) {
 
-    //предусмотреть сброс чекбокса
-    if (!checkbox.checked && value) {
-      updatedSearchParams = getUncheckedSearchParams(queryKey, value);
-    }
-
-    if(checkbox.checked && value) {
-      updatedSearchParams = getSearchParams(queryKey, value);
-    }
-
-    if (updatedSearchParams) {
-      console.log(updatedSearchParams.toString());
-      //level=%D0%9B%D1%8E%D0%B1%D0%B8%D1%82%D0%B5%D0%BB%D1%8C%D1%81%D0%BA%D0%B8%D0%B9
+      const updatedSearchParams = checkbox.checked ? getSearchParams(queryKey, value) : getUncheckedSearchParams(queryKey, value);
 
       setSearchParams(updatedSearchParams);
 
       navigate({
         pathname: `${AppRoute.Catalog}${MIN_PAGE_NUMBER}`,
-        search: searchParams.toString()
+        search: updatedSearchParams.toString()
       });
     }
   };
 
-  const deleteSearchParams = () => {
+  const deleteSearchParams = useCallback(() => {
     Object.values(QueryKey).forEach((key) => {
       if(key === QueryKey.SortOrder || key === QueryKey.SortType) {
         return;
       }
+
       searchParams.delete(key);
     });
-  };
+  },[searchParams]);
 
   const handleFormReset = () => {
     dispatch(resetFilters());
     deleteSearchParams();
     setSearchParams(searchParams);
+
+    setPriceFrom('');
+    setPriceTo('');
   };
 
   useEffect(() => () => {
     dispatch(resetFilters());
-  }, [dispatch]);
+    deleteSearchParams();
+  }, [dispatch, deleteSearchParams]);
 
   return (
     <div className="catalog__aside">
       <div className="catalog-filter">
         <form action="#" onReset={handleFormReset}>
           <h2 className="visually-hidden">Фильтр</h2>
-          <FilterPrice/>
+          <FilterPrice
+            priceFrom={priceFrom}
+            priceTo={priceTo}
+            onPriceFrom={setPriceFrom}
+            onPriceTo={setPriceTo}
+          />
           <fieldset className="catalog-filter__block">
             <legend className="title title--h5">Категория</legend>
             {Object.entries(FilterCategory).map(([name, category]) => (
