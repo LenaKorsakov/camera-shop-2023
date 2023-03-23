@@ -12,7 +12,31 @@ import { MIN_PAGE_NUMBER } from '../../const/const';
 import { FilterCategory } from '../../const/filter-category';
 import { FilterLevel } from '../../const/filter-level';
 import { FilterType } from '../../const/filter-type';
-import { Query } from '../../const/query';
+import { QueryKey } from '../../const/query-key';
+
+const VIDEOCAMERA_PARAMS = {key: QueryKey.FilterCategory, value: FilterCategory.Videocamera};
+const PHOTOCAMERA_PARAMS = {key: QueryKey.FilterCategory, value: FilterCategory.Photocamera};
+
+const SNAPSHOT_PARAMS = {key: QueryKey.FilterType, value: FilterType.Snapshot};
+const FILM_PARAMS = {key: QueryKey.FilterType, value: FilterType.Film};
+
+const excludeParams = (params: URLSearchParams, excludedValues: string[]) => {
+  //удаление из строки запроса ненужных параметров
+  const cleanedParams = [...params.entries()].filter(([_arg, value]) => {
+
+    if (excludedValues.length === 1) {
+      return value !== excludedValues[0];
+    }
+
+    if (excludedValues.length > 1) {
+      return excludedValues.some((item) => item !== value);
+    }
+
+    return value;
+  });
+
+  return new URLSearchParams(cleanedParams);
+};
 
 function Filters(): JSX.Element {
   const currentFilterTypes = useAppSelector(getCurrentFilterTypes);
@@ -28,42 +52,23 @@ function Filters(): JSX.Element {
     if ((filter === FilterType.Film || filter === FilterType.Snapshot) && isVideocamera) {
       return false;
     }
-    //работает некорректно
+
     return filtres.some((value) => value === filter);
   };
 
-  const excludeParams = (params: URLSearchParams, excludedValues: string[]) => {
-    //удаление из параметров поиска ненужных параметров
-    const cleanedParams = [...params.entries()].filter(([_arg, value]) => {
-
-      if (excludedValues.length === 1) {
-        return value !== excludedValues[0];
-      }
-
-      if (excludedValues.length > 1) {
-        return excludedValues.some((item) => item !== value);
-      }
-
-      return value;
-    });
-
-    return new URLSearchParams(cleanedParams);
-  };
-
-  const getVideocameraSearchParams = (queryKey: Query, queryValue: string): URLSearchParams => {
-    dispatch(deleteCurrentFilter({key: Query.FilterType, value: FilterType.Film}));
-    dispatch(deleteCurrentFilter({key: Query.FilterType, value: FilterType.Snapshot}));
-    dispatch(deleteCurrentFilter({key: Query.FilterCategory, value: FilterCategory.Photocamera}));
+  const getVideocameraSearchParams = (queryKey: QueryKey, queryValue: string): URLSearchParams => {
+    dispatch(deleteCurrentFilter(FILM_PARAMS));
+    dispatch(deleteCurrentFilter(SNAPSHOT_PARAMS));
+    dispatch(deleteCurrentFilter(PHOTOCAMERA_PARAMS));
 
     const videocameraSearchParams = excludeParams(searchParams, [FilterType.Film, FilterType.Snapshot, FilterCategory.Photocamera]);
     videocameraSearchParams.append(queryKey, queryValue);
-    console.log(videocameraSearchParams.toString());
 
     return videocameraSearchParams;
   };
 
-  const getPhotocameraSearchParams = (queryKey: Query, queryValue: string): URLSearchParams => {
-    dispatch(deleteCurrentFilter({key: Query.FilterCategory, value: FilterCategory.Videocamera}));
+  const getPhotocameraSearchParams = (queryKey: QueryKey, queryValue: string): URLSearchParams => {
+    dispatch(deleteCurrentFilter(VIDEOCAMERA_PARAMS));
 
     const photocameraSearchParams = excludeParams(searchParams, [FilterCategory.Videocamera]);
     photocameraSearchParams.append(queryKey, queryValue);
@@ -71,7 +76,7 @@ function Filters(): JSX.Element {
     return photocameraSearchParams;
   };
 
-  const getSearchParams = (queryKey: Query, queryValue: string): URLSearchParams => {
+  const getSearchParams = (queryKey: QueryKey, queryValue: string): URLSearchParams => {
     if (queryValue === FilterCategory.Photocamera) {
       return getPhotocameraSearchParams(queryKey, queryValue);
     }
@@ -87,7 +92,7 @@ function Filters(): JSX.Element {
     return params;
   };
 
-  const getUncheckedSearchParams = (queryKey: Query, queryValue: string) => {
+  const getUncheckedSearchParams = (queryKey: QueryKey, queryValue: string) => {
     dispatch(deleteCurrentFilter({key: queryKey, value: queryValue}));
 
     return excludeParams(searchParams, [queryValue]);
@@ -95,7 +100,7 @@ function Filters(): JSX.Element {
 
   const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
     const checkbox = event.target;
-    const queryKey = checkbox.dataset.query as Query;
+    const queryKey = checkbox.dataset.query as QueryKey;
     const value = checkbox.dataset.value as string;
 
     let updatedSearchParams;
@@ -113,7 +118,6 @@ function Filters(): JSX.Element {
       console.log(updatedSearchParams.toString());
       //level=%D0%9B%D1%8E%D0%B1%D0%B8%D1%82%D0%B5%D0%BB%D1%8C%D1%81%D0%BA%D0%B8%D0%B9
 
-
       setSearchParams(updatedSearchParams);
 
       navigate({
@@ -124,8 +128,8 @@ function Filters(): JSX.Element {
   };
 
   const deleteSearchParams = () => {
-    Object.values(Query).forEach((key) => {
-      if(key === Query.SortOrder || key === Query.SortType) {
+    Object.values(QueryKey).forEach((key) => {
+      if(key === QueryKey.SortOrder || key === QueryKey.SortType) {
         return;
       }
       searchParams.delete(key);
@@ -157,7 +161,7 @@ function Filters(): JSX.Element {
                     type="checkbox"
                     name={name[0].toLowerCase().concat(name.slice(1))}
                     checked={category === currentFilterCategory}
-                    data-query={Query.FilterCategory}
+                    data-query={QueryKey.FilterCategory}
                     data-value={category}
                     onChange={handleCheckboxChange}
                   />
@@ -181,7 +185,7 @@ function Filters(): JSX.Element {
                       name={name[0].toLowerCase().concat(name.slice(1))}
                       checked={isChecked(type, currentFilterTypes)}
                       disabled={isDisabled}
-                      data-query={Query.FilterType}
+                      data-query={QueryKey.FilterType}
                       data-value={type}
                       onChange={handleCheckboxChange}
                     />
@@ -203,7 +207,7 @@ function Filters(): JSX.Element {
                     type="checkbox"
                     name={name[0].toLowerCase().concat(name.slice(1))}
                     checked={isChecked(level, currentFilterLevels)}
-                    data-query={Query.FilterLevel}
+                    data-query={QueryKey.FilterLevel}
                     data-value={level}
                     onChange={handleCheckboxChange}
                   />

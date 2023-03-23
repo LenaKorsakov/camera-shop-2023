@@ -1,4 +1,4 @@
-export enum Query {
+export enum QueryKey {
   Search = 'name_like',
   SortOrder = '_order',
   SortType = '_sort',

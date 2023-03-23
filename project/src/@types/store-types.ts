@@ -3,7 +3,7 @@ import { store } from '../store/index';
 import { FetchStatus } from '../const/fetch-status';
 import { ServerOrderValue } from '../const/sort-order';
 import { ServerTypeValue } from '../const/sort-type';
-import { Query } from '../const/query';
+import { QueryKey } from '../const/query-key';
 
 import { Camera, Cameras, Promo } from './camera-types';
 import { ReviewsRaw } from './review-types';
@@ -56,6 +56,6 @@ export type FilterData = {
 }
 
 export type CurrentFilter = {
-  key: Query;
+  key: QueryKey;
   value: string;
 }

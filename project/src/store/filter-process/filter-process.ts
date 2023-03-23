@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { NameSpace } from '../../const/name-space';
+import { QueryKey } from '../../const/query-key';
 
 import { CurrentFilter, FilterData } from '../../@types/store-types';
-import { Query } from '../../const/query';
 
 export const initialStateFilter: FilterData = {
   currentFilterCategory: null,
@@ -28,15 +28,15 @@ export const filterProcess = createSlice({
     },
     deleteCurrentFilter: (state, action: PayloadAction<CurrentFilter>) => {
       switch(action.payload.key) {
-        case (Query.FilterCategory): {
+        case (QueryKey.FilterCategory): {
           state.currentFilterCategory = '';
           break;
         }
-        case (Query.FilterType): {
+        case (QueryKey.FilterType): {
           state.currentFilterTypes.filter((type) => type !== action.payload.value);
           break;
         }
-        case (Query.FilterLevel): {
+        case (QueryKey.FilterLevel): {
           state.currentFilterLevels.filter((level) => level !== action.payload.value);
           break;
         }

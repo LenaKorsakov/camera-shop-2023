@@ -7,15 +7,15 @@ import { AppDispatch, State } from '../../@types/store-types';
 import { Action } from '../../const/action';
 import { ApiRoute } from '../../const/api-route';
 import { ReviewPost, ReviewsRaw } from '../../@types/review-types';
-import { Query } from '../../const/query';
+import { QueryKey } from '../../const/query-key';
 //import { FilterCategory, ServerFilterValue } from '../../const/filter-category';
 
 const getParams = (state: State) => ({
-  [Query.SortOrder]: state.SORT.currentSortOrder,
-  [Query.SortType]: state.SORT.currentSortType,
-  [Query.FilterLevel]: state.FILTER.currentFilterLevels,
-  [Query.FilterType]: state.FILTER.currentFilterTypes,
-  [Query.FilterCategory]: state.FILTER.currentFilterCategory
+  [QueryKey.SortOrder]: state.SORT.currentSortOrder,
+  [QueryKey.SortType]: state.SORT.currentSortType,
+  [QueryKey.FilterLevel]: state.FILTER.currentFilterLevels,
+  [QueryKey.FilterType]: state.FILTER.currentFilterTypes,
+  [QueryKey.FilterCategory]: state.FILTER.currentFilterCategory
 });
 
 export const fetchAllCameraAction = createAsyncThunk<
@@ -47,7 +47,7 @@ string,
 }
 >(Action.FetchSearchCameras,
   async (value, {extra: api}) => {
-    const params = {[Query.Search]: value};
+    const params = {[QueryKey.Search]: value};
 
     const { data } = await api.get<Cameras>(ApiRoute.Cameras, {params});
 

@@ -7,7 +7,7 @@ import { getCurrentFilterCategory, getCurrentFilterLevels, getCurrentFilterTypes
 import { setCurrentFilterCategory, setCurrentFilterLevels, setCurrentFilterTypes } from '../store/filter-process/filter-process';
 import { getCurrentSortOrder, getCurrentSortType } from '../store/sort-process/sort-process-selectors';
 
-import { Query } from '../const/query';
+import { QueryKey } from '../const/query-key';
 import { ServerOrderValue } from '../const/sort-order';
 import { ServerTypeValue } from '../const/sort-type';
 
@@ -23,28 +23,28 @@ const useCheckSearchParams = () => {
   const [searchParams] = useSearchParams();
 
   useEffect (() => {
-    const isQueryParamExists = (param: Query) => searchParams && searchParams.has(param);
+    const isQueryParamExists = (param: QueryKey) => searchParams && searchParams.has(param);
 
-    if(isQueryParamExists(Query.SortType)) {
-      const paramsSortType = searchParams.get(Query.SortType) as ServerTypeValue;
+    if(isQueryParamExists(QueryKey.SortType)) {
+      const paramsSortType = searchParams.get(QueryKey.SortType) as ServerTypeValue;
       const isAlreadySelected = currentSortType === paramsSortType;
 
       if(!isAlreadySelected) {
-        dispatch(changeSortType(searchParams.get(Query.SortType) as ServerTypeValue));
+        dispatch(changeSortType(searchParams.get(QueryKey.SortType) as ServerTypeValue));
       }
     }
 
-    if(isQueryParamExists(Query.SortOrder)) {
-      const paramsSortOrder = searchParams.get(Query.SortOrder) as ServerOrderValue;
+    if(isQueryParamExists(QueryKey.SortOrder)) {
+      const paramsSortOrder = searchParams.get(QueryKey.SortOrder) as ServerOrderValue;
       const isAlreadySelected = currentSortOrder === paramsSortOrder;
 
       if(!isAlreadySelected) {
-        dispatch(changeSortOrder(searchParams.get(Query.SortOrder) as ServerOrderValue));
+        dispatch(changeSortOrder(searchParams.get(QueryKey.SortOrder) as ServerOrderValue));
       }
     }
 
-    if(isQueryParamExists(Query.FilterCategory)) {
-      const paramsCategory = searchParams.get(Query.FilterCategory) as string;
+    if(isQueryParamExists(QueryKey.FilterCategory)) {
+      const paramsCategory = searchParams.get(QueryKey.FilterCategory) as string;
       const isAlreadySelected = currentFilterCategory === paramsCategory;
 
       if (!isAlreadySelected) {
@@ -52,8 +52,8 @@ const useCheckSearchParams = () => {
       }
     }
 
-    if(isQueryParamExists(Query.FilterType)) {
-      const paramsType = searchParams.getAll(Query.FilterType);
+    if(isQueryParamExists(QueryKey.FilterType)) {
+      const paramsType = searchParams.getAll(QueryKey.FilterType);
       paramsType.forEach((value) => {
         const isAlreadySelected = currentFilterTypes.some((type) => type === value);
 
@@ -63,8 +63,8 @@ const useCheckSearchParams = () => {
       });
     }
 
-    if(isQueryParamExists(Query.FilterLevel)) {
-      const paramsLevel = searchParams.getAll(Query.FilterLevel);
+    if(isQueryParamExists(QueryKey.FilterLevel)) {
+      const paramsLevel = searchParams.getAll(QueryKey.FilterLevel);
       paramsLevel.forEach((value) => {
         const isAlreadySelected = currentFilterLevels.some((level) => level === value);
 

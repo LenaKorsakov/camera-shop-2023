@@ -5,13 +5,13 @@ import { getCurrentSortOrder, getCurrentSortType } from '../../store/sort-proces
 
 import { AppRoute } from '../../const/app-route';
 import { MIN_PAGE_NUMBER } from '../../const/const';
-import { Query } from '../../const/query';
+import { QueryKey } from '../../const/query-key';
 import { ServerOrderValue, SORT_ORDER } from '../../const/sort-order';
 import { ServerTypeValue, SORT_TYPE } from '../../const/sort-type';
 import { resetSort } from '../../store/sort-process/sort-process';
 
-type ParamsType = [Query.SortType, ServerTypeValue];
-type ParamsOrder = [Query.SortOrder, ServerOrderValue];
+type ParamsType = [QueryKey.SortType, ServerTypeValue];
+type ParamsOrder = [QueryKey.SortOrder, ServerOrderValue];
 
 function Sort(): JSX.Element {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -40,8 +40,8 @@ function Sort(): JSX.Element {
 
     if (selectedType) {
       currentOrderType
-        ? updateSearchParams ([Query.SortType, selectedType], [Query.SortOrder, currentOrderType])
-        : updateSearchParams ([Query.SortType, selectedType], [Query.SortOrder, ServerOrderValue.OrderUp]);
+        ? updateSearchParams ([QueryKey.SortType, selectedType], [QueryKey.SortOrder, currentOrderType])
+        : updateSearchParams ([QueryKey.SortType, selectedType], [QueryKey.SortOrder, ServerOrderValue.OrderUp]);
     }
   };
 
@@ -52,15 +52,15 @@ function Sort(): JSX.Element {
 
     if (selectedOrder) {
       currentSortType
-        ? updateSearchParams([Query.SortType, currentSortType], [Query.SortOrder, selectedOrder])
-        : updateSearchParams([Query.SortType, ServerTypeValue.Price], [Query.SortOrder, selectedOrder]);
+        ? updateSearchParams([QueryKey.SortType, currentSortType], [QueryKey.SortOrder, selectedOrder])
+        : updateSearchParams([QueryKey.SortType, ServerTypeValue.Price], [QueryKey.SortOrder, selectedOrder]);
     }
   };
 
   useEffect(() => () => {
     dispatch(resetSort());
-    searchParams.delete(Query.SortOrder);
-    searchParams.delete(Query.SortType);
+    searchParams.delete(QueryKey.SortOrder);
+    searchParams.delete(QueryKey.SortType);
   }, [dispatch, searchParams]);
 
   return (
