@@ -2,26 +2,31 @@ import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { Camera, Cameras, Promo } from '../../@types/camera-types';
-import { AppDispatch, State } from '../../@types/store-types';
+import { AppDispatch, State, UserInput } from '../../@types/store-types';
 
 import { Action } from '../../const/action';
 import { ApiRoute } from '../../const/api-route';
 import { ReviewPost, ReviewsRaw } from '../../@types/review-types';
 import { QueryKey } from '../../const/query-key';
 import { FilterCategory, ServerFilterValue } from '../../const/filter-category';
-//import { sortCamerasByPrice } from '../../utiles/sort-compare';
+import { ServerTypeValue } from '../../const/sort-type';
+import { ServerOrderValue } from '../../const/sort-order';
 
 const getParams = (state: State) => {
   const categoryParams = state.FILTER.currentFilterCategory === FilterCategory.Photocamera
     ? ServerFilterValue.Photocamera
     : state.FILTER.currentFilterCategory;
 
+  const getPrice = (price: UserInput) => price === '' ? null : price;
+
   return ( {
     [QueryKey.SortOrder]: state.SORT.currentSortOrder,
     [QueryKey.SortType]: state.SORT.currentSortType,
     [QueryKey.FilterLevel]: state.FILTER.currentFilterLevels,
     [QueryKey.FilterType]: state.FILTER.currentFilterTypes,
-    [QueryKey.FilterCategory]: categoryParams
+    [QueryKey.FilterCategory]: categoryParams,
+    [QueryKey.PriceFrom]: getPrice(state.FILTER.priceFrom),
+    [QueryKey.PriceTo]: getPrice(state.FILTER.priceTo)
   });
 };
 
@@ -40,8 +45,36 @@ undefined,
 
     const { data } = await api.get<Cameras>(ApiRoute.Cameras, {params});
 
-    //const sortCameras = data.sort(sortCamerasByPrice);
     return data;
+  }
+);
+
+export const fetchPricesAction = createAsyncThunk<
+{minPrice: number; maxPrice: number},
+undefined,
+{
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}
+>(Action.FetchPrices,
+  async (_arg, {getState, extra: api}) => {
+    const state = getState();
+    const params = getParams(state);
+    const priceParams = {
+      ...params,
+      [QueryKey.SortOrder]: ServerTypeValue.Price,
+      [QueryKey.SortType]: ServerOrderValue.OrderUp
+    };
+
+    const { data } = await api.get<Cameras>(ApiRoute.Cameras, {params: priceParams});
+    const mostExpensiveCameraIndex = data.length - 1;
+
+    const minPrice = data[0].price;
+    const maxPrice = data[mostExpensiveCameraIndex].price;
+
+
+    return {minPrice, maxPrice};
   }
 );
 

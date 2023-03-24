@@ -14,6 +14,7 @@ import { FilterLevel } from '../../const/filter-level';
 import { FilterType } from '../../const/filter-type';
 import { QueryKey } from '../../const/query-key';
 import { UserInput } from '../../@types/store-types';
+import { fetchPricesAction } from '../../store/api-actions/api-actions';
 
 const SNAPSHOT_PARAMS = {key: QueryKey.FilterType, value: FilterType.Snapshot};
 const FILM_PARAMS = {key: QueryKey.FilterType, value: FilterType.Film};
@@ -118,6 +119,8 @@ function Filters(): JSX.Element {
     dispatch(resetFilters());
     deleteSearchParams();
   }, [dispatch, deleteSearchParams]);
+
+  useEffect(() => {fetchPricesAction();}, [currentFilterCategory, currentFilterLevels, currentFilterTypes, dispatch]);
 
   return (
     <div className="catalog__aside">

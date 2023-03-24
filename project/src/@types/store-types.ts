@@ -47,10 +47,14 @@ export type AppData = {
   camerasCount: number;
 }
 
+export type UserInput = '' | number;
+
 export type FilterData = {
   currentFilterCategory: string | null;
   currentFilterTypes: string[];
   currentFilterLevels: string[];
+  priceFrom: UserInput;
+  priceTo: UserInput;
   minPrice: number;
   maxPrice: number;
 }
@@ -60,4 +64,3 @@ export type CurrentFilter = {
   value: string;
 }
 
-export type UserInput = '' | number;

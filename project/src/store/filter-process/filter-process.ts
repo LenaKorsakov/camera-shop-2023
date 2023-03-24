@@ -1,14 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+import { fetchPricesAction } from '../api-actions/api-actions';
+
 import { NameSpace } from '../../const/name-space';
 import { QueryKey } from '../../const/query-key';
 
-import { CurrentFilter, FilterData } from '../../@types/store-types';
+import { CurrentFilter, FilterData, UserInput } from '../../@types/store-types';
 
 export const initialStateFilter: FilterData = {
   currentFilterCategory: null,
   currentFilterTypes: [],
   currentFilterLevels: [],
+  priceFrom: '',
+  priceTo: '',
   minPrice: 0,
   maxPrice: 0,
 };
@@ -25,6 +29,12 @@ export const filterProcess = createSlice({
     },
     setCurrentFilterLevels: (state, action: PayloadAction<string>) => {
       state.currentFilterLevels = [...state.currentFilterLevels, action.payload];
+    },
+    setPriceFrom: (state, action: PayloadAction<UserInput>) => {
+      state.priceFrom = action.payload;
+    },
+    setPriceTo: (state, action: PayloadAction<UserInput>) => {
+      state.priceTo = action.payload;
     },
     deleteCurrentFilter: (state, action: PayloadAction<CurrentFilter>) => {
       switch(action.payload.key) {
@@ -46,10 +56,17 @@ export const filterProcess = createSlice({
       state.currentFilterCategory = null;
       state.currentFilterTypes = [];
       state.currentFilterLevels = [];
-      state.minPrice = 0;
-      state.maxPrice = 0;
-    }
-  }
+      state.priceFrom = '';
+      state.priceTo = '';
+    },
+  },
+  extraReducers(builder) {
+    builder
+      .addCase(fetchPricesAction.fulfilled, (state, action) => {
+        state.minPrice = action.payload.minPrice;
+        state.maxPrice = action.payload.maxPrice;
+      });
+  },
 });
 
-export const {setCurrentFilterCategory, setCurrentFilterTypes, setCurrentFilterLevels, resetFilters, deleteCurrentFilter} = filterProcess.actions;
+export const {setCurrentFilterCategory, setCurrentFilterTypes, setCurrentFilterLevels, resetFilters, deleteCurrentFilter, setPriceFrom, setPriceTo} = filterProcess.actions;
