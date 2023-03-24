@@ -43,11 +43,11 @@ export const filterProcess = createSlice({
           break;
         }
         case (QueryKey.FilterType): {
-          state.currentFilterTypes.filter((type) => type !== action.payload.value);
+          state.currentFilterTypes = state.currentFilterTypes.filter((type) => type !== action.payload.value);
           break;
         }
         case (QueryKey.FilterLevel): {
-          state.currentFilterLevels.filter((level) => level !== action.payload.value);
+          state.currentFilterLevels = state.currentFilterLevels.filter((level) => level !== action.payload.value);
           break;
         }
       }

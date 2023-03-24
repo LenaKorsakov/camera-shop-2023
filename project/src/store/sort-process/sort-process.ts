@@ -22,11 +22,11 @@ export const sortProcess = createSlice({
     changeSortOrder: (state, action: PayloadAction<ServerOrderValue>) => {
       state.currentSortOrder = action.payload;
     },
-    resetSort: (state) => {
+    resetSortType: (state) => {
       state.currentSortType = null;
-      state.currentSortOrder = null;
+      //state.currentSortOrder = null;
     }
   }
 });
 
-export const {changeSortOrder, changeSortType, resetSort} = sortProcess.actions;
+export const {changeSortOrder, changeSortType, resetSortType} = sortProcess.actions;

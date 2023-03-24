@@ -1,6 +1,6 @@
-import { ChangeEvent, useEffect } from 'react';
+import { ChangeEvent, memo } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppSelector } from '../../hooks';
 import { getCurrentSortOrder, getCurrentSortType } from '../../store/sort-process/sort-process-selectors';
 
 import { AppRoute } from '../../const/app-route';
@@ -8,7 +8,7 @@ import { MIN_PAGE_NUMBER } from '../../const/const';
 import { QueryKey } from '../../const/query-key';
 import { ServerOrderValue, SORT_ORDER } from '../../const/sort-order';
 import { ServerTypeValue, SORT_TYPE } from '../../const/sort-type';
-import { resetSort } from '../../store/sort-process/sort-process';
+//import { resetSort } from '../../store/sort-process/sort-process';
 
 type ParamsType = [QueryKey.SortType, ServerTypeValue];
 type ParamsOrder = [QueryKey.SortOrder, ServerOrderValue];
@@ -16,7 +16,7 @@ type ParamsOrder = [QueryKey.SortOrder, ServerOrderValue];
 function Sort(): JSX.Element {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const dispatch = useAppDispatch();
+  //const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const currentSortType = useAppSelector(getCurrentSortType);
@@ -57,11 +57,11 @@ function Sort(): JSX.Element {
     }
   };
 
-  useEffect(() => () => {
-    dispatch(resetSort());
-    searchParams.delete(QueryKey.SortOrder);
-    searchParams.delete(QueryKey.SortType);
-  }, [dispatch, searchParams]);
+  // useEffect(() => () => {
+  //   dispatch(resetSort());
+  //   searchParams.delete(QueryKey.SortOrder);
+  //   searchParams.delete(QueryKey.SortType);
+  // }, [dispatch, searchParams]);
 
   return (
     <div className="catalog-sort">
@@ -109,4 +109,4 @@ function Sort(): JSX.Element {
   );
 }
 
-export default Sort;
+export default memo(Sort);

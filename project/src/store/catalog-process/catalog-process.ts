@@ -27,7 +27,7 @@ export const catalogData = createSlice({
         state.loadingStatus = FetchStatus.Success;
       })
       .addCase(fetchAllCameraAction.pending, (state) => {
-        state.loadingStatus = FetchStatus.Success;
+        state.loadingStatus = FetchStatus.Loading;
       })
       .addCase(fetchAllCameraAction.rejected, (state) => {
         state.loadingStatus = FetchStatus.Error;
@@ -40,7 +40,7 @@ export const catalogData = createSlice({
         state.fetchingStatus = FetchStatus.Success;
       })
       .addCase(fetchSearchCameraAction.pending, (state) => {
-        state.fetchingStatus = FetchStatus.Success;
+        state.fetchingStatus = FetchStatus.Loading;
       })
       .addCase(fetchSearchCameraAction.rejected, (state) => {
         state.fetchingStatus = FetchStatus.Error;

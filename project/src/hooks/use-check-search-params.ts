@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from './index';
-import { changeSortOrder, changeSortType } from '../store/sort-process/sort-process';
+import { changeSortOrder, changeSortType, resetSortType } from '../store/sort-process/sort-process';
 import { getCurrentFilterCategory, getCurrentFilterLevels, getCurrentFilterTypes, getPriceFrom, getPriceTo } from '../store/filter-process/filter-process-selectors';
 import { setCurrentFilterCategory, setCurrentFilterLevels, setCurrentFilterTypes, setPriceFrom, setPriceTo } from '../store/filter-process/filter-process';
 import { getCurrentSortOrder, getCurrentSortType } from '../store/sort-process/sort-process-selectors';
@@ -32,9 +32,12 @@ const useCheckSearchParams = () => {
       const paramsSortType = searchParams.get(QueryKey.SortType) as ServerTypeValue;
       const isAlreadySelected = currentSortType === paramsSortType;
 
+
       if(!isAlreadySelected) {
         dispatch(changeSortType(paramsSortType));
       }
+    } else {
+      dispatch(resetSortType());
     }
 
     if(isQueryParamExists(QueryKey.SortOrder)) {

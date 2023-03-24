@@ -40,6 +40,8 @@ function Catalog(): JSX.Element {
     productQty: cameras.length,
   });
 
+  const isNeedPaganation = cameras.length > ContentPerItem.Pagination;
+
   const { pageNum } = useParams() as {pageNum: string};
   const currentPageNum = + pageNum;
 
@@ -88,7 +90,7 @@ function Catalog(): JSX.Element {
                   linkProp={`${AppRoute.Catalog}${page - 1}?${currentParams}`}
                 />}
 
-            {pagesNumbers.map((number) => (
+            {isNeedPaganation && pagesNumbers.map((number) => (
               <PaginationItem
                 pageNum={number}
                 onPaginationItemClick={handlePaginationItemClick}

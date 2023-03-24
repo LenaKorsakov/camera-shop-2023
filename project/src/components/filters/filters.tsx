@@ -1,6 +1,5 @@
-/* eslint-disable no-console */
-import { ChangeEvent, useCallback, useEffect, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { ChangeEvent, useCallback, useState, useEffect } from 'react';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getCurrentFilterCategory, getCurrentFilterLevels, getCurrentFilterTypes } from '../../store/filter-process/filter-process-selectors';
@@ -42,7 +41,7 @@ function Filters(): JSX.Element {
 
   const isChecked = (filter: string, filtres: string[]) => filtres.some((value) => value === filter);
 
-  const getVideocameraSearchParams = (queryKey: QueryKey, queryValue: string) => {
+  const makeVideocameraSearchParams = (queryKey: QueryKey, queryValue: string) => {
     dispatch(deleteCurrentFilter(FILM_PARAMS));
     dispatch(deleteCurrentFilter(SNAPSHOT_PARAMS));
 
@@ -52,27 +51,27 @@ function Filters(): JSX.Element {
     return videocameraSearchParams;
   };
 
-  const getPhotocameraSearchParams = (queryKey: QueryKey, queryValue: string): URLSearchParams => {
+  const makePhotocameraSearchParams = (queryKey: QueryKey, queryValue: string): URLSearchParams => {
     const photocameraSearchParams = excludeParams(searchParams, [FilterCategory.Videocamera]);
     photocameraSearchParams.append(queryKey, queryValue);
 
     return photocameraSearchParams;
   };
 
-  const getSearchParams = (queryKey: QueryKey, queryValue: string): URLSearchParams => {
+  const makeCheckedFilterSearchParams = (queryKey: QueryKey, queryValue: string): URLSearchParams => {
     if (queryValue === FilterCategory.Photocamera) {
-      return getPhotocameraSearchParams(queryKey, queryValue);
+      return makePhotocameraSearchParams(queryKey, queryValue);
     }
 
     if (queryValue === FilterCategory.Videocamera) {
-      return getVideocameraSearchParams(queryKey, queryValue);
+      return makeVideocameraSearchParams(queryKey, queryValue);
     }
 
     const params = new URLSearchParams([...searchParams.entries(), [queryKey, queryValue]]);
     return params;
   };
 
-  const getUncheckedSearchParams = (queryKey: QueryKey, queryValue: string) => {
+  const getUncheckedFilterSearchParams = (queryKey: QueryKey, queryValue: string) => {
     dispatch(deleteCurrentFilter({key: queryKey, value: queryValue}));
 
     return excludeParams(searchParams, [queryValue]);
@@ -85,7 +84,7 @@ function Filters(): JSX.Element {
 
     if (value) {
 
-      const updatedSearchParams = checkbox.checked ? getSearchParams(queryKey, value) : getUncheckedSearchParams(queryKey, value);
+      const updatedSearchParams = checkbox.checked ? makeCheckedFilterSearchParams(queryKey, value) : getUncheckedFilterSearchParams(queryKey, value);
 
       setSearchParams(updatedSearchParams);
 
@@ -115,12 +114,14 @@ function Filters(): JSX.Element {
     setPriceTo('');
   };
 
-  useEffect(() => () => {
-    dispatch(resetFilters());
-    deleteSearchParams();
-  }, [dispatch, deleteSearchParams]);
+  // useEffect(() => () => {
+  //   dispatch(resetFilters());
+  //   deleteSearchParams();
+  // }, [dispatch, deleteSearchParams]);
 
-  useEffect(() => {fetchPricesAction();}, [currentFilterCategory, currentFilterLevels, currentFilterTypes, dispatch]);
+  useEffect(() => {
+    dispatch(fetchPricesAction());
+  }, [currentFilterCategory, currentFilterLevels, currentFilterTypes, dispatch]);
 
   return (
     <div className="catalog__aside">
@@ -130,8 +131,8 @@ function Filters(): JSX.Element {
           <FilterPrice
             priceFrom={priceFrom}
             priceTo={priceTo}
-            onPriceFrom={setPriceFrom}
-            onPriceTo={setPriceTo}
+            onPriceFromChange={setPriceFrom}
+            onPriceToChange={setPriceTo}
           />
           <fieldset className="catalog-filter__block">
             <legend className="title title--h5">Категория</legend>

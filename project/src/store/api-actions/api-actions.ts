@@ -12,21 +12,21 @@ import { FilterCategory, ServerFilterValue } from '../../const/filter-category';
 import { ServerTypeValue } from '../../const/sort-type';
 import { ServerOrderValue } from '../../const/sort-order';
 
-const getParams = (state: State) => {
+const makeCamerasSearchParams = (state: State) => {
   const categoryParams = state.FILTER.currentFilterCategory === FilterCategory.Photocamera
     ? ServerFilterValue.Photocamera
     : state.FILTER.currentFilterCategory;
 
-  const getPrice = (price: UserInput) => price === '' ? null : price;
+  const makePrice = (price: UserInput) => price === '' ? null : price;
 
-  return ( {
+  return({
     [QueryKey.SortOrder]: state.SORT.currentSortOrder,
     [QueryKey.SortType]: state.SORT.currentSortType,
     [QueryKey.FilterLevel]: state.FILTER.currentFilterLevels,
     [QueryKey.FilterType]: state.FILTER.currentFilterTypes,
     [QueryKey.FilterCategory]: categoryParams,
-    [QueryKey.PriceFrom]: getPrice(state.FILTER.priceFrom),
-    [QueryKey.PriceTo]: getPrice(state.FILTER.priceTo)
+    [QueryKey.PriceFrom]: makePrice(state.FILTER.priceFrom),
+    [QueryKey.PriceTo]: makePrice(state.FILTER.priceTo)
   });
 };
 
@@ -41,7 +41,7 @@ undefined,
 >(Action.FetchAllCameras,
   async (_arg, {getState, extra: api}) => {
     const state = getState();
-    const params = getParams(state);
+    const params = makeCamerasSearchParams(state);
 
     const { data } = await api.get<Cameras>(ApiRoute.Cameras, {params});
 
@@ -60,14 +60,15 @@ undefined,
 >(Action.FetchPrices,
   async (_arg, {getState, extra: api}) => {
     const state = getState();
-    const params = getParams(state);
-    const priceParams = {
+    const params = makeCamerasSearchParams(state);
+
+    const priceSearchParams = {
       ...params,
       [QueryKey.SortOrder]: ServerTypeValue.Price,
       [QueryKey.SortType]: ServerOrderValue.OrderUp
     };
 
-    const { data } = await api.get<Cameras>(ApiRoute.Cameras, {params: priceParams});
+    const { data } = await api.get<Cameras>(ApiRoute.Cameras, {params: priceSearchParams});
     const mostExpensiveCameraIndex = data.length - 1;
 
     const minPrice = data[0].price;
