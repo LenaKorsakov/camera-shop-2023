@@ -2,19 +2,19 @@ import { ChangeEvent, useState } from 'react';
 import { UserInput } from '../../@types/store-types';
 import { QueryKey } from '../../const/query-key';
 import { useAppSelector } from '../../hooks';
-import { getMaxPrice, getMinPrice } from '../../store/filter-process/filter-process-selectors';
+import { getCamerasMaxPrice, getCamerasMinPrice } from '../../store/filter-process/filter-process-selectors';
 
-type FilterPriceProps = {
-  priceFrom: UserInput;
-  priceTo: UserInput;
-  onPriceFromChange: (priceFrom: UserInput) => void;
-  onPriceToChange: (priceTo: UserInput) => void;
+type FilterByPriceProps = {
+  bottomPrice: UserInput;
+  topPrice: UserInput;
+  onBottomPriceChange: (priceFrom: UserInput) => void;
+  onTopPriceChange: (priceTo: UserInput) => void;
 }
 
 
-function FilterPrice({priceFrom, priceTo, onPriceFromChange, onPriceToChange}: FilterPriceProps): JSX.Element {
-  const minPrice = useAppSelector(getMinPrice);
-  const maxPrice = useAppSelector(getMaxPrice);
+function FilterByPrice({bottomPrice, topPrice, onBottomPriceChange, onTopPriceChange}: FilterByPriceProps): JSX.Element {
+  const minPrice = useAppSelector(getCamerasMinPrice);
+  const maxPrice = useAppSelector(getCamerasMaxPrice);
 
   const [isPriceFromInvalid, setPriceFromIsInvalid] = useState<boolean>(false);
   const [isPriceToInvalid, setPriceToInvalid] = useState<boolean>(false);
@@ -24,28 +24,31 @@ function FilterPrice({priceFrom, priceTo, onPriceFromChange, onPriceToChange}: F
     const filterType = event.target.dataset.query as QueryKey;
     const isNotValid = Number(price) < 0;
 
-    if (filterType === QueryKey.PriceFrom) {
-      if (isNotValid) {
-        setPriceFromIsInvalid(true);
-        onPriceFromChange('');
+    switch(filterType) {
+      case QueryKey.PriceFrom : {
+        if (isNotValid) {
+          setPriceFromIsInvalid(true);
+          onBottomPriceChange('');
 
-        return;
+          return;
+        }
+
+        setPriceFromIsInvalid(false);
+        onBottomPriceChange(price);
+        break;
       }
 
-      setPriceFromIsInvalid(false);
-      onPriceFromChange(price);
-    }
+      case QueryKey.PriceTo :
+        if(isNotValid) {
+          setPriceToInvalid(true);
+          onTopPriceChange('');
 
-    if (filterType === QueryKey.PriceTo) {
-      if(isNotValid) {
-        setPriceToInvalid(true);
-        onPriceToChange('');
+          return;
+        }
 
-        return;
-      }
-
-      setPriceToInvalid(false);
-      onPriceToChange(price);
+        setPriceToInvalid(false);
+        onTopPriceChange(price);
+        break;
     }
   };
 
@@ -59,7 +62,7 @@ function FilterPrice({priceFrom, priceTo, onPriceFromChange, onPriceToChange}: F
               type="number"
               name="price"
               placeholder={`от ${minPrice}`}
-              value={priceFrom}
+              value={bottomPrice}
               onChange={handlePriceInputChange}
               data-query={QueryKey.PriceFrom}
             />
@@ -71,7 +74,7 @@ function FilterPrice({priceFrom, priceTo, onPriceFromChange, onPriceToChange}: F
               type="number"
               name="priceUp"
               placeholder={`до ${maxPrice}`}
-              value={priceTo}
+              value={topPrice}
               onChange={handlePriceInputChange}
               data-query={QueryKey.PriceTo}
             />
@@ -82,4 +85,4 @@ function FilterPrice({priceFrom, priceTo, onPriceFromChange, onPriceToChange}: F
   );
 }
 
-export default FilterPrice;
+export default FilterByPrice;

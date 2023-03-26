@@ -3,8 +3,8 @@ import { useSearchParams } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from './index';
 import { changeSortOrder, changeSortType, resetSortOrder, resetSortType } from '../store/sort-process/sort-process';
-import { getCurrentFilterCategory, getCurrentFilterLevels, getCurrentFilterTypes, getPriceFrom, getPriceTo } from '../store/filter-process/filter-process-selectors';
-import { resetCurrentFilter, setCurrentFilterCategory, setCurrentFilterLevels, setCurrentFilterTypes, setPriceFrom, setPriceTo } from '../store/filter-process/filter-process';
+import { getCurrentFilterByCategory, getCurrentFiltersByLevels, getCurrentFiltersByTypes, getUserEnteredBottomPrice, getUserEnteredTopPrice } from '../store/filter-process/filter-process-selectors';
+import { resetCurrentFilter, setCurrentFilterCategory, setCurrentFilterLevels, setCurrentFilterTypes, setBottomPrice, setTopPrice } from '../store/filter-process/filter-process';
 import { getCurrentSortOrder, getCurrentSortType } from '../store/sort-process/sort-process-selectors';
 
 import { QueryKey } from '../const/query-key';
@@ -15,13 +15,13 @@ import { UserInput } from '../@types/store-types';
 
 const useCheckSearchParams = () => {
   const dispatch = useAppDispatch();
-  const currentFilterCategory = useAppSelector(getCurrentFilterCategory);
-  const currentFilterTypes = useAppSelector(getCurrentFilterTypes);
-  const currentFilterLevels = useAppSelector(getCurrentFilterLevels);
+  const currentFilterCategory = useAppSelector(getCurrentFilterByCategory);
+  const currentFilterTypes = useAppSelector(getCurrentFiltersByTypes);
+  const currentFilterLevels = useAppSelector(getCurrentFiltersByLevels);
   const currentSortType = useAppSelector(getCurrentSortType);
   const currentSortOrder = useAppSelector(getCurrentSortOrder);
-  const currentPriceTo = useAppSelector(getPriceTo);
-  const currentPriceFrom = useAppSelector(getPriceFrom);
+  const currentPriceTo = useAppSelector(getUserEnteredTopPrice);
+  const currentPriceFrom = useAppSelector(getUserEnteredBottomPrice);
 
   const [searchParams] = useSearchParams();
 
@@ -60,7 +60,7 @@ const useCheckSearchParams = () => {
       const isAlreadySelected = currentPriceFrom === paramsPriceFrom;
 
       if(!isAlreadySelected) {
-        dispatch(setPriceFrom(paramsPriceFrom));
+        dispatch(setBottomPrice(paramsPriceFrom));
       }
     }
 
@@ -69,7 +69,7 @@ const useCheckSearchParams = () => {
       const isAlreadySelected = currentPriceTo === paramsPriceTo;
 
       if(!isAlreadySelected) {
-        dispatch(setPriceTo(paramsPriceTo));
+        dispatch(setTopPrice(paramsPriceTo));
       }
     }
 

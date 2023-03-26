@@ -11,8 +11,8 @@ export const initialStateFilter: FilterData = {
   currentFilterCategory: null,
   currentFilterTypes: [],
   currentFilterLevels: [],
-  priceFrom: '',
-  priceTo: '',
+  bottomPrice: '',
+  topPrice: '',
   minPrice: 0,
   maxPrice: 0,
 };
@@ -30,11 +30,11 @@ export const filterProcess = createSlice({
     setCurrentFilterLevels: (state, action: PayloadAction<string>) => {
       state.currentFilterLevels = [...state.currentFilterLevels, action.payload];
     },
-    setPriceFrom: (state, action: PayloadAction<UserInput>) => {
-      state.priceFrom = action.payload;
+    setBottomPrice: (state, action: PayloadAction<UserInput>) => {
+      state.bottomPrice = action.payload;
     },
-    setPriceTo: (state, action: PayloadAction<UserInput>) => {
-      state.priceTo = action.payload;
+    setTopPrice: (state, action: PayloadAction<UserInput>) => {
+      state.topPrice = action.payload;
     },
     deleteCurrentFilter: (state, action: PayloadAction<CurrentFilter>) => {
       switch(action.payload.key) {
@@ -72,8 +72,8 @@ export const filterProcess = createSlice({
       state.currentFilterCategory = null;
       state.currentFilterTypes = [];
       state.currentFilterLevels = [];
-      state.priceFrom = '';
-      state.priceTo = '';
+      state.bottomPrice = '';
+      state.topPrice = '';
     },
   },
   extraReducers(builder) {
@@ -85,4 +85,4 @@ export const filterProcess = createSlice({
   },
 });
 
-export const {setCurrentFilterCategory, setCurrentFilterTypes, setCurrentFilterLevels, resetFilters, deleteCurrentFilter, setPriceFrom, setPriceTo, resetCurrentFilter} = filterProcess.actions;
+export const {setCurrentFilterCategory, setCurrentFilterTypes, setCurrentFilterLevels, resetFilters, deleteCurrentFilter, setBottomPrice, setTopPrice, resetCurrentFilter} = filterProcess.actions;

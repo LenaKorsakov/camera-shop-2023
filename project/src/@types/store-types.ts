@@ -53,8 +53,8 @@ export type FilterData = {
   currentFilterCategory: string | null;
   currentFilterTypes: string[];
   currentFilterLevels: string[];
-  priceFrom: UserInput;
-  priceTo: UserInput;
+  bottomPrice: UserInput;
+  topPrice: UserInput;
   minPrice: number;
   maxPrice: number;
 }

@@ -1,10 +1,10 @@
 import { ChangeEvent, useCallback, useState, useEffect, memo } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 
-import FilterPrice from '../filter-price/filter-price';
+import FilterByPrice from '../filter-by-price/filter-by-price';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getCurrentFilterCategory, getCurrentFilterLevels, getCurrentFilterTypes } from '../../store/filter-process/filter-process-selectors';
+import { getCurrentFilterByCategory, getCurrentFiltersByLevels, getCurrentFiltersByTypes } from '../../store/filter-process/filter-process-selectors';
 import { deleteCurrentFilter, resetFilters } from '../../store/filter-process/filter-process';
 import { fetchPricesAction } from '../../store/api-actions/api-actions';
 
@@ -29,17 +29,17 @@ const excludeParams = (params: URLSearchParams, excludedValues: string[]) => {
 };
 
 function Filters(): JSX.Element {
-  const currentFilterTypes = useAppSelector(getCurrentFilterTypes);
-  const currentFilterLevels = useAppSelector(getCurrentFilterLevels);
-  const currentFilterCategory = useAppSelector(getCurrentFilterCategory);
-  const isVideocamera = currentFilterCategory === FilterCategory.Videocamera;
+  const currentFiltersByType = useAppSelector(getCurrentFiltersByTypes);
+  const currentFiltersByLevels = useAppSelector(getCurrentFiltersByLevels);
+  const currentFilterByCategory = useAppSelector(getCurrentFilterByCategory);
+  const isVideocamera = currentFilterByCategory === FilterCategory.Videocamera;
 
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const [priceFrom, setPriceFrom] = useState<UserInput>('');
-  const [priceTo, setPriceTo] = useState<UserInput>('');
+  const [bottomPrice, setBottomPrice] = useState<UserInput>('');
+  const [topPrice, setTopPrice] = useState<UserInput>('');
 
   const isChecked = (filter: string, filtres: string[]) => filtres.some((value) => value === filter);
 
@@ -112,24 +112,24 @@ function Filters(): JSX.Element {
     deleteSearchParams();
     setSearchParams(searchParams);
 
-    setPriceFrom('');
-    setPriceTo('');
+    setBottomPrice('');
+    setTopPrice('');
   };
 
   useEffect(() => {
     dispatch(fetchPricesAction());
-  }, [currentFilterCategory, currentFilterLevels, currentFilterTypes, dispatch]);
+  }, [currentFilterByCategory, currentFiltersByLevels, currentFiltersByType, dispatch]);
 
   return (
     <div className="catalog__aside">
       <div className="catalog-filter">
         <form action="#" onReset={handleFormReset}>
           <h2 className="visually-hidden">Фильтр</h2>
-          <FilterPrice
-            priceFrom={priceFrom}
-            priceTo={priceTo}
-            onPriceFromChange={setPriceFrom}
-            onPriceToChange={setPriceTo}
+          <FilterByPrice
+            bottomPrice={bottomPrice}
+            topPrice={topPrice}
+            onBottomPriceChange={setBottomPrice}
+            onTopPriceChange={setTopPrice}
           />
           <fieldset className="catalog-filter__block">
             <legend className="title title--h5">Категория</legend>
@@ -139,7 +139,7 @@ function Filters(): JSX.Element {
                   <input
                     type="checkbox"
                     name={name[0].toLowerCase().concat(name.slice(1))}
-                    checked={category === currentFilterCategory}
+                    checked={category === currentFilterByCategory}
                     data-query={QueryKey.FilterCategory}
                     data-value={category}
                     onChange={handleCheckboxChange}
@@ -162,7 +162,7 @@ function Filters(): JSX.Element {
                     <input
                       type="checkbox"
                       name={name[0].toLowerCase().concat(name.slice(1))}
-                      checked={isChecked(type, currentFilterTypes)}
+                      checked={isChecked(type, currentFiltersByType)}
                       disabled={isDisabled}
                       data-query={QueryKey.FilterType}
                       data-value={type}
@@ -185,7 +185,7 @@ function Filters(): JSX.Element {
                   <input
                     type="checkbox"
                     name={name[0].toLowerCase().concat(name.slice(1))}
-                    checked={isChecked(level, currentFilterLevels)}
+                    checked={isChecked(level, currentFiltersByLevels)}
                     data-query={QueryKey.FilterLevel}
                     data-value={level}
                     onChange={handleCheckboxChange}

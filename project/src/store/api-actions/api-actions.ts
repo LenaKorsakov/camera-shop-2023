@@ -1,18 +1,17 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { Camera, Cameras, Promo } from '../../@types/camera-types';
-import { AppDispatch, State, UserInput } from '../../@types/store-types';
-
 import { Action } from '../../const/action';
 import { ApiRoute } from '../../const/api-route';
-import { ReviewPost, ReviewsRaw } from '../../@types/review-types';
 import { QueryKey } from '../../const/query-key';
 import { FilterCategory, ServerFilterValue } from '../../const/filter-category';
 import { ServerTypeValue } from '../../const/sort-type';
-import { ServerOrderValue } from '../../const/sort-order';
 
-const makeCamerasSearchParams = (state: State) => {
+import { ReviewPost, ReviewsRaw } from '../../@types/review-types';
+import { Camera, Cameras, Promo } from '../../@types/camera-types';
+import { AppDispatch, State, UserInput } from '../../@types/store-types';
+
+const generateCamerasSearchParams = (state: State) => {
   const categoryParams = state.FILTER.currentFilterCategory === FilterCategory.Photocamera
     ? ServerFilterValue.Photocamera
     : state.FILTER.currentFilterCategory;
@@ -25,8 +24,8 @@ const makeCamerasSearchParams = (state: State) => {
     [QueryKey.FilterLevel]: state.FILTER.currentFilterLevels,
     [QueryKey.FilterType]: state.FILTER.currentFilterTypes,
     [QueryKey.FilterCategory]: categoryParams,
-    [QueryKey.PriceFrom]: makePrice(state.FILTER.priceFrom),
-    [QueryKey.PriceTo]: makePrice(state.FILTER.priceTo)
+    [QueryKey.PriceFrom]: makePrice(state.FILTER.bottomPrice),
+    [QueryKey.PriceTo]: makePrice(state.FILTER.topPrice)
   });
 };
 
@@ -41,7 +40,7 @@ undefined,
 >(Action.FetchAllCameras,
   async (_arg, {getState, extra: api}) => {
     const state = getState();
-    const params = makeCamerasSearchParams(state);
+    const params = generateCamerasSearchParams(state);
 
     const { data } = await api.get<Cameras>(ApiRoute.Cameras, {params});
 
@@ -60,12 +59,11 @@ undefined,
 >(Action.FetchPrices,
   async (_arg, {getState, extra: api}) => {
     const state = getState();
-    const params = makeCamerasSearchParams(state);
+    const params = generateCamerasSearchParams(state);
 
     const priceSearchParams = {
       ...params,
-      [QueryKey.SortOrder]: ServerTypeValue.Price,
-      [QueryKey.SortType]: ServerOrderValue.OrderUp
+      [QueryKey.SortType]: ServerTypeValue.Price,
     };
 
     const { data } = await api.get<Cameras>(ApiRoute.Cameras, {params: priceSearchParams});
