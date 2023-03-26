@@ -24,9 +24,11 @@ export const sortProcess = createSlice({
     },
     resetSortType: (state) => {
       state.currentSortType = null;
-      //state.currentSortOrder = null;
+    },
+    resetSortOrder: (state) => {
+      state.currentSortOrder = null;
     }
   }
 });
 
-export const {changeSortOrder, changeSortType, resetSortType} = sortProcess.actions;
+export const {changeSortOrder, changeSortType, resetSortType, resetSortOrder} = sortProcess.actions;

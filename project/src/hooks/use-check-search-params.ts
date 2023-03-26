@@ -2,9 +2,9 @@ import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from './index';
-import { changeSortOrder, changeSortType, resetSortType } from '../store/sort-process/sort-process';
+import { changeSortOrder, changeSortType, resetSortOrder, resetSortType } from '../store/sort-process/sort-process';
 import { getCurrentFilterCategory, getCurrentFilterLevels, getCurrentFilterTypes, getPriceFrom, getPriceTo } from '../store/filter-process/filter-process-selectors';
-import { setCurrentFilterCategory, setCurrentFilterLevels, setCurrentFilterTypes, setPriceFrom, setPriceTo } from '../store/filter-process/filter-process';
+import { resetCurrentFilter, setCurrentFilterCategory, setCurrentFilterLevels, setCurrentFilterTypes, setPriceFrom, setPriceTo } from '../store/filter-process/filter-process';
 import { getCurrentSortOrder, getCurrentSortType } from '../store/sort-process/sort-process-selectors';
 
 import { QueryKey } from '../const/query-key';
@@ -36,8 +36,10 @@ const useCheckSearchParams = () => {
       if(!isAlreadySelected) {
         dispatch(changeSortType(paramsSortType));
       }
-    } else {
-      dispatch(resetSortType());
+    }
+
+    if(!isQueryParamExists(QueryKey.SortType) && currentSortType !== null) {
+      dispatch(resetSortType());//делаем сброс state, когда в адресной строке уже нет query-string с ключом sort_type, а в state значение сохранилось
     }
 
     if(isQueryParamExists(QueryKey.SortOrder)) {
@@ -49,20 +51,24 @@ const useCheckSearchParams = () => {
       }
     }
 
+    if(!isQueryParamExists(QueryKey.SortOrder) && currentSortOrder !== null) {
+      dispatch(resetSortOrder());
+    }
+
     if(isQueryParamExists(QueryKey.PriceFrom)) {
       const paramsPriceFrom = searchParams.get(QueryKey.PriceFrom) as UserInput;
-      const isAlreadyInputed = currentPriceFrom === paramsPriceFrom;
+      const isAlreadySelected = currentPriceFrom === paramsPriceFrom;
 
-      if(!isAlreadyInputed) {
+      if(!isAlreadySelected) {
         dispatch(setPriceFrom(paramsPriceFrom));
       }
     }
 
     if(isQueryParamExists(QueryKey.PriceTo)) {
       const paramsPriceTo = searchParams.get(QueryKey.PriceTo) as UserInput;
-      const isAlreadyInputed = currentPriceTo === paramsPriceTo;
+      const isAlreadySelected = currentPriceTo === paramsPriceTo;
 
-      if(!isAlreadyInputed) {
+      if(!isAlreadySelected) {
         dispatch(setPriceTo(paramsPriceTo));
       }
     }
@@ -76,6 +82,10 @@ const useCheckSearchParams = () => {
       }
     }
 
+    if(!isQueryParamExists(QueryKey.FilterCategory) && currentFilterCategory !== null) {
+      dispatch(resetCurrentFilter(QueryKey.FilterCategory));
+    }
+
     if(isQueryParamExists(QueryKey.FilterType)) {
       const paramsType = searchParams.getAll(QueryKey.FilterType);
       paramsType.forEach((value) => {
@@ -87,6 +97,10 @@ const useCheckSearchParams = () => {
       });
     }
 
+    if(!isQueryParamExists(QueryKey.FilterType) && currentFilterTypes.length !== 0) {
+      dispatch(resetCurrentFilter(QueryKey.FilterType));
+    }
+
     if(isQueryParamExists(QueryKey.FilterLevel)) {
       const paramsLevel = searchParams.getAll(QueryKey.FilterLevel);
       paramsLevel.forEach((value) => {
@@ -96,6 +110,10 @@ const useCheckSearchParams = () => {
           dispatch(setCurrentFilterLevels(value));
         }
       });
+    }
+
+    if(!isQueryParamExists(QueryKey.FilterLevel) && currentFilterLevels.length !== 0) {
+      dispatch(resetCurrentFilter(QueryKey.FilterLevel));
     }
 
   },[dispatch, searchParams, currentFilterCategory, currentFilterTypes, currentFilterLevels, currentSortOrder, currentSortType, currentPriceFrom, currentPriceTo]);

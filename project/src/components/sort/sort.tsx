@@ -8,7 +8,6 @@ import { MIN_PAGE_NUMBER } from '../../const/const';
 import { QueryKey } from '../../const/query-key';
 import { ServerOrderValue, SORT_ORDER } from '../../const/sort-order';
 import { ServerTypeValue, SORT_TYPE } from '../../const/sort-type';
-//import { resetSort } from '../../store/sort-process/sort-process';
 
 type ParamsType = [QueryKey.SortType, ServerTypeValue];
 type ParamsOrder = [QueryKey.SortOrder, ServerOrderValue];
@@ -16,7 +15,6 @@ type ParamsOrder = [QueryKey.SortOrder, ServerOrderValue];
 function Sort(): JSX.Element {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  //const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const currentSortType = useAppSelector(getCurrentSortType);
@@ -56,12 +54,6 @@ function Sort(): JSX.Element {
         : updateSearchParams([QueryKey.SortType, ServerTypeValue.Price], [QueryKey.SortOrder, selectedOrder]);
     }
   };
-
-  // useEffect(() => () => {
-  //   dispatch(resetSort());
-  //   searchParams.delete(QueryKey.SortOrder);
-  //   searchParams.delete(QueryKey.SortType);
-  // }, [dispatch, searchParams]);
 
   return (
     <div className="catalog-sort">

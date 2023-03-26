@@ -1,4 +1,4 @@
-import { changeSortOrder, changeSortType, initialStateSort, resetSort, sortProcess } from './sort-process';
+import { changeSortOrder, changeSortType, initialStateSort, resetSortOrder, sortProcess, resetSortType } from './sort-process';
 
 import { ServerTypeValue } from '../../const/sort-type';
 import { UNKNOWN_ACTION } from '../../utiles/mock';
@@ -24,8 +24,12 @@ describe('Reducer: sort', () => {
     expect(sortProcess.reducer(state, {type: changeSortOrder.type, payload: ServerOrderValue.OrderDown}))
       .toEqual({...state, currentSortOrder: ServerOrderValue.OrderDown });
   });
-  it('should should return initial state if dispatch resetSort', () => {
-    expect(sortProcess.reducer(state, {type: resetSort.type}))
-      .toEqual(state);
+  it('should should return state null if dispatch resetSortOrder', () => {
+    expect(sortProcess.reducer(state, {type: resetSortOrder.type}))
+      .toEqual({...state, currentSortOrder: null });
+  });
+  it('should should return state null if dispatch resetSortType', () => {
+    expect(sortProcess.reducer(state, {type: resetSortType.type}))
+      .toEqual({...state, currentSortType: null });
   });
 });

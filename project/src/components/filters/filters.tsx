@@ -1,19 +1,21 @@
-import { ChangeEvent, useCallback, useState, useEffect } from 'react';
+import { ChangeEvent, useCallback, useState, useEffect, memo } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
+
+import FilterPrice from '../filter-price/filter-price';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getCurrentFilterCategory, getCurrentFilterLevels, getCurrentFilterTypes } from '../../store/filter-process/filter-process-selectors';
 import { deleteCurrentFilter, resetFilters } from '../../store/filter-process/filter-process';
+import { fetchPricesAction } from '../../store/api-actions/api-actions';
 
-import FilterPrice from '../filter-price/filter-price';
 import { AppRoute } from '../../const/app-route';
 import { MIN_PAGE_NUMBER } from '../../const/const';
 import { FilterCategory } from '../../const/filter-category';
 import { FilterLevel } from '../../const/filter-level';
 import { FilterType } from '../../const/filter-type';
 import { QueryKey } from '../../const/query-key';
+
 import { UserInput } from '../../@types/store-types';
-import { fetchPricesAction } from '../../store/api-actions/api-actions';
 
 const SNAPSHOT_PARAMS = {key: QueryKey.FilterType, value: FilterType.Snapshot};
 const FILM_PARAMS = {key: QueryKey.FilterType, value: FilterType.Film};
@@ -114,11 +116,6 @@ function Filters(): JSX.Element {
     setPriceTo('');
   };
 
-  // useEffect(() => () => {
-  //   dispatch(resetFilters());
-  //   deleteSearchParams();
-  // }, [dispatch, deleteSearchParams]);
-
   useEffect(() => {
     dispatch(fetchPricesAction());
   }, [currentFilterCategory, currentFilterLevels, currentFilterTypes, dispatch]);
@@ -213,4 +210,4 @@ function Filters(): JSX.Element {
   );
 }
 
-export default Filters;
+export default memo(Filters);
