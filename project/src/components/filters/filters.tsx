@@ -10,15 +10,15 @@ import { fetchPricesAction } from '../../store/api-actions/api-actions';
 
 import { AppRoute } from '../../const/app-route';
 import { MIN_PAGE_NUMBER } from '../../const/const';
-import { FilterCategory } from '../../const/filter-category';
-import { FilterLevel } from '../../const/filter-level';
-import { FilterType } from '../../const/filter-type';
+import { FilterByCategory } from '../../const/filter-by-category';
+import { FilterByLevel } from '../../const/filter-by-level';
+import { FilterByType } from '../../const/filter-by-type';
 import { QueryKey } from '../../const/query-key';
 
 import { UserInput } from '../../@types/store-types';
 
-const SNAPSHOT_PARAMS = {key: QueryKey.FilterType, value: FilterType.Snapshot};
-const FILM_PARAMS = {key: QueryKey.FilterType, value: FilterType.Film};
+const SNAPSHOT_PARAMS = {key: QueryKey.FilterType, value: FilterByType.Snapshot};
+const FILM_PARAMS = {key: QueryKey.FilterType, value: FilterByType.Film};
 
 const excludeParams = (params: URLSearchParams, excludedValues: string[]) => {
   //удаление из строки запроса ненужных параметров
@@ -32,7 +32,8 @@ function Filters(): JSX.Element {
   const currentFiltersByType = useAppSelector(getCurrentFiltersByTypes);
   const currentFiltersByLevels = useAppSelector(getCurrentFiltersByLevels);
   const currentFilterByCategory = useAppSelector(getCurrentFilterByCategory);
-  const isVideocamera = currentFilterByCategory === FilterCategory.Videocamera;
+
+  const isVideocamera = currentFilterByCategory === FilterByCategory.Videocamera;
 
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -47,25 +48,25 @@ function Filters(): JSX.Element {
     dispatch(deleteCurrentFilter(FILM_PARAMS));
     dispatch(deleteCurrentFilter(SNAPSHOT_PARAMS));
 
-    const videocameraSearchParams = excludeParams(searchParams, [FilterType.Film, FilterType.Snapshot, FilterCategory.Photocamera]);
+    const videocameraSearchParams = excludeParams(searchParams, [FilterByType.Film, FilterByType.Snapshot, FilterByCategory.Photocamera]);
     videocameraSearchParams.append(queryKey, queryValue);
 
     return videocameraSearchParams;
   };
 
   const makePhotocameraSearchParams = (queryKey: QueryKey, queryValue: string): URLSearchParams => {
-    const photocameraSearchParams = excludeParams(searchParams, [FilterCategory.Videocamera]);
+    const photocameraSearchParams = excludeParams(searchParams, [FilterByCategory.Videocamera]);
     photocameraSearchParams.append(queryKey, queryValue);
 
     return photocameraSearchParams;
   };
 
   const makeCheckedFilterSearchParams = (queryKey: QueryKey, queryValue: string): URLSearchParams => {
-    if (queryValue === FilterCategory.Photocamera) {
+    if (queryValue === FilterByCategory.Photocamera) {
       return makePhotocameraSearchParams(queryKey, queryValue);
     }
 
-    if (queryValue === FilterCategory.Videocamera) {
+    if (queryValue === FilterByCategory.Videocamera) {
       return makeVideocameraSearchParams(queryKey, queryValue);
     }
 
@@ -133,7 +134,7 @@ function Filters(): JSX.Element {
           />
           <fieldset className="catalog-filter__block">
             <legend className="title title--h5">Категория</legend>
-            {Object.entries(FilterCategory).map(([name, category]) => (
+            {Object.entries(FilterByCategory).map(([name, category]) => (
               <div className="custom-checkbox catalog-filter__item" key={name}>
                 <label>
                   <input
@@ -154,8 +155,8 @@ function Filters(): JSX.Element {
           </fieldset>
           <fieldset className="catalog-filter__block">
             <legend className="title title--h5">Тип камеры</legend>
-            {Object.entries(FilterType).map(([name, type]) => {
-              const isDisabled = (type === FilterType.Snapshot || type === FilterType.Film) && isVideocamera;
+            {Object.entries(FilterByType).map(([name, type]) => {
+              const isDisabled = (type === FilterByType.Snapshot || type === FilterByType.Film) && isVideocamera;
               return (
                 <div className="custom-checkbox catalog-filter__item" key={name}>
                   <label>
@@ -179,7 +180,7 @@ function Filters(): JSX.Element {
           </fieldset>
           <fieldset className="catalog-filter__block">
             <legend className="title title--h5">Уровень</legend>
-            {Object.entries(FilterLevel).map(([name, level]) => (
+            {Object.entries(FilterByLevel).map(([name, level]) => (
               <div className="custom-checkbox catalog-filter__item" key={name}>
                 <label>
                   <input

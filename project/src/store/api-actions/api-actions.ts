@@ -4,7 +4,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Action } from '../../const/action';
 import { ApiRoute } from '../../const/api-route';
 import { QueryKey } from '../../const/query-key';
-import { FilterCategory, ServerFilterValue } from '../../const/filter-category';
+import { FilterByCategory, ServerFilterValue } from '../../const/filter-by-category';
 import { ServerTypeValue } from '../../const/sort-type';
 
 import { ReviewPost, ReviewsRaw } from '../../@types/review-types';
@@ -12,7 +12,7 @@ import { Camera, Cameras, Promo } from '../../@types/camera-types';
 import { AppDispatch, State, UserInput } from '../../@types/store-types';
 
 const generateCamerasSearchParams = (state: State) => {
-  const categoryParams = state.FILTER.currentFilterCategory === FilterCategory.Photocamera
+  const categoryParams = state.FILTER.currentFilterCategory === FilterByCategory.Photocamera
     ? ServerFilterValue.Photocamera
     : state.FILTER.currentFilterCategory;
 
@@ -24,8 +24,8 @@ const generateCamerasSearchParams = (state: State) => {
     [QueryKey.FilterLevel]: state.FILTER.currentFilterLevels,
     [QueryKey.FilterType]: state.FILTER.currentFilterTypes,
     [QueryKey.FilterCategory]: categoryParams,
-    [QueryKey.PriceFrom]: makePrice(state.FILTER.bottomPrice),
-    [QueryKey.PriceTo]: makePrice(state.FILTER.topPrice)
+    [QueryKey.BottomPrice]: makePrice(state.FILTER.bottomPrice),
+    [QueryKey.TopPrice]: makePrice(state.FILTER.topPrice)
   });
 };
 

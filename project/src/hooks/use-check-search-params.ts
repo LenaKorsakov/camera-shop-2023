@@ -55,8 +55,8 @@ const useCheckSearchParams = () => {
       dispatch(resetSortOrder());
     }
 
-    if(isQueryParamExists(QueryKey.PriceFrom)) {
-      const paramsPriceFrom = searchParams.get(QueryKey.PriceFrom) as UserInput;
+    if(isQueryParamExists(QueryKey.BottomPrice)) {
+      const paramsPriceFrom = searchParams.get(QueryKey.BottomPrice) as UserInput;
       const isAlreadySelected = currentPriceFrom === paramsPriceFrom;
 
       if(!isAlreadySelected) {
@@ -64,13 +64,14 @@ const useCheckSearchParams = () => {
       }
     }
 
-    if(isQueryParamExists(QueryKey.PriceTo)) {
-      const paramsPriceTo = searchParams.get(QueryKey.PriceTo) as UserInput;
+    if(isQueryParamExists(QueryKey.TopPrice)) {
+      const paramsPriceTo = searchParams.get(QueryKey.TopPrice) as UserInput;
       const isAlreadySelected = currentPriceTo === paramsPriceTo;
 
       if(!isAlreadySelected) {
         dispatch(setTopPrice(paramsPriceTo));
       }
+      //добить сброс
     }
 
     if(isQueryParamExists(QueryKey.FilterCategory)) {

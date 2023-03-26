@@ -5,6 +5,6 @@ export enum QueryKey {
   FilterType = 'type',
   FilterCategory = 'category',
   FilterLevel = 'level',
-  PriceFrom = 'price_gte',
-  PriceTo = 'price_lte'
+  BottomPrice = 'price_gte',
+  TopPrice = 'price_lte'
 }
