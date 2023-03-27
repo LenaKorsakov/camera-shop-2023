@@ -6,11 +6,11 @@ import { getCurrentSortOrder, getCurrentSortType } from '../../store/sort-proces
 import { AppRoute } from '../../const/app-route';
 import { MIN_PAGE_NUMBER } from '../../const/const';
 import { QueryKey } from '../../const/query-key';
-import { ServerOrderValue, SORT_ORDER } from '../../const/sort-order';
-import { ServerTypeValue, SORT_TYPE } from '../../const/sort-type';
+import { SortByOrderServerValue, SORT_BY_ORDER } from '../../const/sort-by-order';
+import { SortByTypeServerValue, SORT_BY_TYPE } from '../../const/sort-by-type';
 
-type ParamsType = [QueryKey.SortType, ServerTypeValue];
-type ParamsOrder = [QueryKey.SortOrder, ServerOrderValue];
+type ParamsType = [QueryKey.SortType, SortByTypeServerValue];
+type ParamsOrder = [QueryKey.SortOrder, SortByOrderServerValue];
 
 function Sort(): JSX.Element {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -34,24 +34,24 @@ function Sort(): JSX.Element {
 
   const handleInputSortTypeChange = (event: ChangeEvent<HTMLInputElement>) => {
     const element = event.target;
-    const selectedType = element.dataset.value as ServerTypeValue;
+    const selectedType = element.dataset.value as SortByTypeServerValue;
 
     if (selectedType) {
       currentOrderType
         ? updateSearchParams ([QueryKey.SortType, selectedType], [QueryKey.SortOrder, currentOrderType])
-        : updateSearchParams ([QueryKey.SortType, selectedType], [QueryKey.SortOrder, ServerOrderValue.OrderUp]);
+        : updateSearchParams ([QueryKey.SortType, selectedType], [QueryKey.SortOrder, SortByOrderServerValue.OrderUp]);
     }
   };
 
   const handleInputSortOrderChange = (event: ChangeEvent<HTMLInputElement>) => {
     const element = event.target;
 
-    const selectedOrder = element.dataset.value as ServerOrderValue;
+    const selectedOrder = element.dataset.value as SortByOrderServerValue;
 
     if (selectedOrder) {
       currentSortType
         ? updateSearchParams([QueryKey.SortType, currentSortType], [QueryKey.SortOrder, selectedOrder])
-        : updateSearchParams([QueryKey.SortType, ServerTypeValue.Price], [QueryKey.SortOrder, selectedOrder]);
+        : updateSearchParams([QueryKey.SortType, SortByTypeServerValue.Price], [QueryKey.SortOrder, selectedOrder]);
     }
   };
 
@@ -61,7 +61,7 @@ function Sort(): JSX.Element {
         <div className="catalog-sort__inner">
           <p className="title title--h5">Сортировать:</p>
           <div className="catalog-sort__type">
-            {SORT_TYPE.map(({title, id, value}) => (
+            {SORT_BY_TYPE.map(({title, id, value}) => (
               <div className="catalog-sort__btn-text" key={id}>
                 <input
                   type="radio"
@@ -76,7 +76,7 @@ function Sort(): JSX.Element {
             ))}
           </div>
           <div className="catalog-sort__order">
-            {SORT_ORDER.map(({title, id, value}) => (
+            {SORT_BY_ORDER.map(({title, id, value}) => (
               <div className={`catalog-sort__btn catalog-sort__btn--${id}`} key={id}>
                 <input
                   type="radio"

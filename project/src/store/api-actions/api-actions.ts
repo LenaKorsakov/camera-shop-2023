@@ -5,7 +5,7 @@ import { Action } from '../../const/action';
 import { ApiRoute } from '../../const/api-route';
 import { QueryKey } from '../../const/query-key';
 import { FilterByCategory, ServerFilterValue } from '../../const/filter-by-category';
-import { ServerTypeValue } from '../../const/sort-type';
+import { SortByTypeServerValue } from '../../const/sort-by-type';
 
 import { ReviewPost, ReviewsRaw } from '../../@types/review-types';
 import { Camera, Cameras, Promo } from '../../@types/camera-types';
@@ -29,7 +29,7 @@ const generateCamerasSearchParams = (state: State, isFetchingPrice?: boolean) =>
   if (isFetchingPrice) {
     return({
       ...filtersParams,
-      [QueryKey.SortType]: ServerTypeValue.Price,
+      [QueryKey.SortType]: SortByTypeServerValue.Price,
     });
   }
 

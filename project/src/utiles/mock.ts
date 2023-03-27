@@ -118,3 +118,6 @@ export const makeMockState = () => ({
 
 export const mockState = makeMockState();
 export const mockStore = getMockStore(mockState);
+
+export const fakeMinPrice = datatype.number();
+export const fakeMaxPrice = datatype.number();

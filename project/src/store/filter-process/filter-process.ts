@@ -52,7 +52,7 @@ export const filterProcess = createSlice({
         }
       }
     },
-    resetCurrentFilter: (state, action: PayloadAction<QueryKey>) => {
+    resetCurrentFilterGroup: (state, action: PayloadAction<QueryKey>) => {
       switch(action.payload) {
         case (QueryKey.FilterCategory): {
           state.currentFilterCategory = null;
@@ -85,4 +85,4 @@ export const filterProcess = createSlice({
   },
 });
 
-export const {setCurrentFilterCategory, setCurrentFilterTypes, setCurrentFilterLevels, resetFilters, deleteCurrentFilter, setBottomPrice, setTopPrice, resetCurrentFilter} = filterProcess.actions;
+export const {setCurrentFilterCategory, setCurrentFilterTypes, setCurrentFilterLevels, resetFilters, deleteCurrentFilter, setBottomPrice, setTopPrice, resetCurrentFilterGroup} = filterProcess.actions;

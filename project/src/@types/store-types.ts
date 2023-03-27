@@ -1,8 +1,8 @@
 import { store } from '../store/index';
 
 import { FetchStatus } from '../const/fetch-status';
-import { ServerOrderValue } from '../const/sort-order';
-import { ServerTypeValue } from '../const/sort-type';
+import { SortByOrderServerValue } from '../const/sort-by-order';
+import { SortByTypeServerValue } from '../const/sort-by-type';
 import { QueryKey } from '../const/query-key';
 
 import { Camera, Cameras, Promo } from './camera-types';
@@ -38,8 +38,8 @@ export type ReviewData = {
 }
 
 export type SortData = {
-  currentSortType: null | ServerTypeValue;
-  currentSortOrder: null | ServerOrderValue;
+  currentSortType: null | SortByTypeServerValue;
+  currentSortOrder: null | SortByOrderServerValue;
 }
 
 export type AppData = {

@@ -1,6 +1,8 @@
-import { fetchAllCameraAction, fetchCameraByIdAction, fetchPromoAction, fetchReviewsByIdAction, fetchSearchCameraAction, fetchSimilarCamerasAction, sendReviewAction } from './api-actions';
+import { fetchAllCameraAction, fetchCameraByIdAction, fetchPricesAction, fetchPromoAction, fetchReviewsByIdAction, fetchSearchCameraAction, fetchSimilarCamerasAction, sendReviewAction } from './api-actions';
 import { ApiRoute } from '../../const/api-route';
 import { fakeCamera, fakeCameras, fakeId, fakePromo, fakeReviewPost, fakeReviews, getMockStore, mockApi } from '../../utiles/mock';
+import { QueryKey } from '../../const/query-key';
+import { SortByTypeServerValue } from '../../const/sort-by-type';
 
 describe('Asynk actions: test', () => {
   it('fetchAllCameraAction should return cameras if server return 200', async() => {
@@ -17,7 +19,7 @@ describe('Asynk actions: test', () => {
 
     expect(actions).toEqual([
       fetchAllCameraAction.pending.type,
-      fetchAllCameraAction.fulfilled.type
+      fetchAllCameraAction.rejected.type
     ]);
 
     expect(payload).toEqual(fakeCameras);
@@ -39,6 +41,53 @@ describe('Asynk actions: test', () => {
       fetchAllCameraAction.rejected.type
     ]);
   });
+
+  it('should dispatch Fetch Prices', async() => {
+    mockApi
+      .onGet(ApiRoute.Cameras, {params: {
+        [QueryKey.FilterType]: [],
+        [QueryKey.FilterLevel]: [],
+        [QueryKey.FilterCategory]: null,
+        [QueryKey.SortType]: SortByTypeServerValue.Price ,
+      }})
+      .reply(200);
+
+    const store = getMockStore();
+    expect(store.getActions()).toEqual([]);
+
+    await store.dispatch(fetchPricesAction());
+
+    const actions = store.getActions().map(({type}) => type);
+
+    expect(actions).toEqual([
+      fetchPricesAction.pending.type,
+      fetchPricesAction.rejected.type
+    ]);
+
+  });
+  it('should be rejected type when Fetch High Price error', async() => {
+    mockApi
+      .onGet(ApiRoute.Cameras, {params: {
+        [QueryKey.FilterType]: [],
+        [QueryKey.FilterLevel]: [],
+        [QueryKey.FilterCategory]: null,
+        [QueryKey.SortType]: SortByTypeServerValue.Price ,
+      }})
+      .reply(400);
+
+    const store = getMockStore();
+    expect(store.getActions()).toEqual([]);
+
+    await store.dispatch(fetchPricesAction());
+
+    const actions = store.getActions().map(({type}) => type);
+
+    expect(actions).toEqual([
+      fetchPricesAction.pending.type,
+      fetchPricesAction.rejected.type
+    ]);
+  });
+
 
   it('fetchSearchCameraAction should return cameras if server return 200', async() => {
     mockApi

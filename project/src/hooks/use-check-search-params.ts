@@ -4,12 +4,12 @@ import { useSearchParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from './index';
 import { changeSortOrder, changeSortType, resetSortOrder, resetSortType } from '../store/sort-process/sort-process';
 import { getCurrentFilterByCategory, getCurrentFiltersByLevels, getCurrentFiltersByTypes, getUserEnteredBottomPrice, getUserEnteredTopPrice } from '../store/filter-process/filter-process-selectors';
-import { resetCurrentFilter, setCurrentFilterCategory, setCurrentFilterLevels, setCurrentFilterTypes, setBottomPrice, setTopPrice } from '../store/filter-process/filter-process';
+import { resetCurrentFilterGroup, setCurrentFilterCategory, setCurrentFilterLevels, setCurrentFilterTypes, setBottomPrice, setTopPrice } from '../store/filter-process/filter-process';
 import { getCurrentSortOrder, getCurrentSortType } from '../store/sort-process/sort-process-selectors';
 
 import { QueryKey } from '../const/query-key';
-import { ServerOrderValue } from '../const/sort-order';
-import { ServerTypeValue } from '../const/sort-type';
+import { SortByOrderServerValue } from '../const/sort-by-order';
+import { SortByTypeServerValue } from '../const/sort-by-type';
 import { UserInput } from '../@types/store-types';
 
 
@@ -29,7 +29,7 @@ const useCheckSearchParams = () => {
     const isQueryParamExists = (param: QueryKey) => searchParams && searchParams.has(param);
 
     if(isQueryParamExists(QueryKey.SortType)) {
-      const paramsSortType = searchParams.get(QueryKey.SortType) as ServerTypeValue;
+      const paramsSortType = searchParams.get(QueryKey.SortType) as SortByTypeServerValue;
       const isAlreadySelected = currentSortType === paramsSortType;
 
 
@@ -43,7 +43,7 @@ const useCheckSearchParams = () => {
     }
 
     if(isQueryParamExists(QueryKey.SortOrder)) {
-      const paramsSortOrder = searchParams.get(QueryKey.SortOrder) as ServerOrderValue;
+      const paramsSortOrder = searchParams.get(QueryKey.SortOrder) as SortByOrderServerValue;
       const isAlreadySelected = currentSortOrder === paramsSortOrder;
 
       if(!isAlreadySelected) {
@@ -91,7 +91,7 @@ const useCheckSearchParams = () => {
     }
 
     if(!isQueryParamExists(QueryKey.FilterCategory) && currentFilterCategory !== null) {
-      dispatch(resetCurrentFilter(QueryKey.FilterCategory));
+      dispatch(resetCurrentFilterGroup(QueryKey.FilterCategory));
     }
 
     if(isQueryParamExists(QueryKey.FilterType)) {
@@ -106,7 +106,7 @@ const useCheckSearchParams = () => {
     }
 
     if(!isQueryParamExists(QueryKey.FilterType) && currentFilterTypes.length !== 0) {
-      dispatch(resetCurrentFilter(QueryKey.FilterType));
+      dispatch(resetCurrentFilterGroup(QueryKey.FilterType));
     }
 
     if(isQueryParamExists(QueryKey.FilterLevel)) {
@@ -121,7 +121,7 @@ const useCheckSearchParams = () => {
     }
 
     if(!isQueryParamExists(QueryKey.FilterLevel) && currentFilterLevels.length !== 0) {
-      dispatch(resetCurrentFilter(QueryKey.FilterLevel));
+      dispatch(resetCurrentFilterGroup(QueryKey.FilterLevel));
     }
 
   },[dispatch, searchParams, currentFilterCategory, currentFilterTypes, currentFilterLevels, currentSortOrder, currentSortType, currentTopPrice, currentBottomPrice]);

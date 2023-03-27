@@ -5,14 +5,14 @@ import { Provider} from 'react-redux';
 
 import { getMockStore, mockState } from '../../utiles/mock';
 import { NameSpace } from '../../const/name-space';
-import { ServerOrderValue } from '../../const/sort-order';
-import { ServerTypeValue } from '../../const/sort-type';
+import { SortByOrderServerValue } from '../../const/sort-by-order';
+import { SortByTypeServerValue } from '../../const/sort-by-type';
 import Sort from './sort';
 
 const mockStore = getMockStore({...mockState,
   [NameSpace.Sort]: {
-    currentSortOrder: ServerOrderValue.OrderUp,
-    currentSortType: ServerTypeValue.Popular
+    currentSortOrder: SortByOrderServerValue.OrderUp,
+    currentSortType: SortByTypeServerValue.Popular
   }
 });
 
