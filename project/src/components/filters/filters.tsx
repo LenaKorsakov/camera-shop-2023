@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useState, useEffect, memo } from 'react';
+import { ChangeEvent, useCallback, useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 
 import FilterByPrice from '../filter-by-price/filter-by-price';
@@ -32,6 +32,9 @@ function Filters(): JSX.Element {
   const currentFiltersByType = useAppSelector(getCurrentFiltersByTypes);
   const currentFiltersByLevels = useAppSelector(getCurrentFiltersByLevels);
   const currentFilterByCategory = useAppSelector(getCurrentFilterByCategory);
+
+  // const currentBottomPrice = useAppSelector(getUserEnteredBottomPrice);
+  // const currentTopPrice = useAppSelector(getUserEnteredTopPrice);
 
   const isVideocamera = currentFilterByCategory === FilterByCategory.Videocamera;
 
@@ -211,4 +214,4 @@ function Filters(): JSX.Element {
   );
 }
 
-export default memo(Filters);
+export default Filters;

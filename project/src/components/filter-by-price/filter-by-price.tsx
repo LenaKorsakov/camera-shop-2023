@@ -1,9 +1,14 @@
 import { ChangeEvent, SyntheticEvent, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { UserInput } from '../../@types/store-types';
-import { QueryKey } from '../../const/query-key';
-import { useAppSelector } from '../../hooks';
+
 import { getCamerasMaxPrice, getCamerasMinPrice } from '../../store/filter-process/filter-process-selectors';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { displayError } from '../../store/actions';
+
+import { QueryKey } from '../../const/query-key';
+import { WarningMessage } from '../../const/warning-message';
+
+import { UserInput } from '../../@types/store-types';
 
 type FilterByPriceProps = {
   bottomPrice: UserInput;
@@ -12,15 +17,54 @@ type FilterByPriceProps = {
   onTopPriceChange: (priceTo: UserInput) => void;
 }
 
-
 function FilterByPrice({bottomPrice, topPrice, onBottomPriceChange, onTopPriceChange}: FilterByPriceProps): JSX.Element {
+  const dispatch = useAppDispatch();
+
   const minPrice = useAppSelector(getCamerasMinPrice);
   const maxPrice = useAppSelector(getCamerasMaxPrice);
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const numBottomPrice = Number(bottomPrice);
+  const numTopPrice = Number(topPrice);
 
-  const [isBottomPriceInvalid, setBottomPriceIsInvalid] = useState<boolean>(false);
+  const [searchParams, setSearchParams ] = useSearchParams();
+
+  const [isBottomPriceInvalid, setBottomPriceInvalid] = useState<boolean>(false);
   const [isTopPriceInvalid, setTopPriceInvalid] = useState<boolean>(false);
+
+  const getValidBottomPrice = () => {
+    if (numBottomPrice !== 0) {
+      if (numBottomPrice < minPrice) {
+        return minPrice;
+      }
+      if (numBottomPrice > maxPrice && numTopPrice === 0) {
+        return maxPrice;
+      }
+      if ((numBottomPrice > numTopPrice || numBottomPrice > maxPrice) && numTopPrice !== 0) {
+        return numTopPrice;
+      }
+
+      return bottomPrice;
+    } else {
+      dispatch(displayError(WarningMessage.FilterWrongBottomPriceWarning));
+    }
+  };
+
+  const getValidTopPrice = () => {
+    if (numTopPrice !== 0) {
+      if (numTopPrice > maxPrice) {
+        return maxPrice;
+      }
+      if (numTopPrice < minPrice && numBottomPrice === 0) {
+        return minPrice;
+      }
+      if ((numTopPrice < numBottomPrice || numTopPrice < minPrice) && numBottomPrice !== 0) {
+        return numBottomPrice;
+      }
+      return numTopPrice;
+    } else {
+      dispatch(displayError(WarningMessage.FilterWrongTopPriceWarning));
+    }
+  };
 
   const handlePriceInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const price = event.target.value as UserInput;
@@ -30,13 +74,13 @@ function FilterByPrice({bottomPrice, topPrice, onBottomPriceChange, onTopPriceCh
     switch(filterType) {
       case QueryKey.BottomPrice : {
         if (isNotValid) {
-          setBottomPriceIsInvalid(true);
+          setBottomPriceInvalid(true);
           onBottomPriceChange('');
 
           return;
         }
 
-        setBottomPriceIsInvalid(false);
+        setBottomPriceInvalid(false);
         onBottomPriceChange(price);
         break;
       }
@@ -61,66 +105,38 @@ function FilterByPrice({bottomPrice, topPrice, onBottomPriceChange, onTopPriceCh
 
     switch(filterType) {
       case QueryKey.BottomPrice: {
-        const getValidBottomPrice = () => {
-          if (Number(bottomPrice) < minPrice || Number(bottomPrice) === 0) {
-            return minPrice;
-          }
-          if (Number(bottomPrice > maxPrice && Number(topPrice) === 0)) {
-            return maxPrice;
-          }
-          if ((Number(bottomPrice) > Number(topPrice) || bottomPrice > maxPrice) && Number(topPrice) !== 0) {
-            return Number(topPrice);
-          }
-
-          return bottomPrice;
-        };
-
         const validBottomPrice = getValidBottomPrice();
-        onBottomPriceChange(validBottomPrice);
-        setBottomPriceIsInvalid(false);
 
-        searchParams.set(QueryKey.BottomPrice, String(validBottomPrice));
+        if (validBottomPrice) {
+          onBottomPriceChange(validBottomPrice);
 
-        if (Number(topPrice) === 0) {
-          onTopPriceChange(maxPrice);
-
-          searchParams.set(QueryKey.TopPrice, String(maxPrice));
+          searchParams.set(QueryKey.BottomPrice, String(validBottomPrice));
         }
 
         break;
       }
 
       case QueryKey.TopPrice: {
-        const getValidTopPrice = () => {
-          if (Number(topPrice) > maxPrice || Number(bottomPrice) === 0) {
-            return maxPrice;
-          }
-          if (Number(topPrice < minPrice && Number(bottomPrice) === 0)) {
-            return minPrice;
-          }
-          if ((Number(topPrice) < Number(bottomPrice) || topPrice < minPrice) && Number(bottomPrice) !== 0) {
-            return Number(bottomPrice);
-          }
-
-          return topPrice;
-        };
-
         const validTopPrice = getValidTopPrice();
-        onTopPriceChange(validTopPrice);
-        setTopPriceInvalid(false);
 
-        searchParams.set(QueryKey.TopPrice, String(validTopPrice));
+        if (validTopPrice) {
+          onTopPriceChange(validTopPrice);
 
-        if (Number(bottomPrice) === 0) {
-          onBottomPriceChange(minPrice);
-
-          searchParams.set(QueryKey.BottomPrice, String(minPrice));
+          searchParams.set(QueryKey.TopPrice, String(validTopPrice));
         }
 
         break;
       }
     }
-    setSearchParams(searchParams);
+
+    if (numBottomPrice !== 0 && numTopPrice !== 0 ) {
+      setBottomPriceInvalid(false);
+      setTopPriceInvalid(false);
+
+      setSearchParams(searchParams);
+    } else {
+      dispatch(displayError(WarningMessage.FilterWrongPriceWarning));
+    }
   };
 
   const handleInputKeyDown = (event: React.KeyboardEvent) => {
