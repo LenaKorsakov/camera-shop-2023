@@ -156,7 +156,7 @@ function FilterByPrice({bottomPrice, topPrice, onBottomPriceChange, onTopPriceCh
   };
 
   return (
-    <fieldset className="catalog-filter__block">
+    <fieldset className="catalog-filter__block" data-testid='filter-by-price'>
       <legend className="title title--h5">Цена, ₽</legend>
       <div className="catalog-filter__price-range">
         <div className={`custom-input ${isBottomPriceInvalid ? 'is-invalid' : '' }`}>

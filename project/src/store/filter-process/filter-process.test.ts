@@ -1,14 +1,15 @@
-
 import { setCurrentFilterCategory, setCurrentFilterTypes, setCurrentFilterLevels, setBottomPrice, setTopPrice, resetCurrentFilterGroup, resetFilters, deleteCurrentFilter } from './filter-process';
 import { fakeMaxPrice, fakeMinPrice, UNKNOWN_ACTION } from '../../utiles/mock';
 
-import { FilterData } from '../../@types/store-types';
+import { fetchPricesAction } from '../api-actions/api-actions';
 import { filterProcess, initialStateFilter } from './filter-process';
+
 import { FilterByCategory } from '../../const/filter-by-category';
 import { FilterByType } from '../../const/filter-by-type';
 import { FilterByLevel } from '../../const/filter-by-level';
-import { fetchPricesAction } from '../api-actions/api-actions';
 import { QueryKey } from '../../const/query-key';
+
+import { FilterData } from '../../@types/store-types';
 
 describe('Reducer: filter', () => {
   let state: FilterData;

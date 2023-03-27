@@ -14,6 +14,9 @@ import { initialStateProduct } from '../store/product-process/product-process';
 import { initialStateReview } from '../store/review-process/review-process';
 import { initialStateBasket } from '../store/basket-process/basket-process';
 import { FetchStatus } from '../const/fetch-status';
+import { initialStateApp } from '../store/app-process/app-process';
+import { initialStateSort } from '../store/sort-process/sort-process';
+import { initialStateFilter } from '../store/filter-process/filter-process';
 
 export const makeFakeCamera = (): Camera => ({
   id: datatype.number(),
@@ -114,6 +117,9 @@ export const makeMockState = () => ({
     ...initialStateReview,
   },
   [NameSpace.Order]: {...initialStateBasket},
+  [NameSpace.APP]: {...initialStateApp},
+  [NameSpace.Sort]: {...initialStateSort},
+  [NameSpace.Filter]: {...initialStateFilter}
 });
 
 export const mockState = makeMockState();
