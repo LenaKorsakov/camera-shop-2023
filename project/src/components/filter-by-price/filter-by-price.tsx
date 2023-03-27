@@ -1,4 +1,4 @@
-import { ChangeEvent, SyntheticEvent, useState } from 'react';
+import { ChangeEvent, SyntheticEvent } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { getCamerasMaxPrice, getCamerasMinPrice } from '../../store/filter-process/filter-process-selectors';
@@ -13,11 +13,15 @@ import { UserInput } from '../../@types/store-types';
 type FilterByPriceProps = {
   bottomPrice: UserInput;
   topPrice: UserInput;
-  onBottomPriceChange: (priceFrom: UserInput) => void;
-  onTopPriceChange: (priceTo: UserInput) => void;
+  onBottomPriceChange: (bottomPrice: UserInput) => void;
+  onTopPriceChange: (topPrice: UserInput) => void;
+  isBottomPriceInvalid: boolean;
+  onBottomPriceInvalidChange: (isBottomPriceInvalid: boolean) => void;
+  isTopPriceInvalid: boolean;
+  onTopPriceInvalidChange: (isTopPriceInvalid: boolean) => void;
 }
 
-function FilterByPrice({bottomPrice, topPrice, onBottomPriceChange, onTopPriceChange}: FilterByPriceProps): JSX.Element {
+function FilterByPrice({bottomPrice, topPrice, onBottomPriceChange, onTopPriceChange, isBottomPriceInvalid, onBottomPriceInvalidChange: setBottomPriceInvalid, isTopPriceInvalid, onTopPriceInvalidChange: setTopPriceInvalid}: FilterByPriceProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   const minPrice = useAppSelector(getCamerasMinPrice);
@@ -27,9 +31,6 @@ function FilterByPrice({bottomPrice, topPrice, onBottomPriceChange, onTopPriceCh
   const numTopPrice = Number(topPrice);
 
   const [searchParams, setSearchParams ] = useSearchParams();
-
-  const [isBottomPriceInvalid, setBottomPriceInvalid] = useState<boolean>(false);
-  const [isTopPriceInvalid, setTopPriceInvalid] = useState<boolean>(false);
 
   const getValidBottomPrice = () => {
     if (numBottomPrice !== 0) {
@@ -46,6 +47,7 @@ function FilterByPrice({bottomPrice, topPrice, onBottomPriceChange, onTopPriceCh
       return bottomPrice;
     } else {
       dispatch(displayError(WarningMessage.FilterWrongBottomPriceWarning));
+      setBottomPriceInvalid(true);
     }
   };
 
@@ -63,6 +65,7 @@ function FilterByPrice({bottomPrice, topPrice, onBottomPriceChange, onTopPriceCh
       return numTopPrice;
     } else {
       dispatch(displayError(WarningMessage.FilterWrongTopPriceWarning));
+      setTopPriceInvalid(true);
     }
   };
 
@@ -129,12 +132,18 @@ function FilterByPrice({bottomPrice, topPrice, onBottomPriceChange, onTopPriceCh
       }
     }
 
-    if (numBottomPrice !== 0 && numTopPrice !== 0 ) {
+    if (numBottomPrice !== 0 && numTopPrice !== 0) {
       setBottomPriceInvalid(false);
       setTopPriceInvalid(false);
 
       setSearchParams(searchParams);
     } else {
+      if (numBottomPrice === 0) {
+        setBottomPriceInvalid(true);
+      }
+      if (numTopPrice === 0) {
+        setTopPriceInvalid(true);
+      }
       dispatch(displayError(WarningMessage.FilterWrongPriceWarning));
     }
   };

@@ -20,8 +20,8 @@ const useCheckSearchParams = () => {
   const currentFilterLevels = useAppSelector(getCurrentFiltersByLevels);
   const currentSortType = useAppSelector(getCurrentSortType);
   const currentSortOrder = useAppSelector(getCurrentSortOrder);
-  const currentPriceTo = useAppSelector(getUserEnteredTopPrice);
-  const currentPriceFrom = useAppSelector(getUserEnteredBottomPrice);
+  const currentBottomPrice = useAppSelector(getUserEnteredTopPrice);
+  const currentTopPrice = useAppSelector(getUserEnteredBottomPrice);
 
   const [searchParams] = useSearchParams();
 
@@ -57,21 +57,28 @@ const useCheckSearchParams = () => {
 
     if(isQueryParamExists(QueryKey.BottomPrice)) {
       const paramsPriceFrom = searchParams.get(QueryKey.BottomPrice) as UserInput;
-      const isAlreadySelected = currentPriceFrom === paramsPriceFrom;
+      const isAlreadySelected = currentTopPrice === paramsPriceFrom;
 
       if(!isAlreadySelected) {
         dispatch(setBottomPrice(paramsPriceFrom));
       }
     }
 
+    if(!isQueryParamExists(QueryKey.BottomPrice) && Number(currentBottomPrice) !== 0) {
+      dispatch(setBottomPrice(''));
+    }
+
     if(isQueryParamExists(QueryKey.TopPrice)) {
       const paramsPriceTo = searchParams.get(QueryKey.TopPrice) as UserInput;
-      const isAlreadySelected = currentPriceTo === paramsPriceTo;
+      const isAlreadySelected = currentBottomPrice === paramsPriceTo;
 
       if(!isAlreadySelected) {
         dispatch(setTopPrice(paramsPriceTo));
       }
-      //добить сброс
+    }
+
+    if(!isQueryParamExists(QueryKey.TopPrice) && Number(currentTopPrice) !== 0) {
+      dispatch(setTopPrice(''));
     }
 
     if(isQueryParamExists(QueryKey.FilterCategory)) {
@@ -117,7 +124,7 @@ const useCheckSearchParams = () => {
       dispatch(resetCurrentFilter(QueryKey.FilterLevel));
     }
 
-  },[dispatch, searchParams, currentFilterCategory, currentFilterTypes, currentFilterLevels, currentSortOrder, currentSortType, currentPriceFrom, currentPriceTo]);
+  },[dispatch, searchParams, currentFilterCategory, currentFilterTypes, currentFilterLevels, currentSortOrder, currentSortType, currentTopPrice, currentBottomPrice]);
 };
 
 export default useCheckSearchParams;

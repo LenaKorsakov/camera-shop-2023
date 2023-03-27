@@ -11,21 +11,32 @@ import { ReviewPost, ReviewsRaw } from '../../@types/review-types';
 import { Camera, Cameras, Promo } from '../../@types/camera-types';
 import { AppDispatch, State, UserInput } from '../../@types/store-types';
 
-const generateCamerasSearchParams = (state: State) => {
+const generateCamerasSearchParams = (state: State, isFetchingPrice?: boolean) => {
   const categoryParams = state.FILTER.currentFilterCategory === FilterByCategory.Photocamera
     ? ServerFilterValue.Photocamera
     : state.FILTER.currentFilterCategory;
 
   const makePrice = (price: UserInput) => price === '' ? null : price;
 
-  return({
-    [QueryKey.SortOrder]: state.SORT.currentSortOrder,
-    [QueryKey.SortType]: state.SORT.currentSortType,
+  const filtersParams = {
     [QueryKey.FilterLevel]: state.FILTER.currentFilterLevels,
     [QueryKey.FilterType]: state.FILTER.currentFilterTypes,
     [QueryKey.FilterCategory]: categoryParams,
     [QueryKey.BottomPrice]: makePrice(state.FILTER.bottomPrice),
     [QueryKey.TopPrice]: makePrice(state.FILTER.topPrice)
+  };
+
+  if (isFetchingPrice) {
+    return({
+      ...filtersParams,
+      [QueryKey.SortType]: ServerTypeValue.Price,
+    });
+  }
+
+  return({
+    ...filtersParams,
+    [QueryKey.SortOrder]: state.SORT.currentSortOrder,
+    [QueryKey.SortType]: state.SORT.currentSortType,
   });
 };
 
@@ -59,14 +70,9 @@ undefined,
 >(Action.FetchPrices,
   async (_arg, {getState, extra: api}) => {
     const state = getState();
-    const params = generateCamerasSearchParams(state);
+    const params = generateCamerasSearchParams(state, true);
 
-    const priceSearchParams = {
-      ...params,
-      [QueryKey.SortType]: ServerTypeValue.Price,
-    };
-
-    const { data } = await api.get<Cameras>(ApiRoute.Cameras, {params: priceSearchParams});
+    const { data } = await api.get<Cameras>(ApiRoute.Cameras, {params});
     const mostExpensiveCameraIndex = data.length - 1;
 
     const minPrice = data[0].price;

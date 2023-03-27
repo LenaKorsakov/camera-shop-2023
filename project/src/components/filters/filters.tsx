@@ -4,7 +4,7 @@ import { useSearchParams, useNavigate } from 'react-router-dom';
 import FilterByPrice from '../filter-by-price/filter-by-price';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getCurrentFilterByCategory, getCurrentFiltersByLevels, getCurrentFiltersByTypes } from '../../store/filter-process/filter-process-selectors';
+import { getCurrentFilterByCategory, getCurrentFiltersByLevels, getCurrentFiltersByTypes, getUserEnteredBottomPrice, getUserEnteredTopPrice } from '../../store/filter-process/filter-process-selectors';
 import { deleteCurrentFilter, resetFilters } from '../../store/filter-process/filter-process';
 import { fetchPricesAction } from '../../store/api-actions/api-actions';
 
@@ -33,8 +33,11 @@ function Filters(): JSX.Element {
   const currentFiltersByLevels = useAppSelector(getCurrentFiltersByLevels);
   const currentFilterByCategory = useAppSelector(getCurrentFilterByCategory);
 
-  // const currentBottomPrice = useAppSelector(getUserEnteredBottomPrice);
-  // const currentTopPrice = useAppSelector(getUserEnteredTopPrice);
+  const currentBottomPrice = useAppSelector(getUserEnteredBottomPrice);
+  const currentTopPrice = useAppSelector(getUserEnteredTopPrice);
+
+  const [bottomPrice, setBottomPrice] = useState<UserInput>(currentBottomPrice);
+  const [topPrice, setTopPrice] = useState<UserInput>(currentTopPrice);
 
   const isVideocamera = currentFilterByCategory === FilterByCategory.Videocamera;
 
@@ -42,8 +45,8 @@ function Filters(): JSX.Element {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const [bottomPrice, setBottomPrice] = useState<UserInput>('');
-  const [topPrice, setTopPrice] = useState<UserInput>('');
+  const [isBottomPriceInvalid, setBottomPriceInvalid] = useState<boolean>(false);
+  const [isTopPriceInvalid, setTopPriceInvalid] = useState<boolean>(false);
 
   const isChecked = (filter: string, filtres: string[]) => filtres.some((value) => value === filter);
 
@@ -118,6 +121,8 @@ function Filters(): JSX.Element {
 
     setBottomPrice('');
     setTopPrice('');
+    setBottomPriceInvalid(false);
+    setTopPriceInvalid(false);
   };
 
   useEffect(() => {
@@ -134,6 +139,10 @@ function Filters(): JSX.Element {
             topPrice={topPrice}
             onBottomPriceChange={setBottomPrice}
             onTopPriceChange={setTopPrice}
+            isBottomPriceInvalid={isBottomPriceInvalid}
+            onBottomPriceInvalidChange={setBottomPriceInvalid}
+            isTopPriceInvalid={isTopPriceInvalid}
+            onTopPriceInvalidChange={setTopPriceInvalid}
           />
           <fieldset className="catalog-filter__block">
             <legend className="title title--h5">Категория</legend>
