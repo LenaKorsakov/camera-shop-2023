@@ -1,15 +1,16 @@
-import { ChangeEvent, KeyboardEvent, SyntheticEvent, useMemo, useRef, useState } from 'react';
+import './form-search.css';
+import { ChangeEvent, KeyboardEvent, SyntheticEvent, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { debounce } from 'lodash';
 
-import LoadingPage from '../../pages/loading-page/loading-page';
-
-import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchCameraByIdAction, fetchSearchCameraAction } from '../../store/api-actions/api-actions';
 import { getSearchedCameras, getSearchedCamerasStatus } from '../../store/catalog-process/catalog-process-selectors';
 import { displayError } from '../../store/actions';
+
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import useOnClickOutside from '../../hooks/use-on-click-outside';
 import { useKeydownEscClose } from '../../hooks/use-keydown-esc-close';
+import useKeyPress from '../../hooks/use-key-press';
 
 import { DEFAULT_TABS_TYPE } from '../../const/tabs-buttons';
 import { SEARCH_DELAY } from '../../const/const';
@@ -24,8 +25,12 @@ function FormSearch(): JSX.Element {
   const searchRef = useRef(null);
   const navigate = useNavigate();
 
+  const arrowUpPressed = useKeyPress('ArrowUp');
+  const arrowDownPressed = useKeyPress('ArrowDown');
+
   const [isDropdownOpened, setDropdownIsOpened] = useState<boolean>(false);
   const [searchedValue, setSearchValue] = useState<string>('');
+  const [currentProductIndex, setCurrentProductIndex] = useState<number>(0);
 
   const debouncedFetchCameras = useMemo(
     () => debounce((value: string) => {
@@ -34,10 +39,24 @@ function FormSearch(): JSX.Element {
 
   const searchedCameras = useAppSelector(getSearchedCameras);
   const fetchingStatus = useAppSelector(getSearchedCamerasStatus);
+  const searchCamerasQnt = searchedCameras.length;
+
+  useEffect(() => {
+    if (searchCamerasQnt && arrowUpPressed) {
+      setCurrentProductIndex((prevState) => (prevState > 0 ? prevState - 1 : prevState));
+    }
+  }, [arrowUpPressed, searchCamerasQnt]);
+
+  useEffect(() => {
+    if (searchCamerasQnt && arrowDownPressed) {
+      setCurrentProductIndex((prevState) => (prevState < searchCamerasQnt - 1 ? prevState + 1 : prevState ));
+    }
+  }, [arrowDownPressed, searchCamerasQnt]);
 
   const resetDropdown = () => {
     setSearchValue('');
     setDropdownIsOpened(false);
+    setCurrentProductIndex(0);
   };
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -60,26 +79,42 @@ function FormSearch(): JSX.Element {
     resetDropdown();
   };
 
-  const goToProductPage = (event: SyntheticEvent | KeyboardEvent) => {
-    const product = event.target as HTMLInputElement;
-    const productId = Number(product.dataset.id);
-
-    dispatch(fetchCameraByIdAction(productId)).unwrap().then(
+  const navigateToCurrentProduct = (id: number) => {
+    dispatch(fetchCameraByIdAction(id)).unwrap().then(
       () => {
-        navigate(`${AppRoute.Product}/${productId}?${ComponentName.Tab}=${DEFAULT_TABS_TYPE}`);
+        navigate(`${AppRoute.Product}/${id}?${ComponentName.Tab}=${DEFAULT_TABS_TYPE}`);
         resetDropdown();
       },
       () => dispatch(displayError(ErrorMessage.FetchingError))
     );
   };
 
+  const handleInputKeyDown = (event: KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+
+      if (searchedCameras) {
+        const selectedCamera = searchedCameras[currentProductIndex];
+        const productId = selectedCamera.id;
+
+        navigateToCurrentProduct(productId);
+      }
+    }
+  };
+
   const handleListItemClick = (event: SyntheticEvent) => {
-    goToProductPage(event);
+    const product = event.target as HTMLLIElement;
+    const productId = Number(product.dataset.id);
+
+    navigateToCurrentProduct(productId);
   };
 
   const handleListItemKeydown = (event: KeyboardEvent) => {
-    if (event.code === 'Enter') {
-      goToProductPage(event);
+    if (event.key === 'Enter') {
+      const product = event.target as HTMLLIElement;
+      const productId = Number(product.dataset.id);
+
+      navigateToCurrentProduct(productId);
     }
   };
 
@@ -105,17 +140,18 @@ function FormSearch(): JSX.Element {
             placeholder="Поиск по сайту"
             onChange={handleInputChange}
             value={searchedValue}
+            onKeyDown={handleInputKeyDown}
           />
         </label>
         <ul className="form-search__select-list scroller">
           {fetchingStatus === FetchStatus.Error && <li className="form-search__select-item" tabIndex={0}> {ErrorMessage.FetchingError} </li> }
-          {fetchingStatus === FetchStatus.Loading && <LoadingPage />}
+          {fetchingStatus === FetchStatus.Loading && <li className="form-search__select-item" tabIndex={0}> {WarningMessage.LoadingWarning} </li>}
           {fetchingStatus === FetchStatus.Success && !searchedCameras.length && searchedValue !== ''
-            && <li className="form-search__select-item" tabIndex={0}> {WarningMessage.DataSearchingWarning} </li> }
-          {fetchingStatus === FetchStatus.Success && searchedCameras.map((item) => (
+            && <li className="form-search__select-item" tabIndex={0}> {WarningMessage.DataEmptySearchingWarning} </li> }
+          {fetchingStatus === FetchStatus.Success && searchedCameras.map((item, i) => (
             <li
               tabIndex={0}
-              className="form-search__select-item"
+              className={`form-search__select-item ${ i === currentProductIndex ? 'form-search__select-item--active' : ''}`}
               key={item.id}
               data-id={item.id}
               onClick={handleListItemClick}
