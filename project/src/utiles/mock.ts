@@ -105,7 +105,8 @@ export const makeMockState = () => ({
   [NameSpace.CatalogData]: {
     ...initialStateCatalog,
     cameras: fakeCameras,
-    loadingStatus: FetchStatus.Success
+    loadingStatus: FetchStatus.Success,
+    promo: fakePromo
   },
   [NameSpace.ProductData]: {
     ...initialStateProduct,

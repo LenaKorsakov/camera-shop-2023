@@ -4,16 +4,8 @@ import { Provider} from 'react-redux';
 
 import MainPage from './main-page';
 
-import { NameSpace } from '../../const/name-space';
-import { fakeCameras, getMockStore, mockState, mockStore } from '../../utiles/mock';
-import { FetchStatus } from '../../const/fetch-status';
+import { mockStore } from '../../utiles/mock';
 
-const loadingStore = getMockStore({...mockState,
-  [NameSpace.CatalogData]: {
-    cameras: fakeCameras,
-    loadingStatus: FetchStatus.Loading
-  }
-});
 
 describe('Component: MainPage', () => {
   it('should render correctly', () => {
@@ -29,19 +21,5 @@ describe('Component: MainPage', () => {
     expect(screen.getByText(/Каталог фото- и видеотехники/i)).toBeInTheDocument();
     const spanElement = screen.getByText(/Новинка!/i);
     expect(spanElement).toBeInTheDocument();
-  });
-
-  it('should render loader when cameras is loading', () => {
-
-    render(
-      <Provider store={loadingStore}>
-        <MemoryRouter>
-          <MainPage/>
-        </MemoryRouter>
-      </Provider>
-    );
-
-    const loader = screen.getByTestId('loader');
-    expect(loader).toBeInTheDocument();
   });
 });

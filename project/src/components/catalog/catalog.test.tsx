@@ -29,7 +29,6 @@ describe('Component: Catalog', () => {
         </MemoryRouter>
       </Provider>
     );
-    expect(screen.getByText(/Каталог фото- и видеотехники/i)).toBeInTheDocument();
 
     const cameraCardsQty = screen.getAllByTestId('card').length;
     expect(cameraCardsQty).toBe(ContentPerItem.Pagination);

@@ -39,6 +39,11 @@ function Filters(): JSX.Element {
   const [bottomPrice, setBottomPrice] = useState<UserInput>(currentBottomPrice);
   const [topPrice, setTopPrice] = useState<UserInput>(currentTopPrice);
 
+  useEffect(() => {
+    setBottomPrice(currentBottomPrice);
+    setTopPrice(currentTopPrice);
+  }, [currentBottomPrice, currentTopPrice]);
+
   const isVideocamera = currentFilterByCategory === FilterByCategory.Videocamera;
 
   const [searchParams, setSearchParams] = useSearchParams();
