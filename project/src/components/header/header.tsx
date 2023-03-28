@@ -1,5 +1,5 @@
 import BasketCounter from './basket-counter';
-import FormSearch from '../form-search/form-search';
+import SearchForm from '../form-search/search-form';
 import Logo from '../logo/logo';
 import NavItem from '../nav-item/nav-item';
 
@@ -27,7 +27,7 @@ function Header(): JSX.Element {
             )}
           </ul>
         </nav>
-        <FormSearch/>
+        <SearchForm/>
         <BasketCounter/>
       </div>
     </header>

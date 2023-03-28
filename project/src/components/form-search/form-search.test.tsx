@@ -2,12 +2,13 @@ import { MemoryRouter } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
 import { Provider} from 'react-redux';
 
-import FormSearch from './form-search';
+import SearchForm from './search-form';
 
 import { fakeCameras, getMockStore, mockState } from '../../utiles/mock';
 import { NameSpace } from '../../const/name-space';
 import { FetchStatus } from '../../const/fetch-status';
 import { ErrorMessage } from '../../const/error-message';
+import { WarningMessage } from '../../const/warning-message';
 
 const loadingStore = getMockStore({...mockState,
   [NameSpace.CatalogData]: {
@@ -30,13 +31,13 @@ const errorStore = getMockStore({...mockState,
   }
 });
 
-describe('Component: FormSearch', () => {
+describe('Component: SearchForm', () => {
   it('should render correctly', () => {
 
     render(
       <Provider store={successStore}>
         <MemoryRouter>
-          <FormSearch/>
+          <SearchForm/>
         </MemoryRouter>
       </Provider>
     );
@@ -48,18 +49,17 @@ describe('Component: FormSearch', () => {
     expect(listItems.length).toEqual(fakeCameras.length);
   });
 
-  it('should render loader when cameras is loading', () => {
+  it('should show loading when cameras is loading', () => {
 
     render(
       <Provider store={loadingStore}>
         <MemoryRouter>
-          <FormSearch/>
+          <SearchForm/>
         </MemoryRouter>
       </Provider>
     );
 
-    const loader = screen.getByTestId('loader');
-    expect(loader).toBeInTheDocument();
+    expect(screen.getByText(WarningMessage.LoadingWarning)).toBeInTheDocument();
   });
 
   it('should show mistake when cameras did not load', () => {
@@ -67,7 +67,7 @@ describe('Component: FormSearch', () => {
     render(
       <Provider store={errorStore}>
         <MemoryRouter>
-          <FormSearch/>
+          <SearchForm/>
         </MemoryRouter>
       </Provider>
     );

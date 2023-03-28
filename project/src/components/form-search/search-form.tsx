@@ -1,4 +1,4 @@
-import './form-search.css';
+import './search-form.css';
 import { ChangeEvent, KeyboardEvent, SyntheticEvent, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { debounce } from 'lodash';
@@ -20,7 +20,7 @@ import { ErrorMessage } from '../../const/error-message';
 import { AppRoute } from '../../const/app-route';
 import { ComponentName } from '../../const/component-name';
 
-function FormSearch(): JSX.Element {
+function SearchForm(): JSX.Element {
   const dispatch = useAppDispatch();
   const searchRef = useRef(null);
   const navigate = useNavigate();
@@ -177,4 +177,4 @@ function FormSearch(): JSX.Element {
   );
 }
 
-export default FormSearch;
+export default SearchForm;
