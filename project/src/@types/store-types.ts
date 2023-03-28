@@ -14,10 +14,11 @@ export type AppDispatch = typeof store.dispatch;
 
 export type CatalogData = {
   cameras: Cameras;
-  promo: Promo;
-  loadingStatus: FetchStatus;
+  catalogLoadingStatus: FetchStatus;
   searchCameras: Cameras;
-  fetchingStatus: FetchStatus;
+  searchedCamerasFetchingStatus: FetchStatus;
+  promoCamera: Promo;
+  promoCameraFetchingStatus: FetchStatus;
 }
 
 export type ProductData = {

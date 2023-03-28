@@ -67,7 +67,7 @@ function Catalog(): JSX.Element {
     <div className="catalog__content">
       <Sort/>
       {loadingStatus === FetchStatus.Loading && <LoadingPage/>}
-      {loadingStatus === FetchStatus.Error && <NotFoundPage/>}
+      {loadingStatus === FetchStatus.Error && <NotFoundPage isCatalog/>}
       {loadingStatus === FetchStatus.Success && cameras.length === 0 && <EmptyPage/>}
       {loadingStatus === FetchStatus.Success &&
       <>

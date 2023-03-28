@@ -13,21 +13,21 @@ import { WarningMessage } from '../../const/warning-message';
 const loadingStore = getMockStore({...mockState,
   [NameSpace.CatalogData]: {
     searchCameras: [],
-    fetchingStatus: FetchStatus.Loading
+    searchedCamerasFetchingStatus: FetchStatus.Loading
   }
 });
 
 const successStore = getMockStore({...mockState,
   [NameSpace.CatalogData]: {
     searchCameras: fakeCameras,
-    fetchingStatus: FetchStatus.Success
+    searchedCamerasFetchingStatus: FetchStatus.Success
   }
 });
 
 const errorStore = getMockStore({...mockState,
   [NameSpace.CatalogData]: {
     searchCameras: [],
-    fetchingStatus: FetchStatus.Error
+    searchedCamerasFetchingStatus: FetchStatus.Error
   }
 });
 

@@ -11,7 +11,7 @@ import { FetchStatus } from '../../const/fetch-status';
 const loadingStore = getMockStore({...mockState,
   [NameSpace.CatalogData]: {
     cameras: fakeCameras,
-    loadingStatus: FetchStatus.Loading
+    catalogLoadingStatus: FetchStatus.Loading
   }
 });
 

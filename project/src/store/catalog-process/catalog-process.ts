@@ -10,10 +10,11 @@ import { FetchStatus } from '../../const/fetch-status';
 
 export const initialStateCatalog: CatalogData = {
   cameras: [],
-  promo: {} as Promo,
-  loadingStatus: FetchStatus.Default,
+  catalogLoadingStatus: FetchStatus.Default,
   searchCameras: [],
-  fetchingStatus: FetchStatus.Default,
+  searchedCamerasFetchingStatus: FetchStatus.Default,
+  promoCamera: {} as Promo,
+  promoCameraFetchingStatus: FetchStatus.Default
 };
 
 export const catalogData = createSlice({
@@ -24,26 +25,33 @@ export const catalogData = createSlice({
     builder
       .addCase(fetchAllCameraAction.fulfilled, (state, action) => {
         state.cameras = action.payload;
-        state.loadingStatus = FetchStatus.Success;
+        state.catalogLoadingStatus = FetchStatus.Success;
       })
       .addCase(fetchAllCameraAction.pending, (state) => {
-        state.loadingStatus = FetchStatus.Loading;
+        state.catalogLoadingStatus = FetchStatus.Loading;
       })
       .addCase(fetchAllCameraAction.rejected, (state) => {
-        state.loadingStatus = FetchStatus.Error;
+        state.catalogLoadingStatus = FetchStatus.Error;
       })
       .addCase(fetchPromoAction.fulfilled, (state, action) => {
-        state.promo = action.payload;
+        state.promoCamera = action.payload;
+        state.promoCameraFetchingStatus = FetchStatus.Success;
+      })
+      .addCase(fetchPromoAction.pending, (state) => {
+        state.promoCameraFetchingStatus = FetchStatus.Loading;
+      })
+      .addCase(fetchPromoAction.rejected, (state, action) => {
+        state.promoCameraFetchingStatus = FetchStatus.Error;
       })
       .addCase(fetchSearchCameraAction.fulfilled, (state, action) => {
         state.searchCameras = action.payload;
-        state.fetchingStatus = FetchStatus.Success;
+        state.searchedCamerasFetchingStatus = FetchStatus.Success;
       })
       .addCase(fetchSearchCameraAction.pending, (state) => {
-        state.fetchingStatus = FetchStatus.Loading;
+        state.searchedCamerasFetchingStatus = FetchStatus.Loading;
       })
       .addCase(fetchSearchCameraAction.rejected, (state) => {
-        state.fetchingStatus = FetchStatus.Error;
+        state.searchedCamerasFetchingStatus = FetchStatus.Error;
       });
   }
 });
