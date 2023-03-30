@@ -1,5 +1,5 @@
 import BasketCounter from './basket-counter';
-import SearchForm from '../form-search/search-form';
+import SearchForm from '../search-form/search-form';
 import Logo from '../logo/logo';
 import NavItem from '../nav-item/nav-item';
 

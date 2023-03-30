@@ -1,5 +1,5 @@
 import './search-form.css';
-import { ChangeEvent, KeyboardEvent, SyntheticEvent, useEffect, useMemo, useRef, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { debounce } from 'lodash';
 
@@ -19,10 +19,12 @@ import { WarningMessage } from '../../const/warning-message';
 import { ErrorMessage } from '../../const/error-message';
 import { AppRoute } from '../../const/app-route';
 import { ComponentName } from '../../const/component-name';
+import ListItem from './list-item';
 
 function SearchForm(): JSX.Element {
   const dispatch = useAppDispatch();
   const searchRef = useRef(null);
+
   const navigate = useNavigate();
 
   const arrowUpPressed = useKeyPress('ArrowUp');
@@ -79,7 +81,7 @@ function SearchForm(): JSX.Element {
     resetDropdown();
   };
 
-  const navigateToCurrentProduct = (id: number) => {
+  const navigateToCurrentProductPage = useCallback((id: number) => {
     dispatch(fetchCameraByIdAction(id)).unwrap().then(
       () => {
         navigate(`${AppRoute.Product}/${id}?${ComponentName.Tab}=${DEFAULT_TABS_TYPE}`);
@@ -87,7 +89,7 @@ function SearchForm(): JSX.Element {
       },
       () => dispatch(displayError(ErrorMessage.FetchingError))
     );
-  };
+  },[dispatch, navigate]);
 
   const handleInputKeyDown = (event: KeyboardEvent) => {
     if (event.key === 'Enter') {
@@ -97,24 +99,8 @@ function SearchForm(): JSX.Element {
         const selectedCamera = searchedCameras[currentProductIndex];
         const productId = selectedCamera.id;
 
-        navigateToCurrentProduct(productId);
+        navigateToCurrentProductPage(productId);
       }
-    }
-  };
-
-  const handleListItemClick = (event: SyntheticEvent) => {
-    const product = event.target as HTMLLIElement;
-    const productId = Number(product.dataset.id);
-
-    navigateToCurrentProduct(productId);
-  };
-
-  const handleListItemKeydown = (event: KeyboardEvent) => {
-    if (event.key === 'Enter') {
-      const product = event.target as HTMLLIElement;
-      const productId = Number(product.dataset.id);
-
-      navigateToCurrentProduct(productId);
     }
   };
 
@@ -148,19 +134,18 @@ function SearchForm(): JSX.Element {
           {fetchingStatus === FetchStatus.Loading && <li className="form-search__select-item" tabIndex={0}> {WarningMessage.LoadingWarning} </li>}
           {fetchingStatus === FetchStatus.Success && !searchedCameras.length && searchedValue !== ''
             && <li className="form-search__select-item" tabIndex={0}> {WarningMessage.DataEmptySearchingWarning} </li> }
-          {fetchingStatus === FetchStatus.Success && searchedCameras.map((item, i) => (
-            <li
-              tabIndex={0}
-              className={`form-search__select-item ${ i === currentProductIndex ? 'form-search__select-item--active' : ''}`}
-              key={item.id}
-              data-id={item.id}
-              onClick={handleListItemClick}
-              onKeyDown={handleListItemKeydown}
-              data-testid='list-item'
-            >
-              {item.name}
-            </li>
-          ))}
+          {fetchingStatus === FetchStatus.Success && searchedCameras.map((item, i) => {
+            const isFocused = i === currentProductIndex;
+
+            return(
+              <ListItem
+                key={item.id}
+                isFocused={isFocused}
+                onNavigateToCurrentProductPage={navigateToCurrentProductPage}
+                item={item}
+              />
+            );
+          })}
         </ul>
       </form>
       <button
