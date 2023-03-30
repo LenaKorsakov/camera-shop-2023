@@ -14,9 +14,9 @@ describe('Reducer: productData', () => {
     expect(productData.reducer(undefined, UNKNOWN_ACTION))
       .toEqual(state);
   });
-  it('should update camera and change loading status if fetchCameraByIdAction fulfiled', () => {
+  it('should update camera and reviews and change loading status if fetchCameraByIdAction fulfiled', () => {
     expect(productData.reducer(state, {type: fetchCameraByIdAction.fulfilled.type, payload: fakeCamera}))
-      .toEqual({...state, camera: fakeCamera, fetchStatus: FetchStatus.Success });
+      .toEqual({...state, camera: fakeCamera, reviews: fakeCamera.reviews, fetchStatus: FetchStatus.Success });
   });
   it('should change loading status to loading if camera loading', () => {
     expect(productData.reducer(state, {type: fetchCameraByIdAction.pending.type}))

@@ -9,6 +9,7 @@ import { ProductData } from '../../@types/store-types';
 import { Camera } from '../../@types/camera-types';
 
 export const initialStateProduct: ProductData = {
+  reviews: [],
   camera: {} as Camera,
   similarCameras: [],
   fetchStatus: FetchStatus.Default,
@@ -22,6 +23,7 @@ export const productData = createSlice({
     builder
       .addCase(fetchCameraByIdAction.fulfilled, (state, action) => {
         state.camera = action.payload;
+        state.reviews = action.payload.reviews;
         state.fetchStatus = FetchStatus.Success;
       })
       .addCase(fetchCameraByIdAction.pending, (state) => {

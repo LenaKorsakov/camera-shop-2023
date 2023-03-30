@@ -18,6 +18,19 @@ import { initialStateApp } from '../store/app-process/app-process';
 import { initialStateSort } from '../store/sort-process/sort-process';
 import { initialStateFilter } from '../store/filter-process/filter-process';
 
+export const makeFakeReview = (): ReviewRaw => ({
+  id: datatype.string(),
+  userName: internet.userName(),
+  advantage: lorem.sentence(),
+  disadvantage: lorem.sentence(),
+  review: lorem.paragraph(),
+  rating: datatype.number({ min: 1, max: 5, precision: 0.01 }),
+  cameraId: datatype.number(),
+  createAt: datatype.string(),
+});
+export const fakeReviews = Array.from({length: 15}, makeFakeReview);
+export const fakeReview = fakeReviews[1];
+
 export const makeFakeCamera = (): Camera => ({
   id: datatype.number(),
   name: commerce.productName(),
@@ -33,22 +46,10 @@ export const makeFakeCamera = (): Camera => ({
   previewImgWebp: image.imageUrl(),
   previewImgWebp2x: image.imageUrl(),
   reviewCount: datatype.number(),
+  reviews: fakeReviews
 });
 export const fakeCameras = Array.from({length: 20}, makeFakeCamera);
 export const fakeCamera = fakeCameras[0];
-
-export const makeFakeReview = (): ReviewRaw => ({
-  id: datatype.string(),
-  userName: internet.userName(),
-  advantage: lorem.sentence(),
-  disadvantage: lorem.sentence(),
-  review: lorem.paragraph(),
-  rating: datatype.number({ min: 1, max: 5, precision: 0.01 }),
-  cameraId: datatype.number(),
-  createAt: datatype.string(),
-});
-export const fakeReviews = Array.from({length: 15}, makeFakeReview);
-export const fakeReview = fakeReviews[1];
 
 export const makeFakeReviewAdapt = (): ReviewAdapt => ({
   id: datatype.string(),

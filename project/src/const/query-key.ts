@@ -7,5 +7,6 @@ export enum QueryKey {
   FilterLevel = 'level',
   BottomPrice = 'price_gte',
   TopPrice = 'price_lte',
-  Limit = '_limit'
+  Limit = '_limit',
+  Embed = '_embed'
 }

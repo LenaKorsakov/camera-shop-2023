@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction} from '@reduxjs/toolkit';
 
-import { fetchReviewsByIdAction, sendReviewAction } from '../api-actions/api-actions';
+import { sendReviewAction } from '../api-actions/api-actions';
 
 import { NameSpace } from '../../const/name-space';
 
@@ -8,8 +8,6 @@ import { ReviewData } from '../../@types/store-types';
 import { FetchStatus } from '../../const/fetch-status';
 
 export const initialStateReview: ReviewData = {
-  reviews: [],
-  fetchStatus: FetchStatus.Default,
   sendingStatus: FetchStatus.Default,
   isSendSuccess: false
 };
@@ -24,16 +22,6 @@ export const reviewData = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(fetchReviewsByIdAction.fulfilled, (state, action) => {
-        state.reviews = action.payload;
-        state.fetchStatus = FetchStatus.Success;
-      })
-      .addCase(fetchReviewsByIdAction.pending, (state) => {
-        state.fetchStatus = FetchStatus.Loading;
-      })
-      .addCase(fetchReviewsByIdAction.rejected, (state) => {
-        state.fetchStatus = FetchStatus.Error;
-      })
       .addCase(sendReviewAction.fulfilled, (state) => {
         state.isSendSuccess = true;
         state.sendingStatus = FetchStatus.Success;

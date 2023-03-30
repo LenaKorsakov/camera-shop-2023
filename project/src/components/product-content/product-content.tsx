@@ -9,7 +9,6 @@ import { getProductFetchingStatus, getSimilarCameras } from '../../store/product
 
 import { useAppSelector } from '../../hooks';
 
-import { capitalizeFirstLetter } from '../../utils/format';
 import { Camera } from '../../@types/camera-types';
 import { FetchStatus } from '../../const/fetch-status';
 import LoadingPage from '../../pages/loading-page/loading-page';
@@ -33,7 +32,7 @@ function ProductContent({camera}: ProductContentProps): JSX.Element {
         <Breadcrumbs
           isCatalogActive={false}
           isProductPage
-          productName={`${capitalizeFirstLetter(camera.category)} «${capitalizeFirstLetter(camera.name)}»`}
+          productName={`${camera.category} «${camera.name}»`}
         />
         <div className="page-content__section">
           <CameraInfo camera={camera}/>

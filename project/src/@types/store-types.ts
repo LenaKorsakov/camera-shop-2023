@@ -25,6 +25,7 @@ export type ProductData = {
   camera: Camera;
   similarCameras: Cameras;
   fetchStatus: FetchStatus;
+  reviews: ReviewsRaw;
 }
 
 export type BasketData = {
@@ -32,8 +33,6 @@ export type BasketData = {
 }
 
 export type ReviewData = {
-  reviews: ReviewsRaw;
-  fetchStatus: FetchStatus;
   sendingStatus: FetchStatus;
   isSendSuccess: boolean;
 }

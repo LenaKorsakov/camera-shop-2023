@@ -1,11 +1,11 @@
 import './search-form.css';
-import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { debounce } from 'lodash';
 
-import { fetchCameraByIdAction, fetchSearchCameraAction } from '../../store/api-actions/api-actions';
+import { fetchSearchCameraAction } from '../../store/api-actions/api-actions';
 import { getSearchedCameras, getSearchedCamerasStatus } from '../../store/catalog-process/catalog-process-selectors';
-import { displayError } from '../../store/actions';
+//import { displayError } from '../../store/actions';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import useOnClickOutside from '../../hooks/use-on-click-outside';
@@ -82,14 +82,9 @@ function SearchForm(): JSX.Element {
   };
 
   const navigateToCurrentProductPage = useCallback((id: number) => {
-    dispatch(fetchCameraByIdAction(id)).unwrap().then(
-      () => {
-        navigate(`${AppRoute.Product}/${id}?${ComponentName.Tab}=${DEFAULT_TABS_TYPE}`);
-        resetDropdown();
-      },
-      () => dispatch(displayError(ErrorMessage.FetchingError))
-    );
-  },[dispatch, navigate]);
+    navigate(`${AppRoute.Product}/${id}?${ComponentName.Tab}=${DEFAULT_TABS_TYPE}`);
+    resetDropdown();
+  },[navigate]);
 
   const handleInputKeyDown = (event: KeyboardEvent) => {
     if (event.key === 'Enter') {
@@ -162,4 +157,4 @@ function SearchForm(): JSX.Element {
   );
 }
 
-export default SearchForm;
+export default memo(SearchForm);

@@ -156,7 +156,8 @@ number,
 }
 >(Action.FetchCameraById,
   async (id, {extra: api}) => {
-    const { data } = await api.get<Camera>(`${ApiRoute.Cameras}/${id}`);
+    const params = {[QueryKey.Embed]: ApiRoute.ReviewsParams };
+    const { data } = await api.get<Camera>(`${ApiRoute.Cameras}/${id}`, {params});
 
     return data;
   }

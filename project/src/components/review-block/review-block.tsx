@@ -3,12 +3,10 @@ import { memo, useState } from 'react';
 import ButtonToTop from '../button-to-top/button-to-top';
 import ReviewModal from '../review-modal/review-modal';
 import ReviewsList from './review-item/review-list';
-import LoadingPage from '../../pages/loading-page/loading-page';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeSuccessStatus } from '../../store/review-process/review-process';
-import { getReviewsLoadingStatus, getSortedReviews } from '../../store/review-process/review-data-selectors';
-import { FetchStatus } from '../../const/fetch-status';
+import { getSortedReviews } from '../../store/product-process/product-data-selectors';
 
 type ReviewBlockProps = {
   cameraId: number;
@@ -18,10 +16,8 @@ function ReviewBlock({ cameraId }: ReviewBlockProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   const reviews = useAppSelector(getSortedReviews);
-  const isLoading = useAppSelector(getReviewsLoadingStatus) === FetchStatus.Loading;
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
-
 
   const handleNewReviewButtonClick = () => {
     setIsOpen(true);
@@ -45,7 +41,7 @@ function ReviewBlock({ cameraId }: ReviewBlockProps): JSX.Element {
             </button>
 
           </div>
-          {isLoading ? <LoadingPage /> : <ReviewsList cameraId={cameraId} reviews={reviews}/>}
+          {reviews.length > 0 && <ReviewsList cameraId={cameraId} reviews={reviews}/>}
         </div>
 
       </section>

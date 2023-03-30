@@ -1,3 +1,5 @@
+import { ReviewsRaw } from './review-types';
+
 export type Camera = {
   id: number;
   name: string;
@@ -13,7 +15,9 @@ export type Camera = {
   previewImgWebp: string;
   previewImgWebp2x: string;
   reviewCount: number;
+  reviews: ReviewsRaw;
 }
+
 
 export type Cameras = Camera[];
 

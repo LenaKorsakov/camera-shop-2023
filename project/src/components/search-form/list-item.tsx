@@ -1,5 +1,5 @@
 import './search-form.css';
-import { KeyboardEvent, SyntheticEvent, useEffect, useRef } from 'react';
+import { KeyboardEvent, memo, SyntheticEvent, useEffect, useRef } from 'react';
 
 import { Camera } from '../../@types/camera-types';
 
@@ -49,4 +49,4 @@ function ListItem({item, isFocused, onNavigateToCurrentProductPage}: ListItemPro
   );
 }
 
-export default ListItem;
+export default memo(ListItem);
