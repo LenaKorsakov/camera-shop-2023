@@ -4,7 +4,7 @@ import { Provider} from 'react-redux';
 
 import CameraInfo from './camera-info';
 
-import { fakeCamera, mockStore } from '../../utiles/mock';
+import { fakeCamera, mockStore } from '../../utils/mock';
 
 describe('Component: Camera Info', () => {
   it('should render correctly', () => {

@@ -1,6 +1,6 @@
 import { appProcess, initialStateApp, setCurrentParams } from './app-process';
 
-import { UNKNOWN_ACTION } from '../../utiles/mock';
+import { UNKNOWN_ACTION } from '../../utils/mock';
 
 import { AppData } from '../../@types/store-types';
 

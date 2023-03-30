@@ -5,7 +5,7 @@ import { Provider} from 'react-redux';
 
 import SuccessModal from './success-modal';
 
-import { fakeCamera, mockStore } from '../../utiles/mock';
+import { fakeCamera, mockStore } from '../../utils/mock';
 
 const handleButtonClick = jest.fn();
 

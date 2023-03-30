@@ -4,7 +4,7 @@ import {Provider} from 'react-redux';
 
 import ReviewForm from './review-form';
 
-import { fakeCamera, mockStore } from '../../utiles/mock';
+import { fakeCamera, mockStore } from '../../utils/mock';
 import { InputPlaceholder, InputTitle } from '../../const/review-inputs';
 
 describe('Component: Review Form', () => {

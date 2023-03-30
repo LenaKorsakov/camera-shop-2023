@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 import Picture from '../picture/picture';
 
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getPromoCamera, getPromoCameraFetchStatus } from '../../store/catalog-process/catalog-process-selectors';
 
 import { AppRoute } from '../../const/app-route';
@@ -11,13 +11,22 @@ import { ComponentName } from '../../const/component-name';
 import { DEFAULT_TABS_TYPE } from '../../const/tabs-buttons';
 import { FetchStatus } from '../../const/fetch-status';
 import LoadingPage from '../../pages/loading-page/loading-page';
+import { useEffect } from 'react';
+import { fetchPromoAction } from '../../store/api-actions/api-actions';
 
 function Banner(): JSX.Element {
+  const dispatch = useAppDispatch();
 
   const promoCamera = useAppSelector(getPromoCamera);
   const { name, previewImg, previewImgWebp, previewImg2x, previewImgWebp2x, id } = promoCamera;
 
+
+  useEffect(() => {
+    dispatch(fetchPromoAction());
+  },[dispatch]);
+
   const fetchStatus = useAppSelector(getPromoCameraFetchStatus);
+
 
   return (
     <div className="banner">

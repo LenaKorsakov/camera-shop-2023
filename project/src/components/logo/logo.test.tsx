@@ -7,7 +7,7 @@ import { Provider} from 'react-redux';
 import Logo from './logo';
 import HistoryRouter from '../history-route/history-router';
 
-import { mockStore } from '../../utiles/mock';
+import { mockStore } from '../../utils/mock';
 import { ComponentName } from '../../const/component-name';
 import { AppRoute } from '../../const/app-route';
 

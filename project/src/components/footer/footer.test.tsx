@@ -4,7 +4,7 @@ import { Provider} from 'react-redux';
 
 import Footer from './footer';
 
-import { mockStore } from '../../utiles/mock';
+import { mockStore } from '../../utils/mock';
 
 describe('Component: Footer', () => {
   it('should render correctly', () => {

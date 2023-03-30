@@ -5,7 +5,7 @@ import { Provider} from 'react-redux';
 
 import ReviewModal from './review-modal';
 
-import { fakeCamera, mockStore } from '../../utiles/mock';
+import { fakeCamera, mockStore } from '../../utils/mock';
 
 describe('Component: Review Modal', () => {
 

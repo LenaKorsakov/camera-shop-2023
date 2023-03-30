@@ -4,7 +4,7 @@ import { Provider} from 'react-redux';
 
 import SearchForm from './search-form';
 
-import { fakeCameras, getMockStore, mockState } from '../../utiles/mock';
+import { fakeCameras, getMockStore, mockState } from '../../utils/mock';
 import { NameSpace } from '../../const/name-space';
 import { FetchStatus } from '../../const/fetch-status';
 import { ErrorMessage } from '../../const/error-message';

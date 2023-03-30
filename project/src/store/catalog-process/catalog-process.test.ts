@@ -1,6 +1,6 @@
 import { fetchAllCameraAction, fetchPromoAction, fetchSearchCameraAction } from '../api-actions/api-actions';
 import { catalogData, initialStateCatalog } from './catalog-process';
-import { fakeCameras, fakePromo, UNKNOWN_ACTION } from '../../utiles/mock';
+import { fakeCameras, fakePromo, UNKNOWN_ACTION } from '../../utils/mock';
 import { CatalogData } from '../../@types/store-types';
 import { FetchStatus } from '../../const/fetch-status';
 

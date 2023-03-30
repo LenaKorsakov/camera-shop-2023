@@ -4,7 +4,7 @@ import {Provider} from 'react-redux';
 
 import FilterByPrice from './filter-by-price';
 
-import { mockStore } from '../../utiles/mock';
+import { mockStore } from '../../utils/mock';
 
 describe('Component: Filters', () => {
   it('should render correctly', () => {

@@ -5,7 +5,7 @@ import { Provider} from 'react-redux';
 
 import PaginationItem from './pagination-item';
 
-import { fakeCamera, mockStore } from '../../utiles/mock';
+import { fakeCamera, mockStore } from '../../utils/mock';
 
 describe('Component: Pagination Item', () => {
   const handlePaganationItemClick = jest.fn();

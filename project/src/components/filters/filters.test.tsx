@@ -4,7 +4,7 @@ import {Provider} from 'react-redux';
 
 import Filters from './filters';
 
-import { mockStore } from '../../utiles/mock';
+import { mockStore } from '../../utils/mock';
 
 describe('Component: Filters', () => {
   it('should render correctly', () => {

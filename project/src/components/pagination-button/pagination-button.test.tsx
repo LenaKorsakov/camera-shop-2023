@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event';
 
 import PaginationButton from './pagination-button';
 
-import { mockStore } from '../../utiles/mock';
+import { mockStore } from '../../utils/mock';
 import { AppRoute } from '../../const/app-route';
 import { PaginationButtonName } from '../../const/pagination-buttons-name';
 

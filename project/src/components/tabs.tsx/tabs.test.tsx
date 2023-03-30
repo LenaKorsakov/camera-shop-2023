@@ -1,7 +1,7 @@
 import {render, screen} from '@testing-library/react';
 import {MemoryRouter} from 'react-router-dom';
 
-import { fakeCamera } from '../../utiles/mock';
+import { fakeCamera } from '../../utils/mock';
 
 import Tabs from './tabs';
 

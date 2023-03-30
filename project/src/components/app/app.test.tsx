@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import HistoryRouter from '../history-route/history-router';
 import App from './app';
 
-import { fakeCamera, mockStore } from '../../utiles/mock';
+import { fakeCamera, mockStore } from '../../utils/mock';
 import { AppRoute } from '../../const/app-route';
 
 const history = createMemoryHistory();

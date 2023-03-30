@@ -1,6 +1,6 @@
 import { ReviewAdapt } from '../../../@types/review-types';
 import { ReviewItemTitle } from '../../../const/review-item-title';
-import { formatReviewDate } from '../../../utiles/format';
+import { formatReviewDate } from '../../../utils/format';
 import StarsRating from '../../stars-rating/stars-rating';
 
 type ReviewItemProps = {

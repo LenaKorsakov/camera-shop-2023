@@ -17,8 +17,8 @@ function Sort(): JSX.Element {
 
   const navigate = useNavigate();
 
-  const currentSortType = useAppSelector(getCurrentSortType);
-  const currentOrderType = useAppSelector(getCurrentSortOrder);
+  const currentSortByType = useAppSelector(getCurrentSortType);
+  const currentSortByOrder = useAppSelector(getCurrentSortOrder);
 
   const updateSearchParams = (typeParams: ParamsType, orderParams: ParamsOrder) => {
     searchParams.set(...typeParams);
@@ -34,24 +34,20 @@ function Sort(): JSX.Element {
 
   const handleInputSortTypeChange = (event: ChangeEvent<HTMLInputElement>) => {
     const element = event.target;
-    const selectedType = element.dataset.value as SortByTypeServerValue;
+    const selectedSortByType = element.dataset.value as SortByTypeServerValue;
 
-    if (selectedType) {
-      currentOrderType
-        ? updateSearchParams ([QueryKey.SortType, selectedType], [QueryKey.SortOrder, currentOrderType])
-        : updateSearchParams ([QueryKey.SortType, selectedType], [QueryKey.SortOrder, SortByOrderServerValue.OrderUp]);
+    if (selectedSortByType) {
+      updateSearchParams ([QueryKey.SortType, selectedSortByType], [QueryKey.SortOrder, currentSortByOrder || SortByOrderServerValue.OrderUp]);
     }
   };
 
   const handleInputSortOrderChange = (event: ChangeEvent<HTMLInputElement>) => {
     const element = event.target;
 
-    const selectedOrder = element.dataset.value as SortByOrderServerValue;
+    const selectedSortByOrder = element.dataset.value as SortByOrderServerValue;
 
-    if (selectedOrder) {
-      currentSortType
-        ? updateSearchParams([QueryKey.SortType, currentSortType], [QueryKey.SortOrder, selectedOrder])
-        : updateSearchParams([QueryKey.SortType, SortByTypeServerValue.Price], [QueryKey.SortOrder, selectedOrder]);
+    if (selectedSortByOrder) {
+      updateSearchParams([QueryKey.SortType, currentSortByType || SortByTypeServerValue.Price], [QueryKey.SortOrder, selectedSortByOrder]);
     }
   };
 
@@ -68,7 +64,7 @@ function Sort(): JSX.Element {
                   id={id}
                   name="sort"
                   data-value={value}
-                  checked={value === currentSortType}
+                  checked={value === currentSortByType}
                   onChange={handleInputSortTypeChange}
                 />
                 <label htmlFor={id}>{title}</label>
@@ -84,7 +80,7 @@ function Sort(): JSX.Element {
                   name="sort-icon"
                   aria-label={title}
                   data-value={value}
-                  checked={value === currentOrderType}
+                  checked={value === currentSortByOrder}
                   onChange={handleInputSortOrderChange}
                 />{' '}
                 <label htmlFor={id}>

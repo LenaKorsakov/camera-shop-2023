@@ -4,7 +4,7 @@ import { Provider} from 'react-redux';
 
 import LoadingPage from './loading-page';
 
-import { fakeCameras, getMockStore, mockState } from '../../utiles/mock';
+import { fakeCameras, getMockStore, mockState } from '../../utils/mock';
 import { NameSpace } from '../../const/name-space';
 import { FetchStatus } from '../../const/fetch-status';
 

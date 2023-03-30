@@ -1,5 +1,5 @@
 import { ProductData } from '../../@types/store-types';
-import { fakeCamera, fakeCameras, UNKNOWN_ACTION } from '../../utiles/mock';
+import { fakeCamera, fakeCameras, UNKNOWN_ACTION } from '../../utils/mock';
 import { fetchCameraByIdAction, fetchSimilarCamerasAction } from '../api-actions/api-actions';
 import { initialStateProduct, productData } from './product-process';
 import { FetchStatus } from '../../const/fetch-status';

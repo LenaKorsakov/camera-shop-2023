@@ -41,6 +41,7 @@ function Filters(): JSX.Element {
 
   useEffect(() => {
     setBottomPrice(currentBottomPrice);
+
     setTopPrice(currentTopPrice);
   }, [currentBottomPrice, currentTopPrice]);
 

@@ -1,43 +1,73 @@
 import { fetchAllCameraAction, fetchCameraByIdAction, fetchPricesAction, fetchPromoAction, fetchReviewsByIdAction, fetchSearchCameraAction, fetchSimilarCamerasAction, sendReviewAction } from './api-actions';
+import { fakeCamera, fakeCameras, fakeId, fakePromo, fakeReviewPost, fakeReviews, getMockStore, mockApi, mockState } from '../../utils/mock';
+import { catalogData } from '../catalog-process/catalog-process';
+
 import { ApiRoute } from '../../const/api-route';
-import { fakeCamera, fakeCameras, fakeId, fakePromo, fakeReviewPost, fakeReviews, getMockStore, mockApi } from '../../utiles/mock';
 import { QueryKey } from '../../const/query-key';
 import { SortByTypeServerValue } from '../../const/sort-by-type';
+import { NameSpace } from '../../const/name-space';
+import { FetchStatus } from '../../const/fetch-status';
+import { SortByOrderServerValue } from '../../const/sort-by-order';
 
 describe('Asynk actions: test', () => {
-  it('fetchAllCameraAction should return cameras if server return 200', async() => {
+  it('fetchAllCameraAction should return cameras if server return 200 and change catalogLoadingStatus to success', async () => {
     mockApi
-      .onGet(ApiRoute.Cameras)
+      .onGet(ApiRoute.Cameras, {params: {
+        [QueryKey.FilterType]: [],
+        [QueryKey.FilterLevel]: [],
+        [QueryKey.FilterCategory]: null,
+        [QueryKey.BottomPrice]: null,
+        [QueryKey.TopPrice]: null,
+        [QueryKey.SortOrder]: null,
+        [QueryKey.SortType]: null,
+      }})
       .reply(200, fakeCameras);
 
-    const store = getMockStore();
-    expect(store.getActions()).toEqual([]);
-
-    await store.dispatch(fetchAllCameraAction());
-
+    const store = getMockStore(mockState);
+    const {payload} = await store.dispatch(fetchAllCameraAction());
     const actions = store.getActions().map(({type}) => type);
 
-    expect(actions).toEqual([
-      fetchAllCameraAction.pending.type,
-      fetchAllCameraAction.rejected.type
-    ]);
+    expect(actions)
+      .toEqual([
+        fetchAllCameraAction.pending.type,
+        fetchAllCameraAction.fulfilled.type,
+      ]);
+
+    expect(payload).toEqual(fakeCameras);
+
+    expect(catalogData.reducer(mockState[NameSpace.CatalogData],
+      {type: fetchAllCameraAction.fulfilled.type}
+    ).catalogLoadingStatus).toBe(FetchStatus.Success);
   });
+
+
   it('fetchAllCameraAction should not return cameras if server return 400', async() => {
     mockApi
-      .onGet(ApiRoute.Cameras)
+      .onGet(ApiRoute.Cameras, {params: {
+        [QueryKey.FilterType]: [],
+        [QueryKey.FilterLevel]: [],
+        [QueryKey.FilterCategory]: null,
+        [QueryKey.BottomPrice]: null,
+        [QueryKey.TopPrice]: null,
+        [QueryKey.SortOrder]: null,
+        [QueryKey.SortType]: null,
+      }})
       .reply(400);
 
-    const store = getMockStore();
-    expect(store.getActions()).toEqual([]);
-
+    const store = getMockStore(mockState);
     await store.dispatch(fetchAllCameraAction());
-
     const actions = store.getActions().map(({type}) => type);
 
-    expect(actions).toEqual([
-      fetchAllCameraAction.pending.type,
-      fetchAllCameraAction.rejected.type
-    ]);
+    expect(actions)
+      .toEqual([
+        fetchAllCameraAction.pending.type,
+        fetchAllCameraAction.rejected.type,
+      ]);
+
+
+    expect(catalogData.reducer(mockState[NameSpace.CatalogData],
+      {type: fetchAllCameraAction.rejected.type}
+    ).catalogLoadingStatus).toBe(FetchStatus.Error);
   });
 
   it('should dispatch Fetch Prices', async() => {
@@ -46,22 +76,21 @@ describe('Asynk actions: test', () => {
         [QueryKey.FilterType]: [],
         [QueryKey.FilterLevel]: [],
         [QueryKey.FilterCategory]: null,
-        [QueryKey.SortType]: SortByTypeServerValue.Price ,
+        [QueryKey.BottomPrice]: null,
+        [QueryKey.TopPrice]: null,
+        [QueryKey.SortType]: null,
       }})
       .reply(200);
 
-    const store = getMockStore();
-    expect(store.getActions()).toEqual([]);
-
+    const store = getMockStore(mockState);
     await store.dispatch(fetchPricesAction());
-
     const actions = store.getActions().map(({type}) => type);
 
-    expect(actions).toEqual([
-      fetchPricesAction.pending.type,
-      fetchPricesAction.rejected.type
-    ]);
-
+    expect(actions)
+      .toEqual([
+        fetchPricesAction.pending.type,
+        fetchPricesAction.rejected.type,
+      ]);
   });
   it('should be rejected type when Fetch High Price error', async() => {
     mockApi
@@ -69,21 +98,22 @@ describe('Asynk actions: test', () => {
         [QueryKey.FilterType]: [],
         [QueryKey.FilterLevel]: [],
         [QueryKey.FilterCategory]: null,
-        [QueryKey.SortType]: SortByTypeServerValue.Price ,
+        [QueryKey.BottomPrice]: null,
+        [QueryKey.TopPrice]: null,
+        [QueryKey.SortOrder]: SortByOrderServerValue.OrderUp,
+        [QueryKey.SortType]: SortByTypeServerValue.Price
       }})
       .reply(400);
 
-    const store = getMockStore();
-    expect(store.getActions()).toEqual([]);
-
+    const store = getMockStore(mockState);
     await store.dispatch(fetchPricesAction());
-
     const actions = store.getActions().map(({type}) => type);
 
-    expect(actions).toEqual([
-      fetchPricesAction.pending.type,
-      fetchPricesAction.rejected.type
-    ]);
+    expect(actions)
+      .toEqual([
+        fetchPricesAction.pending.type,
+        fetchPricesAction.rejected.type,
+      ]);
   });
 
 

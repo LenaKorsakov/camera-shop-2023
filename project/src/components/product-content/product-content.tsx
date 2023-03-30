@@ -9,7 +9,7 @@ import { getProductFetchingStatus, getSimilarCameras } from '../../store/product
 
 import { useAppSelector } from '../../hooks';
 
-import { capitalizeFirstLetter } from '../../utiles/format';
+import { capitalizeFirstLetter } from '../../utils/format';
 import { Camera } from '../../@types/camera-types';
 import { FetchStatus } from '../../const/fetch-status';
 import LoadingPage from '../../pages/loading-page/loading-page';

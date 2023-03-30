@@ -4,7 +4,7 @@ import Picture from '../picture/picture';
 import CameraRating from '../camera-rating/camera-rating';
 
 import { PictureSize } from '../../const/picture-size';
-import { capitalizeFirstLetter, formatPrice } from '../../utiles/format';
+import { capitalizeFirstLetter, formatPrice } from '../../utils/format';
 
 import { Camera } from '../../@types/camera-types';
 

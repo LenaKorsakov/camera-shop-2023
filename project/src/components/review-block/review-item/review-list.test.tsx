@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { Provider} from 'react-redux';
 
 import ReviewsList from './review-list';
-import { fakeCamera, fakeReviewsAdapt, mockStore } from '../../../utiles/mock';
+import { fakeCamera, fakeReviewsAdapt, mockStore } from '../../../utils/mock';
 
 
 describe('Component: Review List', () => {

@@ -4,7 +4,7 @@ import { Provider} from 'react-redux';
 
 import NotFoundPage from './not-found-page';
 
-import { mockStore } from '../../utiles/mock';
+import { mockStore } from '../../utils/mock';
 
 
 describe('Component: ProductPage', () => {

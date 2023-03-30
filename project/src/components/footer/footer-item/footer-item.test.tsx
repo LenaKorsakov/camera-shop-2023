@@ -5,7 +5,7 @@ import { Provider} from 'react-redux';
 import FooterItem from './footer-item';
 
 import { FOOTER_ITEMS } from '../../../const/nav-items';
-import { mockStore } from '../../../utiles/mock';
+import { mockStore } from '../../../utils/mock';
 import { NavItemsTitles } from '../../../const/nav-items';
 
 

@@ -4,7 +4,7 @@ import { Provider} from 'react-redux';
 
 import CameraRating from './camera-rating';
 
-import { fakeCamera, mockStore } from '../../utiles/mock';
+import { fakeCamera, mockStore } from '../../utils/mock';
 
 describe('Component: Camera Rating', () => {
   it('should render correctly', () => {

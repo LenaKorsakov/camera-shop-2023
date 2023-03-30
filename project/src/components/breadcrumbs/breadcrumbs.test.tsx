@@ -4,7 +4,7 @@ import { Provider} from 'react-redux';
 
 import Breadcrumbs from './breadcrumbs';
 
-import { fakeCamera, mockStore} from '../../utiles/mock';
+import { fakeCamera, mockStore} from '../../utils/mock';
 
 describe('Component: Breadcrumbs', () => {
   it('should render correctly on catalog page', () => {

@@ -4,7 +4,7 @@ import { Provider} from 'react-redux';
 
 import ButtonToTop from './button-to-top';
 
-import {fakePromo, mockState, getMockStore, fakeCameras} from '../../utiles/mock';
+import {fakePromo, mockState, getMockStore, fakeCameras} from '../../utils/mock';
 import { NameSpace } from '../../const/name-space';
 
 

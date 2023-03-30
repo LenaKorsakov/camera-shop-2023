@@ -1,8 +1,8 @@
 import { createSelector } from 'reselect';
 
 import { NameSpace } from '../../const/name-space';
-import { adaptReview } from '../../utiles/adapter';
-import { sortReviewByTime } from '../../utiles/sort-compare';
+import { adaptReview } from '../../utils/adapter';
+import { sortReviewByTime } from '../../utils/sort-compare';
 
 import { ReviewsAdapt, ReviewsRaw } from '../../@types/review-types';
 import { State } from '../../@types/store-types';

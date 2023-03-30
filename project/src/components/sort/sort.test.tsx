@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { Provider} from 'react-redux';
 
 
-import { getMockStore, mockState } from '../../utiles/mock';
+import { getMockStore, mockState } from '../../utils/mock';
 import { NameSpace } from '../../const/name-space';
 import { SortByOrderServerValue } from '../../const/sort-by-order';
 import { SortByTypeServerValue } from '../../const/sort-by-type';

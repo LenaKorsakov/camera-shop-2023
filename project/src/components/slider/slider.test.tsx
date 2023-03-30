@@ -4,7 +4,7 @@ import { Provider} from 'react-redux';
 
 import Slider from './slider';
 
-import { mockState, getMockStore, fakeCameras, fakeCamera} from '../../utiles/mock';
+import { mockState, getMockStore, fakeCameras, fakeCamera} from '../../utils/mock';
 import { NameSpace } from '../../const/name-space';
 
 

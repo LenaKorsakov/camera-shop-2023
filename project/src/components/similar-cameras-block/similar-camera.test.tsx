@@ -4,7 +4,7 @@ import { Provider} from 'react-redux';
 
 import SimilarCamerasBlock from './similar-cameras-block';
 
-import { fakeCameras, mockStore} from '../../utiles/mock';
+import { fakeCameras, mockStore} from '../../utils/mock';
 
 describe('Component: Similar Cameras Block', () => {
   it('should render correctly', () => {

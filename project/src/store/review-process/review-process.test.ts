@@ -1,5 +1,5 @@
 import { fetchReviewsByIdAction, sendReviewAction } from '../api-actions/api-actions';
-import { fakeReviews, UNKNOWN_ACTION } from '../../utiles/mock';
+import { fakeReviews, UNKNOWN_ACTION } from '../../utils/mock';
 import { ReviewData } from '../../@types/store-types';
 import { changeSuccessStatus, initialStateReview, reviewData } from './review-process';
 import { FetchStatus } from '../../const/fetch-status';

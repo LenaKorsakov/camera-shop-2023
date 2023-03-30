@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 
 import RatingPicker from './rating-picker';
 
-import { fakeReview } from '../../../utiles/mock';
+import { fakeReview } from '../../../utils/mock';
 import { InputTitle } from '../../../const/review-inputs';
 
 const rating = fakeReview.rating;

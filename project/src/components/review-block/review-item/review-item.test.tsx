@@ -4,7 +4,7 @@ import { Provider} from 'react-redux';
 
 import ReviewItem from './review-item';
 
-import { fakeReviewAdapt, mockStore } from '../../../utiles/mock';
+import { fakeReviewAdapt, mockStore } from '../../../utils/mock';
 
 
 describe('Component: Review Item', () => {

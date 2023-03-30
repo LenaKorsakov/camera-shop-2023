@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { Provider} from 'react-redux';
 
 import Header from './header';
-import { mockStore } from '../../utiles/mock';
+import { mockStore } from '../../utils/mock';
 
 describe('Component: Header', () => {
   it('should render correctly', () => {

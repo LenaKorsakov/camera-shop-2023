@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 
 import Picture from './picture';
 
-import { fakeCamera } from '../../utiles/mock';
+import { fakeCamera } from '../../utils/mock';
 import { PictureSize } from '../../const/picture-size';
 
 

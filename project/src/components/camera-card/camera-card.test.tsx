@@ -4,7 +4,7 @@ import { Provider} from 'react-redux';
 
 import CameraCard from './camera-card';
 
-import { fakeCamera, mockStore } from '../../utiles/mock';
+import { fakeCamera, mockStore } from '../../utils/mock';
 
 describe('Component: Camera card', () => {
   it('should render correctly', () => {

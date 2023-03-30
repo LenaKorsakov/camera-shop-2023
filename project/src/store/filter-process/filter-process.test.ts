@@ -1,5 +1,5 @@
 import { setCurrentFilterCategory, setCurrentFilterTypes, setCurrentFilterLevels, setBottomPrice, setTopPrice, resetCurrentFilterGroup, resetFilters, deleteCurrentFilter } from './filter-process';
-import { fakeMaxPrice, fakeMinPrice, UNKNOWN_ACTION } from '../../utiles/mock';
+import { fakeMaxPrice, fakeMinPrice, UNKNOWN_ACTION } from '../../utils/mock';
 
 import { fetchPricesAction } from '../api-actions/api-actions';
 import { filterProcess, initialStateFilter } from './filter-process';

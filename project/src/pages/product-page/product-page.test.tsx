@@ -4,7 +4,7 @@ import { Provider} from 'react-redux';
 
 import ProductPage from './product-page';
 
-import { mockStore } from '../../utiles/mock';
+import { mockStore } from '../../utils/mock';
 
 describe('Component: Product Page', () => {
   it('should render correctly', () => {

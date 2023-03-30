@@ -6,7 +6,7 @@ import CameraRating from '../camera-rating/camera-rating';
 import Picture from '../picture/picture';
 
 import { AppRoute } from '../../const/app-route';
-import { capitalizeFirstLetter, formatPrice } from '../../utiles/format';
+import { capitalizeFirstLetter, formatPrice } from '../../utils/format';
 import { PictureSize } from '../../const/picture-size';
 import { ComponentName } from '../../const/component-name';
 import { DEFAULT_TABS_TYPE } from '../../const/tabs-buttons';

@@ -4,7 +4,7 @@ import { Provider} from 'react-redux';
 
 import Banner from './banner';
 
-import {fakePromo, mockState, getMockStore, fakeCameras} from '../../utiles/mock';
+import {fakePromo, mockState, getMockStore, fakeCameras} from '../../utils/mock';
 import { NameSpace } from '../../const/name-space';
 import { FetchStatus } from '../../const/fetch-status';
 
