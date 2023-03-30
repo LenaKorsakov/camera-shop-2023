@@ -13,7 +13,8 @@ const mockStateSuccess = getMockStore({
   [NameSpace.ProductData]: {
     camera: fakeCamera,
     fetchStatus: FetchStatus.Success,
-    similarCameras: fakeCameras
+    similarCameras: fakeCameras,
+    reviews: []
   },
 });
 

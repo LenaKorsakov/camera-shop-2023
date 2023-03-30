@@ -4,12 +4,12 @@ import { Provider} from 'react-redux';
 
 import ReviewBlock from './review-block';
 
-import { fakeCamera, fakeReviews, getMockStore, mockState} from '../../utils/mock';
+import { fakeCamera, getMockStore, mockState} from '../../utils/mock';
 import { NameSpace } from '../../const/name-space';
 
 const fakeStore = getMockStore({...mockState,
   [NameSpace.ProductData]: {
-    reviews: fakeReviews,
+    reviews: [],
   }
 });
 
