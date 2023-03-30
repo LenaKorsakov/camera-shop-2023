@@ -28,8 +28,8 @@ describe('Component: Slider', () => {
       </Provider>
     );
 
-    const cameraCardsQty = screen.getAllByTestId('card').length;
-    expect(cameraCardsQty).toBe(fakeCameras.length);
+    const cameraCardsAmount = screen.getAllByTestId('card').length;
+    expect(cameraCardsAmount).toBe(fakeCameras.length);
   });
 
   it('should show/not show buttons', () => {

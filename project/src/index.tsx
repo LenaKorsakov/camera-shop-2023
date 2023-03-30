@@ -15,7 +15,6 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
 
-// store.dispatch(fetchAllCameraAction());
 store.dispatch(fetchPromoAction());
 
 root.render(

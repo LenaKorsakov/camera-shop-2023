@@ -14,33 +14,41 @@ describe('Reducer: catalogData', () => {
     expect(catalogData.reducer(undefined, UNKNOWN_ACTION))
       .toEqual(state);
   });
-  it('should update cameras and change loading status if fetchAllCameraAction fulfiled', () => {
+  it('should update cameras and change  catalog loading status if fetchAllCameraAction fulfiled', () => {
     expect(catalogData.reducer(state, {type: fetchAllCameraAction.fulfilled.type, payload: fakeCameras}))
-      .toEqual({...state, cameras: fakeCameras, loadingStatus: FetchStatus.Success });
+      .toEqual({...state, cameras: fakeCameras, catalogLoadingStatus: FetchStatus.Success });
   });
-  it('should change loading status to loading if cameras loading', () => {
+  it('should change catalog loading status to loading if cameras loading', () => {
     expect(catalogData.reducer(state, {type: fetchAllCameraAction.pending.type}))
-      .toEqual({...state, loadingStatus: FetchStatus.Loading });
+      .toEqual({...state, catalogLoadingStatus: FetchStatus.Loading });
   });
   it('should change loading status to error if fetchAllCameraAction rejected', () => {
     expect(catalogData.reducer(state, {type: fetchAllCameraAction.rejected.type}))
-      .toEqual({...state, loadingStatus: FetchStatus.Error});
+      .toEqual({...state, catalogLoadingStatus: FetchStatus.Error});
   });
-  it('should return promo if fetchPromoAction fulfiled', () => {
+  it('should return promoCamera if fetchPromoAction fulfiled and change fetching status to success', () => {
     expect(catalogData.reducer(state, {type: fetchPromoAction.fulfilled.type, payload: fakePromo}))
-      .toEqual({...state, promo: fakePromo});
+      .toEqual({...state, promoCamera: fakePromo, promoCameraFetchingStatus: FetchStatus.Success });
+  });
+  it('should change fetching status to loading if fetchPromoAction pending', () => {
+    expect(catalogData.reducer(state, {type: fetchPromoAction.pending.type, payload: fakePromo}))
+      .toEqual({...state, promoCameraFetchingStatus: FetchStatus.Loading });
+  });
+  it('should change fetching status to error if fetchPromoAction rejected', () => {
+    expect(catalogData.reducer(state, {type: fetchPromoAction.rejected.type, payload: fakePromo}))
+      .toEqual({...state, promoCameraFetchingStatus: FetchStatus.Error });
   });
   it('should update searchCameras and change status to success if fetchSearchCameraAction fulfiled', () => {
     expect(catalogData.reducer(state, {type: fetchSearchCameraAction.fulfilled.type, payload: fakeCameras}))
-      .toEqual({...state, searchCameras: fakeCameras, fetchingStatus: FetchStatus.Success });
+      .toEqual({...state, searchCameras: fakeCameras, searchedCamerasFetchingStatus: FetchStatus.Success });
   });
   it('should change status to error if fetchSearchCameraAction rejected', () => {
     expect(catalogData.reducer(state, {type: fetchSearchCameraAction.rejected.type}))
-      .toEqual({...state, fetchingStatus: FetchStatus.Error });
+      .toEqual({...state, searchedCamerasFetchingStatus: FetchStatus.Error });
   });
   it('should change status to loading if fetchSearchCameraAction pending', () => {
     expect(catalogData.reducer(state, {type: fetchSearchCameraAction.pending.type}))
-      .toEqual({...state, fetchingStatus: FetchStatus.Loading });
+      .toEqual({...state, searchedCamerasFetchingStatus: FetchStatus.Loading });
   });
 });
 

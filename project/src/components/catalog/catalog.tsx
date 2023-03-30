@@ -29,15 +29,15 @@ function Catalog(): JSX.Element {
   const {
     firstContentIndex,
     lastContentIndex,
-    nextPage,
-    prevPage,
+    goToNextPage: nextPage,
+    goToPrevPage: prevPage,
     page,
     setPage,
     pagesNumbers,
     totalPages,
   } = usePagination({
     contentPerPage: ContentPerItem.Pagination,
-    productQty: cameras.length,
+    productAmount: cameras.length,
   });
 
   const isNeedPaganation = cameras.length > ContentPerItem.Pagination;

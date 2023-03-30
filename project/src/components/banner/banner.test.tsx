@@ -6,11 +6,13 @@ import Banner from './banner';
 
 import {fakePromo, mockState, getMockStore, fakeCameras} from '../../utiles/mock';
 import { NameSpace } from '../../const/name-space';
+import { FetchStatus } from '../../const/fetch-status';
 
 const fakeStore = getMockStore({...mockState,
   [NameSpace.CatalogData]: {
     cameras: fakeCameras,
-    promoCamera: fakePromo
+    promoCamera: fakePromo,
+    promoCameraFetchingStatus: FetchStatus.Success
   }
 });
 

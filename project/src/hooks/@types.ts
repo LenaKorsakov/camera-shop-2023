@@ -1,6 +1,6 @@
 interface UsePaginationProps {
   contentPerPage: number;
-  productQty: number;
+  productAmount: number;
 }
 
 interface UsePaganationReturn {
@@ -9,8 +9,8 @@ interface UsePaganationReturn {
   firstContentIndex: number;
   lastContentIndex: number;
   pagesNumbers: number[];
-  nextPage: () => void;
-  prevPage: () => void;
+  goToNextPage: () => void;
+  goToPrevPage: () => void;
   setPage: (page: number) => void;
 }
 

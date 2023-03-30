@@ -39,19 +39,19 @@ function SearchForm(): JSX.Element {
 
   const searchedCameras = useAppSelector(getSearchedCameras);
   const fetchingStatus = useAppSelector(getSearchedCamerasStatus);
-  const searchCamerasQnt = searchedCameras.length;
+  const searchCamerasAmount = searchedCameras.length;
 
   useEffect(() => {
-    if (searchCamerasQnt && arrowUpPressed) {
+    if (searchCamerasAmount && arrowUpPressed) {
       setCurrentProductIndex((prevState) => (prevState > 0 ? prevState - 1 : prevState));
     }
-  }, [arrowUpPressed, searchCamerasQnt]);
+  }, [arrowUpPressed, searchCamerasAmount]);
 
   useEffect(() => {
-    if (searchCamerasQnt && arrowDownPressed) {
-      setCurrentProductIndex((prevState) => (prevState < searchCamerasQnt - 1 ? prevState + 1 : prevState ));
+    if (searchCamerasAmount && arrowDownPressed) {
+      setCurrentProductIndex((prevState) => (prevState < searchCamerasAmount - 1 ? prevState + 1 : prevState ));
     }
-  }, [arrowDownPressed, searchCamerasQnt]);
+  }, [arrowDownPressed, searchCamerasAmount]);
 
   const resetDropdown = () => {
     setSearchValue('');

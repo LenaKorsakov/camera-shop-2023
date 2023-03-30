@@ -13,14 +13,14 @@ type SliderProps = {
 
 function Slider({cameras}: SliderProps): JSX.Element {
   const [firstContentIndex, setFirstContentIndex] = useState<number>(MIN_SLIDE_ITEM_INDEX);
-  const productQty = cameras.length;
+  const productAmount = cameras.length;
 
   const lastContentIndex = firstContentIndex + ContentPerItem.Slider;
 
   const changeSlide = (direction: boolean) => {
     setFirstContentIndex((prevState) => {
       if (direction) {
-        if (lastContentIndex === productQty) {
+        if (lastContentIndex === productAmount) {
           return prevState;
         }
         return prevState + 1;
@@ -37,7 +37,7 @@ function Slider({cameras}: SliderProps): JSX.Element {
   const handleButtonPrevClick = () => changeSlide(false);
 
   const isPrev = firstContentIndex === MIN_SLIDE_ITEM_INDEX;
-  const isNext = lastContentIndex === productQty;
+  const isNext = lastContentIndex === productAmount;
 
   return (
     <div className="product-similar__slider-list">

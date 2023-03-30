@@ -17,7 +17,7 @@ const fakeStore = getMockStore({...mockState,
   }
 });
 
-const camerasQty = fakeCameras.length;
+const camerasAmount = fakeCameras.length;
 
 describe('Component: Catalog', () => {
   it('should render correctly', () => {
@@ -30,11 +30,11 @@ describe('Component: Catalog', () => {
       </Provider>
     );
 
-    const cameraCardsQty = screen.getAllByTestId('card').length;
-    expect(cameraCardsQty).toBe(ContentPerItem.Pagination);
+    const cameraCardsAmount = screen.getAllByTestId('card').length;
+    expect(cameraCardsAmount).toBe(ContentPerItem.Pagination);
 
-    const paginationPagesQty = Math.ceil(camerasQty / ContentPerItem.Pagination);
-    expect(screen.getAllByTestId('pagination').length).toBe(paginationPagesQty);
+    const paginationPagesAmount = Math.ceil(camerasAmount / ContentPerItem.Pagination);
+    expect(screen.getAllByTestId('pagination').length).toBe(paginationPagesAmount);
   });
 });
 

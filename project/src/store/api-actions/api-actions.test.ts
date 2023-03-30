@@ -21,8 +21,6 @@ describe('Asynk actions: test', () => {
       fetchAllCameraAction.pending.type,
       fetchAllCameraAction.rejected.type
     ]);
-
-    //expect(payload).toEqual(fakeCameras);
   });
   it('fetchAllCameraAction should not return cameras if server return 400', async() => {
     mockApi

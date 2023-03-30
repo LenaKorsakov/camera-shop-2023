@@ -4,14 +4,23 @@ import { Provider} from 'react-redux';
 
 import MainPage from './main-page';
 
-import { mockStore } from '../../utiles/mock';
+import { fakeCameras, fakePromo, getMockStore, mockState } from '../../utiles/mock';
+import { NameSpace } from '../../const/name-space';
+import { FetchStatus } from '../../const/fetch-status';
 
+const fakeStore = getMockStore({...mockState,
+  [NameSpace.CatalogData]: {
+    cameras: fakeCameras,
+    promoCamera: fakePromo,
+    promoCameraFetchingStatus: FetchStatus.Success
+  }
+});
 
 describe('Component: MainPage', () => {
   it('should render correctly', () => {
 
     render(
-      <Provider store={mockStore}>
+      <Provider store={fakeStore}>
         <MemoryRouter>
           <MainPage/>
         </MemoryRouter>
