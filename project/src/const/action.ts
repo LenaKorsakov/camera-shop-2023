@@ -9,7 +9,8 @@ export const Action = {
   FetchReviewsById: 'review/fetchReviewsById',
   SendReview: 'review/sendReview',
 
-  FetchPrices: 'filter/fetchPrices',
+  FetchMinPrice: 'filter/fetchMinPrice',
+  FetchMaxPrice: 'filter/fetchMaxPrice',
 
   SendCoupon: 'order/sendCoupon',
   SendOrder: 'order/sendOrder',

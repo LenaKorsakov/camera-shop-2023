@@ -1,7 +1,7 @@
 import { setCurrentFilterCategory, setCurrentFilterTypes, setCurrentFilterLevels, setBottomPrice, setTopPrice, resetCurrentFilterGroup, resetFilters, deleteCurrentFilter } from './filter-process';
 import { fakeMaxPrice, fakeMinPrice, UNKNOWN_ACTION } from '../../utils/mock';
 
-import { fetchPricesAction } from '../api-actions/api-actions';
+import { fetchMaxPriceAction, fetchMinPriceAction } from '../api-actions/api-actions';
 import { filterProcess, initialStateFilter } from './filter-process';
 
 import { FilterByCategory } from '../../const/filter-by-category';
@@ -41,9 +41,13 @@ describe('Reducer: filter', () => {
     expect(filterProcess.reducer(state, {type: setTopPrice.type, payload: 200}))
       .toEqual({...state, topPrice: 200});
   });
-  it('should set min ans max prices if fetchPricesAction.fulfilled', () => {
-    expect(filterProcess.reducer(state, {type: fetchPricesAction.fulfilled.type, payload: {minPrice: fakeMinPrice, maxPrice: fakeMaxPrice}}))
-      .toEqual({...state, maxPrice: fakeMaxPrice, minPrice: fakeMinPrice});
+  it('should set min price if fetchMinPriceAction.fulfilled', () => {
+    expect(filterProcess.reducer(state, {type: fetchMinPriceAction.fulfilled.type, payload: fakeMinPrice}))
+      .toEqual({...state, minPrice: fakeMinPrice});
+  });
+  it('should set max price if fetchMaxPriceAction.fulfilled', () => {
+    expect(filterProcess.reducer(state, {type: fetchMaxPriceAction.fulfilled.type, payload: fakeMaxPrice}))
+      .toEqual({...state, maxPrice: fakeMaxPrice});
   });
   it('should reset current filter group', () => {
     expect(filterProcess.reducer({...state, currentFilterLevels: [FilterByLevel.Hobby, FilterByLevel.Professional]}, resetCurrentFilterGroup(QueryKey.FilterLevel)))

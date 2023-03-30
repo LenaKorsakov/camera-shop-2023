@@ -6,7 +6,7 @@ import FilterByPrice from '../filter-by-price/filter-by-price';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getCurrentFilterByCategory, getCurrentFiltersByLevels, getCurrentFiltersByTypes, getUserEnteredBottomPrice, getUserEnteredTopPrice } from '../../store/filter-process/filter-process-selectors';
 import { deleteCurrentFilter, resetFilters } from '../../store/filter-process/filter-process';
-import { fetchPricesAction } from '../../store/api-actions/api-actions';
+import { fetchMaxPriceAction, fetchMinPriceAction } from '../../store/api-actions/api-actions';
 
 import { AppRoute } from '../../const/app-route';
 import { MIN_PAGE_NUMBER } from '../../const/const';
@@ -132,7 +132,8 @@ function Filters(): JSX.Element {
   };
 
   useEffect(() => {
-    dispatch(fetchPricesAction());
+    dispatch(fetchMinPriceAction());
+    dispatch(fetchMaxPriceAction());
   }, [currentFilterByCategory, currentFiltersByLevels, currentFiltersByType, dispatch]);
 
   return (

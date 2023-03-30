@@ -10,8 +10,10 @@ import { SortByTypeServerValue } from '../../const/sort-by-type';
 import { ReviewPost, ReviewsRaw } from '../../@types/review-types';
 import { Camera, Cameras, Promo } from '../../@types/camera-types';
 import { AppDispatch, State, UserInput } from '../../@types/store-types';
+import { SortByOrderServerValue } from '../../const/sort-by-order';
 
-const generateCamerasSearchParams = (state: State, isFetchingPrice?: boolean) => {
+const generateCamerasSearchParams = (state: State, isFetchingMinPrice?: boolean, isFetchingMaxPrice?: boolean) => {
+  const CAMERA_LIMIT = 1;
   const categoryParams = state.FILTER.currentFilterCategory === FilterByCategory.Photocamera
     ? ServerFilterValue.Photocamera
     : state.FILTER.currentFilterCategory;
@@ -26,10 +28,19 @@ const generateCamerasSearchParams = (state: State, isFetchingPrice?: boolean) =>
     [QueryKey.TopPrice]: makePrice(state.FILTER.topPrice)
   };
 
-  if (isFetchingPrice) {
+  if (isFetchingMinPrice) {
     return({
       ...filtersParams,
       [QueryKey.SortType]: SortByTypeServerValue.Price,
+      [QueryKey.Limit]: CAMERA_LIMIT,
+    });
+  }
+  if (isFetchingMaxPrice) {
+    return({
+      ...filtersParams,
+      [QueryKey.SortOrder]: SortByOrderServerValue.OrderDown,
+      [QueryKey.SortType]: SortByTypeServerValue.Price,
+      [QueryKey.Limit]: CAMERA_LIMIT,
     });
   }
 
@@ -59,27 +70,45 @@ undefined,
   }
 );
 
-export const fetchPricesAction = createAsyncThunk<
-{minPrice: number; maxPrice: number},
+export const fetchMinPriceAction = createAsyncThunk<
+number,
 undefined,
 {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }
->(Action.FetchPrices,
+>(Action.FetchMinPrice,
   async (_arg, {getState, extra: api}) => {
     const state = getState();
     const params = generateCamerasSearchParams(state, true);
 
     const { data } = await api.get<Cameras>(ApiRoute.Cameras, {params});
-    const mostExpensiveCameraIndex = data.length - 1;
 
     const minPrice = data[0].price;
-    const maxPrice = data[mostExpensiveCameraIndex].price;
 
+    return minPrice;
+  }
+);
 
-    return {minPrice, maxPrice};
+export const fetchMaxPriceAction = createAsyncThunk<
+number,
+undefined,
+{
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}
+>(Action.FetchMaxPrice,
+  async (_arg, {getState, extra: api}) => {
+    const state = getState();
+    const params = generateCamerasSearchParams(state, false, true);
+
+    const { data } = await api.get<Cameras>(ApiRoute.Cameras, {params});
+
+    const maxPrice = data[0].price;
+
+    return maxPrice;
   }
 );
 

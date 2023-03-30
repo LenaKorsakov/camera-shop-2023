@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { fetchPricesAction } from '../api-actions/api-actions';
+import { fetchMaxPriceAction, fetchMinPriceAction } from '../api-actions/api-actions';
 
 import { NameSpace } from '../../const/name-space';
 import { QueryKey } from '../../const/query-key';
@@ -78,9 +78,12 @@ export const filterProcess = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(fetchPricesAction.fulfilled, (state, action) => {
-        state.minPrice = action.payload.minPrice;
-        state.maxPrice = action.payload.maxPrice;
+      .addCase(fetchMinPriceAction.fulfilled, (state, action) => {
+        state.minPrice = action.payload;
+      });
+    builder
+      .addCase(fetchMaxPriceAction.fulfilled, (state, action) => {
+        state.maxPrice = action.payload;
       });
   },
 });

@@ -6,5 +6,6 @@ export enum QueryKey {
   FilterCategory = 'category',
   FilterLevel = 'level',
   BottomPrice = 'price_gte',
-  TopPrice = 'price_lte'
+  TopPrice = 'price_lte',
+  Limit = '_limit'
 }
