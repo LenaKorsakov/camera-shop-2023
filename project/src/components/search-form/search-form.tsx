@@ -124,7 +124,6 @@ function SearchForm(): JSX.Element {
             onChange={handleInputChange}
             value={searchedValue}
             onKeyDown={handleInputKeyDown}
-            autoFocus
           />
         </label>
         <ul className="form-search__select-list scroller">
