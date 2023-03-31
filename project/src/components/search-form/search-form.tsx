@@ -5,7 +5,6 @@ import { debounce } from 'lodash';
 
 import { fetchSearchCameraAction } from '../../store/api-actions/api-actions';
 import { getSearchedCameras, getSearchedCamerasStatus } from '../../store/catalog-process/catalog-process-selectors';
-//import { displayError } from '../../store/actions';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import useOnClickOutside from '../../hooks/use-on-click-outside';
@@ -32,7 +31,9 @@ function SearchForm(): JSX.Element {
 
   const [isDropdownOpened, setDropdownIsOpened] = useState<boolean>(false);
   const [searchedValue, setSearchValue] = useState<string>('');
-  const [currentProductIndex, setCurrentProductIndex] = useState<number>(0);
+  const [currentProductIndex, setCurrentProductIndex] = useState<number>(-1);
+  // eslint-disable-next-line no-console
+  console.log(currentProductIndex);
 
   const debouncedFetchCameras = useMemo(
     () => debounce((value: string) => {
@@ -59,6 +60,7 @@ function SearchForm(): JSX.Element {
     setSearchValue('');
     setDropdownIsOpened(false);
     setCurrentProductIndex(0);
+    setCurrentProductIndex(-1);
   };
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -122,6 +124,7 @@ function SearchForm(): JSX.Element {
             onChange={handleInputChange}
             value={searchedValue}
             onKeyDown={handleInputKeyDown}
+            autoFocus
           />
         </label>
         <ul className="form-search__select-list scroller">

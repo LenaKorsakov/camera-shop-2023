@@ -12,14 +12,14 @@ type ReviewListProps = {
 }
 
 function ReviewsList({reviews, cameraId}: ReviewListProps): JSX.Element {
-  const [reviewAmount, setReviewQty] = useState<number>(ContentPerItem.Review);
+  const [reviewAmount, setReviewAmount] = useState<number>(ContentPerItem.Review);
 
-  useEffect(() => setReviewQty(ContentPerItem.Review), [cameraId]);
+  useEffect(() => setReviewAmount(ContentPerItem.Review), [cameraId]);
 
   const visibleReviews = reviews.slice(0, reviewAmount);
   const isButtonVisible = reviewAmount < reviews.length;
 
-  const handleButtonClick = () => setReviewQty((prevState) => prevState + ContentPerItem.Review);
+  const handleButtonClick = () => setReviewAmount((prevState) => prevState + ContentPerItem.Review);
 
   return (
     <>

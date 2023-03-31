@@ -15,17 +15,3 @@ interface UsePaganationReturn {
 }
 
 export type UsePaganation = (argument: UsePaginationProps) => UsePaganationReturn;
-
-interface UseSliderProps {
-  contentPerSlide: number;
-  productQty: number;
-}
-
-interface UseSliderReturn {
-  firstContentIndex: number;
-  lastContentIndex: number;
-  nextSlide: () => void;
-  prevSlide: () => void;
-}
-
-export type UseSlider = (argument: UseSliderProps) => UseSliderReturn;
