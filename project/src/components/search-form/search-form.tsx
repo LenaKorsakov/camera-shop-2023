@@ -32,8 +32,6 @@ function SearchForm(): JSX.Element {
   const [isDropdownOpened, setDropdownIsOpened] = useState<boolean>(false);
   const [searchedValue, setSearchValue] = useState<string>('');
   const [currentProductIndex, setCurrentProductIndex] = useState<number>(-1);
-  // eslint-disable-next-line no-console
-  console.log(currentProductIndex);
 
   const debouncedFetchCameras = useMemo(
     () => debounce((value: string) => {
