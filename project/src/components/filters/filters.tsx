@@ -4,7 +4,7 @@ import { useSearchParams, useNavigate } from 'react-router-dom';
 import FilterByPrice from '../filter-by-price/filter-by-price';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getCurrentFilterByCategory, getCurrentFiltersByLevels, getCurrentFiltersByTypes, getUserEnteredBottomPrice, getUserEnteredTopPrice } from '../../store/filter-process/filter-process-selectors';
+import { getCamerasMaxPrice, getCamerasMinPrice, getCurrentFilterByCategory, getCurrentFiltersByLevels, getCurrentFiltersByTypes, getUserEnteredBottomPrice, getUserEnteredTopPrice } from '../../store/filter-process/filter-process-selectors';
 import { deleteCurrentFilter, resetFilters } from '../../store/filter-process/filter-process';
 import { fetchMaxPriceAction, fetchMinPriceAction } from '../../store/api-actions/api-actions';
 
@@ -36,14 +36,21 @@ function Filters(): JSX.Element {
   const currentBottomPrice = useAppSelector(getUserEnteredBottomPrice);
   const currentTopPrice = useAppSelector(getUserEnteredTopPrice);
 
+  const currentMinPrice = useAppSelector(getCamerasMinPrice);
+  const currentMaxPrice = useAppSelector(getCamerasMaxPrice);
+
   const [bottomPrice, setBottomPrice] = useState<UserInput>(currentBottomPrice);
   const [topPrice, setTopPrice] = useState<UserInput>(currentTopPrice);
 
   useEffect(() => {
-    setBottomPrice(currentBottomPrice);
+    if (Number(currentBottomPrice) !== currentMinPrice) {
+      setBottomPrice(currentBottomPrice);
+    }
 
-    setTopPrice(currentTopPrice);
-  }, [currentBottomPrice, currentTopPrice]);
+    if (Number(currentTopPrice) !== currentMaxPrice) {
+      setTopPrice(currentTopPrice);
+    }
+  }, [currentBottomPrice, currentTopPrice, currentMinPrice, currentMaxPrice]);
 
   const isVideocamera = currentFilterByCategory === FilterByCategory.Videocamera;
 

@@ -32,21 +32,23 @@ function FilterByPrice({bottomPrice, topPrice, onBottomPriceChange, onTopPriceCh
   const [isTopPriceInvalid, setTopPriceInvalid] = useState<boolean>(false);
 
   const getValidBottomPrice = () => {
-    if (numBottomPrice < minPrice || numBottomPrice === 0) {
-      return minPrice;
-    }
-    if (numBottomPrice > maxPrice && numTopPrice === 0) {
-      return maxPrice;
-    }
-    if ((numBottomPrice > numTopPrice || numBottomPrice > maxPrice) && numTopPrice !== 0) {
-      return numTopPrice;
-    }
+    if (numBottomPrice !== 0) {
+      if (numBottomPrice < minPrice) {
+        return minPrice;
+      }
+      if (numBottomPrice > maxPrice && numTopPrice === 0) {
+        return maxPrice;
+      }
+      if ((numBottomPrice > numTopPrice || numBottomPrice > maxPrice) && numTopPrice !== 0) {
+        return numTopPrice;
+      }
 
-    return bottomPrice;
+      return bottomPrice;
+    }
   };
 
   const getValidTopPrice = () => {
-    if (numTopPrice > maxPrice || numTopPrice === 0) {
+    if (numTopPrice > maxPrice && numTopPrice !== 0) {
       return maxPrice;
     }
     if (numTopPrice < minPrice && numBottomPrice === 0) {
@@ -122,10 +124,14 @@ function FilterByPrice({bottomPrice, topPrice, onBottomPriceChange, onTopPriceCh
     }
 
     if (numBottomPrice === 0) {
+      onBottomPriceChange('');
+
       searchParams.set(QueryKey.BottomPrice, String(minPrice));
       setBottomPriceInvalid(false);
     }
     if (numTopPrice === 0) {
+      onTopPriceChange('');
+
       searchParams.set(QueryKey.TopPrice, String(maxPrice));
       setTopPriceInvalid(false);
     }
