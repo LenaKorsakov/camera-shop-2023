@@ -1,12 +1,12 @@
-import { ChangeEvent, SyntheticEvent } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { ChangeEvent, SyntheticEvent, useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { getCamerasMaxPrice, getCamerasMinPrice } from '../../store/filter-process/filter-process-selectors';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { displayError } from '../../store/actions';
+import { useAppSelector } from '../../hooks';
 
 import { QueryKey } from '../../const/query-key';
-import { WarningMessage } from '../../const/warning-message';
+import { AppRoute } from '../../const/app-route';
+import { MIN_PAGE_NUMBER } from '../../const/const';
 
 import { UserInput } from '../../@types/store-types';
 
@@ -15,14 +15,9 @@ type FilterByPriceProps = {
   topPrice: UserInput;
   onBottomPriceChange: (bottomPrice: UserInput) => void;
   onTopPriceChange: (topPrice: UserInput) => void;
-  isBottomPriceInvalid: boolean;
-  onBottomPriceInvalidChange: (isBottomPriceInvalid: boolean) => void;
-  isTopPriceInvalid: boolean;
-  onTopPriceInvalidChange: (isTopPriceInvalid: boolean) => void;
 }
 
-function FilterByPrice({bottomPrice, topPrice, onBottomPriceChange, onTopPriceChange, isBottomPriceInvalid, onBottomPriceInvalidChange: setBottomPriceInvalid, isTopPriceInvalid, onTopPriceInvalidChange: setTopPriceInvalid}: FilterByPriceProps): JSX.Element {
-  const dispatch = useAppDispatch();
+function FilterByPrice({bottomPrice, topPrice, onBottomPriceChange, onTopPriceChange}: FilterByPriceProps): JSX.Element {
 
   const minPrice = useAppSelector(getCamerasMinPrice);
   const maxPrice = useAppSelector(getCamerasMaxPrice);
@@ -31,42 +26,36 @@ function FilterByPrice({bottomPrice, topPrice, onBottomPriceChange, onTopPriceCh
   const numTopPrice = Number(topPrice);
 
   const [searchParams, setSearchParams ] = useSearchParams();
+  const navigate = useNavigate();
+
+  const [isBottomPriceInvalid, setBottomPriceInvalid] = useState<boolean>(false);
+  const [isTopPriceInvalid, setTopPriceInvalid] = useState<boolean>(false);
 
   const getValidBottomPrice = () => {
-    if (numBottomPrice !== 0) {
-      if (numBottomPrice < minPrice) {
-        return minPrice;
-      }
-      if (numBottomPrice > maxPrice && numTopPrice === 0) {
-        return maxPrice;
-      }
-      if ((numBottomPrice > numTopPrice || numBottomPrice > maxPrice) && numTopPrice !== 0) {
-        return numTopPrice;
-      }
-
-      return bottomPrice;
-    } else {
-      dispatch(displayError(WarningMessage.FilterWrongBottomPriceWarning));
-      setBottomPriceInvalid(true);
+    if (numBottomPrice < minPrice || numBottomPrice === 0) {
+      return minPrice;
     }
+    if (numBottomPrice > maxPrice && numTopPrice === 0) {
+      return maxPrice;
+    }
+    if ((numBottomPrice > numTopPrice || numBottomPrice > maxPrice) && numTopPrice !== 0) {
+      return numTopPrice;
+    }
+
+    return bottomPrice;
   };
 
   const getValidTopPrice = () => {
-    if (numTopPrice !== 0) {
-      if (numTopPrice > maxPrice) {
-        return maxPrice;
-      }
-      if (numTopPrice < minPrice && numBottomPrice === 0) {
-        return minPrice;
-      }
-      if ((numTopPrice < numBottomPrice || numTopPrice < minPrice) && numBottomPrice !== 0) {
-        return numBottomPrice;
-      }
-      return numTopPrice;
-    } else {
-      dispatch(displayError(WarningMessage.FilterWrongTopPriceWarning));
-      setTopPriceInvalid(true);
+    if (numTopPrice > maxPrice || numTopPrice === 0) {
+      return maxPrice;
     }
+    if (numTopPrice < minPrice && numBottomPrice === 0) {
+      return minPrice;
+    }
+    if ((numTopPrice < numBottomPrice || numTopPrice < minPrice) && numBottomPrice !== 0) {
+      return numBottomPrice;
+    }
+    return numTopPrice;
   };
 
   const handlePriceInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -132,20 +121,21 @@ function FilterByPrice({bottomPrice, topPrice, onBottomPriceChange, onTopPriceCh
       }
     }
 
-    if (numBottomPrice !== 0 && numTopPrice !== 0) {
+    if (numBottomPrice === 0) {
+      searchParams.set(QueryKey.BottomPrice, String(minPrice));
       setBottomPriceInvalid(false);
-      setTopPriceInvalid(false);
-
-      setSearchParams(searchParams);
-    } else {
-      if (numBottomPrice === 0) {
-        setBottomPriceInvalid(true);
-      }
-      if (numTopPrice === 0) {
-        setTopPriceInvalid(true);
-      }
-      dispatch(displayError(WarningMessage.FilterWrongPriceWarning));
     }
+    if (numTopPrice === 0) {
+      searchParams.set(QueryKey.TopPrice, String(maxPrice));
+      setTopPriceInvalid(false);
+    }
+
+    setSearchParams(searchParams);
+
+    navigate({
+      pathname: `${AppRoute.Catalog}${MIN_PAGE_NUMBER}`,
+      search: searchParams.toString()
+    });
   };
 
   const handleInputKeyDown = (event: React.KeyboardEvent) => {
@@ -164,7 +154,7 @@ function FilterByPrice({bottomPrice, topPrice, onBottomPriceChange, onTopPriceCh
             <input
               type="number"
               name="price"
-              placeholder={`от ${minPrice}`}
+              placeholder={`${minPrice}`}
               value={bottomPrice}
               onChange={handlePriceInputChange}
               onBlur={handlePriceInputBlur}
@@ -178,7 +168,7 @@ function FilterByPrice({bottomPrice, topPrice, onBottomPriceChange, onTopPriceCh
             <input
               type="number"
               name="priceUp"
-              placeholder={`до ${maxPrice}`}
+              placeholder={`${maxPrice}`}
               value={topPrice}
               onChange={handlePriceInputChange}
               onBlur={handlePriceInputBlur}

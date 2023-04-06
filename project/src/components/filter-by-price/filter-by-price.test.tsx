@@ -17,10 +17,6 @@ describe('Component: Filters', () => {
             topPrice={''}
             onBottomPriceChange = {jest.fn()}
             onTopPriceChange={jest.fn()}
-            onBottomPriceInvalidChange={jest.fn()}
-            onTopPriceInvalidChange={jest.fn()}
-            isBottomPriceInvalid={false}
-            isTopPriceInvalid={false}
           />
         </MemoryRouter>
       </Provider>);

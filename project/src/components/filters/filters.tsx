@@ -51,9 +51,6 @@ function Filters(): JSX.Element {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const [isBottomPriceInvalid, setBottomPriceInvalid] = useState<boolean>(false);
-  const [isTopPriceInvalid, setTopPriceInvalid] = useState<boolean>(false);
-
   const isChecked = (filter: string, filtres: string[]) => filtres.some((value) => value === filter);
 
   const makeVideocameraSearchParams = (queryKey: QueryKey, queryValue: string) => {
@@ -127,8 +124,6 @@ function Filters(): JSX.Element {
 
     setBottomPrice('');
     setTopPrice('');
-    setBottomPriceInvalid(false);
-    setTopPriceInvalid(false);
   };
 
   useEffect(() => {
@@ -146,10 +141,6 @@ function Filters(): JSX.Element {
             topPrice={topPrice}
             onBottomPriceChange={setBottomPrice}
             onTopPriceChange={setTopPrice}
-            isBottomPriceInvalid={isBottomPriceInvalid}
-            onBottomPriceInvalidChange={setBottomPriceInvalid}
-            isTopPriceInvalid={isTopPriceInvalid}
-            onTopPriceInvalidChange={setTopPriceInvalid}
           />
           <fieldset className="catalog-filter__block">
             <legend className="title title--h5">Категория</legend>
