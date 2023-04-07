@@ -9,9 +9,10 @@ import { Cameras } from '../../@types/camera-types';
 
 type SliderProps = {
   cameras: Cameras;
+  onAddCameraInBasketButtonClick: () => void;
 }
 
-function Slider({cameras}: SliderProps): JSX.Element {
+function Slider({cameras, onAddCameraInBasketButtonClick}: SliderProps): JSX.Element {
   const [firstContentIndex, setFirstContentIndex] = useState<number>(MIN_SLIDE_ITEM_INDEX);
   const productAmount = cameras.length;
 
@@ -60,6 +61,7 @@ function Slider({cameras}: SliderProps): JSX.Element {
           camera={camera}
           key={camera.id}
           isActive={index >= firstContentIndex && index < lastContentIndex}
+          onAddCameraInBasketButtonClick={onAddCameraInBasketButtonClick}
         />
       ))}
 

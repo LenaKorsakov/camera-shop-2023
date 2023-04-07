@@ -13,7 +13,7 @@ export const initialStateReview: ReviewData = {
 };
 
 export const reviewData = createSlice({
-  name: NameSpace.ProductData,
+  name: NameSpace.ReviewData,
   initialState: initialStateReview,
   reducers: {
     changeSuccessStatus: (state, action: PayloadAction<boolean>) => {

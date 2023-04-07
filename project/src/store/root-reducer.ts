@@ -6,6 +6,7 @@ import { reviewData } from './review-process/review-process';
 import { sortProcess } from './sort-process/sort-process';
 import { appProcess } from './app-process/app-process';
 import { filterProcess } from './filter-process/filter-process';
+import { orderProcess } from './order-process/order-process';
 
 import { NameSpace } from '../const/name-space';
 
@@ -15,5 +16,6 @@ export const rootReducer = combineReducers({
   [NameSpace.ReviewData]: reviewData.reducer,
   [NameSpace.Sort]: sortProcess.reducer,
   [NameSpace.Filter]: filterProcess.reducer,
-  [NameSpace.APP]: appProcess.reducer
+  [NameSpace.APP]: appProcess.reducer,
+  [NameSpace.Order]: orderProcess.reducer
 });

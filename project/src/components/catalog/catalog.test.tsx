@@ -25,7 +25,7 @@ describe('Component: Catalog', () => {
     render(
       <Provider store={fakeStore}>
         <MemoryRouter>
-          <Catalog/>
+          <Catalog onAddCameraInBasketClickButton={jest.fn()}/>
         </MemoryRouter>
       </Provider>
     );

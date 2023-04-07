@@ -1,10 +1,14 @@
 import { WarningMessage } from '../../const/warning-message';
 import './empty-page.css';
 
-function EmptyPage(): JSX.Element {
+type EmptyPageProps = {
+  message: WarningMessage;
+}
+
+function EmptyPage({message}: EmptyPageProps): JSX.Element {
   return (
     <div className='empty-page'>
-      <h1 className='title'>{WarningMessage.FilterWarning}</h1>
+      <h1 className='title'>{message}</h1>
     </div>
   );
 }

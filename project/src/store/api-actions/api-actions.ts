@@ -1,4 +1,4 @@
-import { AxiosInstance } from 'axios';
+import { AxiosError, AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { Action } from '../../const/action';
@@ -11,6 +11,8 @@ import { ReviewPost, ReviewsRaw } from '../../@types/review-types';
 import { Camera, Cameras, Promo } from '../../@types/camera-types';
 import { AppDispatch, State, UserInput } from '../../@types/store-types';
 import { SortByOrderServerValue } from '../../const/sort-by-order';
+import { Coupon, CouponResponse, Order } from '../../@types/order-types';
+import { NOT_FOUND_ERROR_STATUS } from '../../const/const';
 
 const generateCamerasSearchParams = (state: State, isFetchingMinPrice?: boolean, isFetchingMaxPrice?: boolean) => {
   const CAMERA_LIMIT = 1;
@@ -208,3 +210,42 @@ ReviewPost,
     await api.post<ReviewsRaw>(ApiRoute.Reviews, userReview);
   }
 );
+
+export const sendOrderAction = createAsyncThunk<
+void,
+Order,
+{
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}
+>(Action.SendOrder,
+  async (userOrder, {extra: api}) => {
+    await api.post<Order>(ApiRoute.Order, userOrder);
+  }
+);
+
+export const sendCouponAction = createAsyncThunk<
+CouponResponse,
+Coupon,
+{
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}
+>(Action.SendCoupon,
+  async (coupon, {extra: api}) => {
+    try {
+      const response = await api.post<number>(ApiRoute.Coupons, coupon);
+      return response.data;
+    } catch (error) {
+      const status = (error as AxiosError)?.response?.status;
+
+      if (status === NOT_FOUND_ERROR_STATUS) {
+        return null;
+      }
+      throw new Error();
+    }
+  }
+);
+

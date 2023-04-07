@@ -14,6 +14,7 @@ describe('Component: Similar Cameras Block', () => {
         <MemoryRouter>
           <SimilarCamerasBlock
             cameras={fakeCameras}
+            onAddCameraInBasketButtonClick={jest.fn()}
           />
         </MemoryRouter>
       </Provider>

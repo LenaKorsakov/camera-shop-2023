@@ -16,9 +16,10 @@ import NotFoundPage from '../../pages/not-found-page/not-found-page';
 
 type ProductContentProps = {
   camera: Camera;
+  onAddCameraInBasketButtonClick: () => void;
 }
 
-function ProductContent({camera}: ProductContentProps): JSX.Element {
+function ProductContent({camera, onAddCameraInBasketButtonClick}: ProductContentProps): JSX.Element {
   const cameraFetchingStatus = useAppSelector(getProductFetchingStatus);
   const similarCameras = useAppSelector(getSimilarCameras);
 
@@ -27,7 +28,6 @@ function ProductContent({camera}: ProductContentProps): JSX.Element {
       {cameraFetchingStatus === FetchStatus.Loading && <LoadingPage />}
       {cameraFetchingStatus === FetchStatus.Error && <NotFoundPage />}
       {cameraFetchingStatus === FetchStatus.Success && camera &&
-    <main>
       <div className="page-content">
         <Breadcrumbs
           isCatalogActive={false}
@@ -41,6 +41,7 @@ function ProductContent({camera}: ProductContentProps): JSX.Element {
           <section className="product-similar">
             {similarCameras.length > 0 &&
               <SimilarCamerasBlock
+                onAddCameraInBasketButtonClick={onAddCameraInBasketButtonClick}
                 cameras={similarCameras}
               />}
           </section>
@@ -48,8 +49,7 @@ function ProductContent({camera}: ProductContentProps): JSX.Element {
         <div className="page-content__section">
           <ReviewBlock cameraId = {camera.id}/>
         </div>
-      </div>
-    </main>}
+      </div>}
     </>
   );
 }

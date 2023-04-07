@@ -1,4 +1,4 @@
-import { fetchAllCameraAction, fetchCameraByIdAction, fetchMaxPriceAction, fetchMinPriceAction, fetchPromoAction, fetchReviewsByIdAction, fetchSearchCameraAction, fetchSimilarCamerasAction, sendReviewAction } from './api-actions';
+import { fetchAllCameraAction, fetchCameraByIdAction, fetchMaxPriceAction, fetchMinPriceAction, fetchPromoAction, fetchReviewsByIdAction, fetchSearchCameraAction, fetchSimilarCamerasAction, sendCouponAction, sendOrderAction, sendReviewAction } from './api-actions';
 import { fakeCamera, fakeCameras, fakeId, fakePromo, fakeReviewPost, fakeReviews, getMockStore, mockApi, mockState } from '../../utils/mock';
 import { catalogData } from '../catalog-process/catalog-process';
 
@@ -8,6 +8,14 @@ import { SortByTypeServerValue } from '../../const/sort-by-type';
 import { NameSpace } from '../../const/name-space';
 import { FetchStatus } from '../../const/fetch-status';
 import { SortByOrderServerValue } from '../../const/sort-by-order';
+import { Order } from '../../@types/order-types';
+
+const fakeOrder: Order = {
+  camerasIds: [5, 7, 9, 10],
+  coupon: null
+};
+
+const fakeCoupon = {coupon: 'camera-777'};
 
 describe('Asynk actions: test', () => {
   it('fetchAllCameraAction should return cameras if server return 200 and change catalogLoadingStatus to success', async () => {
@@ -317,5 +325,77 @@ describe('Asynk actions: test', () => {
       sendReviewAction.rejected.type
     ]);
   });
+
+  it('sendOrderAction should send order when server return 200', async() => {
+    mockApi
+      .onPost(ApiRoute.Order)
+      .reply(200);
+
+    const store = getMockStore();
+    expect(store.getActions()).toEqual([]);
+
+    await store.dispatch(sendOrderAction(fakeOrder));
+
+    const actions = store.getActions().map(({type}) => type);
+
+    expect(actions).toEqual([
+      sendOrderAction.pending.type,
+      sendOrderAction.fulfilled.type
+    ]);
+  });
+
+  it('sendOrderAction should not send order when server return 400', async() => {
+    mockApi
+      .onPost(ApiRoute.Order)
+      .reply(400);
+
+    const store = getMockStore();
+    expect(store.getActions()).toEqual([]);
+
+    await store.dispatch(sendOrderAction(fakeOrder));
+
+    const actions = store.getActions().map(({type}) => type);
+
+    expect(actions).toEqual([
+      sendOrderAction.pending.type,
+      sendOrderAction.rejected.type
+    ]);
+  });
+  it('sendCouponAction should send coupon when server return 200', async() => {
+    mockApi
+      .onPost(ApiRoute.Coupons)
+      .reply(200);
+
+    const store = getMockStore();
+    expect(store.getActions()).toEqual([]);
+
+    await store.dispatch(sendCouponAction(fakeCoupon));
+
+    const actions = store.getActions().map(({type}) => type);
+
+    expect(actions).toEqual([
+      sendCouponAction.pending.type,
+      sendCouponAction.fulfilled.type
+    ]);
+  });
+
+  it('sendCouponAction should not send coupon when server return 404', async() => {
+    mockApi
+      .onPost(ApiRoute.Coupons)
+      .reply(404);
+
+    const store = getMockStore();
+    expect(store.getActions()).toEqual([]);
+
+    await store.dispatch(sendCouponAction(fakeCoupon));
+
+    const actions = store.getActions().map(({type}) => type);
+
+    expect(actions).toEqual([
+      sendCouponAction.pending.type,
+      sendCouponAction.rejected.type
+    ]);
+  });
 });
+
 

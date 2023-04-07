@@ -15,6 +15,7 @@ describe('Component: Camera card', () => {
           <CameraCard
             isActive
             camera={fakeCamera}
+            onAddCameraInBasketButtonClick={jest.fn()}
           />
         </MemoryRouter>
       </Provider>

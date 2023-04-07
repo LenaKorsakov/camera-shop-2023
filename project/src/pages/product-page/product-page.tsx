@@ -1,19 +1,31 @@
 import { useParams } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import ProductContent from '../../components/product-content/product-content';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchSimilarCamerasAction, fetchCameraByIdAction } from '../../store/api-actions/api-actions';
 
-import { getSelectedCamera } from '../../store/product-process/product-data-selectors';
+import { getCurrentCamera } from '../../store/product-process/product-data-selectors';
+import BasketModal from '../../components/basket-modal/basket-modal';
+import { ModalType } from '../../const/modal-type';
+import { ModalTitle } from '../../const/modal-title';
 
 function ProductPage() {
   const dispatch = useAppDispatch();
+  const [isModalAddCameraToBasketOpen, setModalAddCameraToBasketOpen] = useState<boolean>(false);
+
+  const handleAddCameraToBasketButtonClick = () => {
+    setModalAddCameraToBasketOpen(true);
+  };
+
+  const closeAddCameraToBasketModal = () => {
+    setModalAddCameraToBasketOpen(false);
+  };
 
   const { id } = useParams() as { id: string };
 
-  const camera = useAppSelector(getSelectedCamera);
+  const currentCamera = useAppSelector(getCurrentCamera);
 
   useEffect(() => {
     if (id) {
@@ -26,7 +38,16 @@ function ProductPage() {
 
 
   return (
-    <ProductContent camera={camera}/>);
+    <main>
+      <ProductContent camera={currentCamera} onAddCameraInBasketButtonClick={handleAddCameraToBasketButtonClick}/>
+      {isModalAddCameraToBasketOpen &&
+        <BasketModal
+          type={ModalType.AddCameraInBasket}
+          onCloseModal={closeAddCameraToBasketModal}
+          title={ModalTitle.AddCameraInBasket}
+        />}
+    </main>
+  );
 }
 
 export default ProductPage;

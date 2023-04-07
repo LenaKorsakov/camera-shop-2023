@@ -9,7 +9,7 @@ import { Camera, Cameras } from '../../@types/camera-types';
 import { State } from '../../@types/store-types';
 import { ReviewsAdapt, ReviewsRaw } from '../../@types/review-types';
 
-export const getSelectedCamera = (state: State): Camera => state[NameSpace.ProductData].camera;
+export const getCurrentCamera = (state: State): Camera => state[NameSpace.ProductData].camera;
 export const getProductFetchingStatus = (state: State): FetchStatus => state[NameSpace.ProductData].fetchStatus;
 export const getSimilarCameras = (state: State): Cameras => state[NameSpace.ProductData].similarCameras;
 

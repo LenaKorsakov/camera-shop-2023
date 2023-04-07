@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import InBasketLink from './in-basket-link';
@@ -12,21 +11,27 @@ import { ComponentName } from '../../const/component-name';
 import { DEFAULT_TABS_TYPE } from '../../const/tabs-buttons';
 
 import { Camera } from '../../@types/camera-types';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getCamerasInTheBasket } from '../../store/order-process/order-process-selectors';
+import { selectCamera } from '../../store/order-process/order-process';
 
 type CameraCardProps = {
 isActive: boolean;
 camera: Camera;
+onAddCameraInBasketButtonClick: () => void;
 }
 
-function CameraCard({isActive, camera}: CameraCardProps): JSX.Element {
+function CameraCard({isActive, camera, onAddCameraInBasketButtonClick}: CameraCardProps): JSX.Element {
   const {id, name, rating, price, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, reviewCount, category } = camera;
-  const [inBasket, setInBasket] = useState<boolean>(false);
 
-  const handleButtonClick = () => {
-    //появляется попап с кнопкой добавить товар в корзину
-    //по клику на кнопку диспатчим отправку заказа
-    // если все ок перенаправляем в корзину и  показать попап спасибо и далее
-    setInBasket(true);//это тоже будет устанавливаться и забираться из глобального state пока так
+  const dispatch = useAppDispatch();
+
+  const camerasInTheBasket = useAppSelector(getCamerasInTheBasket);
+  const isAlreadyInTheBasket = camerasInTheBasket.some((item) => item.id === id);
+
+  const handleAddCameraInBasketButtonClick = () => {
+    dispatch(selectCamera(camera));
+    onAddCameraInBasketButtonClick();
   };
 
   return (
@@ -58,11 +63,11 @@ function CameraCard({isActive, camera}: CameraCardProps): JSX.Element {
       </div>
       <div className="product-card__buttons">
 
-        { inBasket ? <InBasketLink/> :
+        { isAlreadyInTheBasket ? <InBasketLink/> :
           <button
             className="btn btn--purple product-card__btn"
             type="button"
-            onClick={handleButtonClick}
+            onClick={handleAddCameraInBasketButtonClick}
           >
                       Купить
           </button>}

@@ -17,10 +17,10 @@ function ReviewBlock({ cameraId }: ReviewBlockProps): JSX.Element {
 
   const reviews = useAppSelector(getSortedReviews);
 
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState<boolean>(false);
 
   const handleNewReviewButtonClick = () => {
-    setIsOpen(true);
+    setIsReviewModalOpen(true);
     dispatch(changeSuccessStatus(false));
   };
 
@@ -46,7 +46,7 @@ function ReviewBlock({ cameraId }: ReviewBlockProps): JSX.Element {
 
       </section>
       <ButtonToTop />
-      {isOpen && <ReviewModal cameraId={cameraId} setIsOpen={setIsOpen}/>}
+      {isReviewModalOpen && <ReviewModal cameraId={cameraId} setIsOpen={setIsReviewModalOpen}/>}
     </>
   );
 }

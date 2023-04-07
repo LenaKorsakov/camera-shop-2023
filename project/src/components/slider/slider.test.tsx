@@ -23,6 +23,7 @@ describe('Component: Slider', () => {
         <MemoryRouter>
           <Slider
             cameras={fakeCameras}
+            onAddCameraInBasketButtonClick={jest.fn()}
           />
         </MemoryRouter>
       </Provider>
@@ -39,6 +40,7 @@ describe('Component: Slider', () => {
         <MemoryRouter>
           <Slider
             cameras={fakeCameras}
+            onAddCameraInBasketButtonClick={jest.fn()}
           />
         </MemoryRouter>
       </Provider>

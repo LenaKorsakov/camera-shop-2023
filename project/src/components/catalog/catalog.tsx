@@ -19,12 +19,17 @@ import { AppRoute } from '../../const/app-route';
 import { ContentPerItem } from '../../const/content-per-item';
 import { MIN_PAGE_NUMBER } from '../../const/const';
 import { FetchStatus } from '../../const/fetch-status';
+import { WarningMessage } from '../../const/warning-message';
 
+type CatalogProps = {
+  onAddCameraInBasketClickButton: () => void;
+};
 
-function Catalog(): JSX.Element {
+function Catalog({onAddCameraInBasketClickButton} : CatalogProps): JSX.Element {
   const cameras = useAppSelector(getAllCameras);
   const loadingStatus = useAppSelector(getCatalogLoadingStatus);
   const currentParams = useAppSelector(getCurrentParams);
+
 
   const {
     firstContentIndex,
@@ -68,7 +73,7 @@ function Catalog(): JSX.Element {
       <Sort/>
       {loadingStatus === FetchStatus.Loading && <LoadingPage/>}
       {loadingStatus === FetchStatus.Error && <NotFoundPage isCatalog/>}
-      {loadingStatus === FetchStatus.Success && cameras.length === 0 && <EmptyPage/>}
+      {loadingStatus === FetchStatus.Success && cameras.length === 0 && <EmptyPage message={WarningMessage.NoProductsMatchingThisFilterWarning}/>}
       {loadingStatus === FetchStatus.Success &&
       <>
         <div className="cards catalog__cards">
@@ -77,6 +82,7 @@ function Catalog(): JSX.Element {
               camera={camera}
               isActive={false}
               key={camera.id}
+              onAddCameraInBasketButtonClick={onAddCameraInBasketClickButton}
             />
           ))}
         </div>

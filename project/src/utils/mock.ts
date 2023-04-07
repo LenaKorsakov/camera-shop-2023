@@ -12,7 +12,7 @@ import { NameSpace } from '../const/name-space';
 import { initialStateCatalog } from '../store/catalog-process/catalog-process';
 import { initialStateProduct } from '../store/product-process/product-process';
 import { initialStateReview } from '../store/review-process/review-process';
-import { initialStateBasket } from '../store/basket-process/basket-process';
+import { initialStateOrder } from '../store/order-process/order-process';
 import { FetchStatus } from '../const/fetch-status';
 import { initialStateApp } from '../store/app-process/app-process';
 import { initialStateSort } from '../store/sort-process/sort-process';
@@ -118,7 +118,7 @@ export const makeMockState = () => ({
   [NameSpace.ReviewData]: {
     ...initialStateReview,
   },
-  [NameSpace.Order]: {...initialStateBasket},
+  [NameSpace.Order]: {...initialStateOrder},
   [NameSpace.APP]: {...initialStateApp},
   [NameSpace.Sort]: {...initialStateSort},
   [NameSpace.Filter]: {...initialStateFilter}

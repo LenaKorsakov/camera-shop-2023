@@ -25,7 +25,7 @@ describe('Component: Product Content', () => {
     render(
       <Provider store={mockStateSuccess}>
         <MemoryRouter>
-          <ProductContent camera={fakeCamera}/>
+          <ProductContent camera={fakeCamera} onAddCameraInBasketButtonClick={jest.fn()}/>
         </MemoryRouter>
       </Provider>
     );

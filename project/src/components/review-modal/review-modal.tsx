@@ -1,7 +1,7 @@
 import { memo, useRef } from 'react';
 
 import ReviewForm from '../review-form/review-form';
-import SuccessModal from './success-modal';
+import SuccessModal from './success-modal/success-modal';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import useOnClickOutside from '../../hooks/use-on-click-outside';
@@ -16,8 +16,6 @@ type ReviewModalProps = {
 }
 
 function ReviewModal({ setIsOpen, cameraId }: ReviewModalProps): JSX.Element {
-  //TODO переделать этот компонент (обработчики закрытия должны быть разными)
-
   const dispatch = useAppDispatch();
 
   const closeModal = () => {

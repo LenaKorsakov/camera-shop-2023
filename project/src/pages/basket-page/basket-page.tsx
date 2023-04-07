@@ -1,7 +1,38 @@
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 import BasketItem from '../../components/basket-item/basket-item';
+import BasketSummary from '../../components/basket-summary/basket-summary';
+import EmptyPage from '../empty-page/empty-page';
+
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getCamerasInTheBasket } from '../../store/order-process/order-process-selectors';
+
+import { WarningMessage } from '../../const/warning-message';
+import { useState } from 'react';
+import BasketModal from '../../components/basket-modal/basket-modal';
+import { ModalTitle } from '../../const/modal-title';
+import { ModalType } from '../../const/modal-type';
+import { selectCamera } from '../../store/order-process/order-process';
 
 function BasketPage(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const cameras = useAppSelector(getCamerasInTheBasket);
+  const uniqueCamerasInTheBasket = [...new Set(cameras)];
+
+  const [isModalRemoveCameraFromBasketOpen, setModalRemoveCameraFromBasketOpen] = useState<boolean>(false);
+
+  const handleCloseRemoveCameraFromBasketModal = () => {
+    setModalRemoveCameraFromBasketOpen(false);
+  };
+
+  const handleRemoveCameraFromBasket = (cameraID: number) => {
+    setModalRemoveCameraFromBasketOpen(true);
+
+    const currentCamera = cameras.find((camera) => camera.id === cameraID);
+    if (currentCamera) {
+      dispatch(selectCamera(currentCamera));
+    }
+  };
+
   return (
     <main>
       <div className="page-content">
@@ -13,60 +44,26 @@ function BasketPage(): JSX.Element {
           <div className="container">
             <h1 className="title title--h2">Корзина</h1>
             <ul className="basket__list">
-              <BasketItem/>(//TODO map)
+              {uniqueCamerasInTheBasket.length > 0
+                ? uniqueCamerasInTheBasket.map((item) => (
+                  <BasketItem
+                    key={item.id}
+                    camera={item}
+                    onRemoveCameraFromBasketButtonClick={handleRemoveCameraFromBasket}
+                  />
+                ))
+                : <EmptyPage message={WarningMessage.EmptyBasketMessage}/>}
             </ul>
-            <div className="basket__summary">
-              <div className="basket__promo">
-                <p className="title title--h4">
-          Если у вас есть промокод на скидку, примените его в этом поле
-                </p>
-                <div className="basket-form">
-                  <form action="#">
-                    <div className="custom-input">
-                      <label>
-                        <span className="custom-input__label">Промокод</span>
-                        <input
-                          type="text"
-                          name="promo"
-                          placeholder="Введите промокод"
-                        />
-                      </label>
-                      <p className="custom-input__error">Промокод неверный</p>
-                      <p className="custom-input__success">Промокод принят!</p>
-                    </div>
-                    <button className="btn" type="submit">
-              Применить
-                    </button>
-                  </form>
-                </div>
-              </div>
-              <div className="basket__summary-order">
-                <p className="basket__summary-item">
-                  <span className="basket__summary-text">Всего:</span>
-                  <span className="basket__summary-value">111 390 ₽</span>
-                </p>
-                <p className="basket__summary-item">
-                  <span className="basket__summary-text">Скидка:</span>
-                  <span className="basket__summary-value basket__summary-value--bonus">
-            0 ₽
-                  </span>
-                </p>
-                <p className="basket__summary-item">
-                  <span className="basket__summary-text basket__summary-text--total">
-            К оплате:
-                  </span>
-                  <span className="basket__summary-value basket__summary-value--total">
-            111 390 ₽
-                  </span>
-                </p>
-                <button className="btn btn--purple" type="submit">
-          Оформить заказ
-                </button>
-              </div>
-            </div>
+            <BasketSummary/>
           </div>
         </section>
       </div>
+      {isModalRemoveCameraFromBasketOpen &&
+      <BasketModal
+        onCloseModal={handleCloseRemoveCameraFromBasketModal}
+        title={ModalTitle.RemoveCameraFromBasket}
+        type={ModalType.RemoveCameraFromBasket}
+      />}
     </main>);
 }
 
