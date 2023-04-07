@@ -5,7 +5,7 @@ type BasketQuantityProps = {
   camera: Camera;
 }
 
-function BasketQuantity({onProductQuantityChange, camera}: BasketQuantityProps): JSX.Element {
+function BasketItemAmount({onProductQuantityChange, camera}: BasketQuantityProps): JSX.Element {
   return (
     <div className="quantity">
       <button
@@ -38,4 +38,4 @@ function BasketQuantity({onProductQuantityChange, camera}: BasketQuantityProps):
   );
 }
 
-export default BasketQuantity;
+export default BasketItemAmount;

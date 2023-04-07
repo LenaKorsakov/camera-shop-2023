@@ -35,7 +35,10 @@ function ProductContent({camera, onAddCameraInBasketButtonClick}: ProductContent
           productName={`${camera.category} «${camera.name}»`}
         />
         <div className="page-content__section">
-          <CameraInfo camera={camera}/>
+          <CameraInfo
+            camera={camera}
+            onAddToBasketButtonClick={onAddCameraInBasketButtonClick}
+          />
         </div>
         <div className="page-content__section">
           <section className="product-similar">

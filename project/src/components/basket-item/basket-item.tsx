@@ -3,12 +3,12 @@ import { useAppSelector } from '../../hooks';
 import { getCamerasInTheBasket } from '../../store/order-process/order-process-selectors';
 
 import Picture from '../picture/picture';
-import BasketAmount from '../basket-amount/basket-amount';
 
 import { PictureSize } from '../../const/picture-size';
 import { capitalizeFirstLetter, formatPrice } from '../../utils/format';
 
 import { Camera } from '../../@types/camera-types';
+import BasketItemAmount from '../basket-item-amount/basket-item-amount';
 
 type BasketItemProps = {
   camera: Camera;
@@ -62,7 +62,7 @@ function BasketItem({ camera, onRemoveCameraFromBasketButtonClick } : BasketItem
       <p className="basket-item__price">
         <span className="visually-hidden">Цена:</span>{formatPrice(price)} ₽
       </p>
-      <BasketAmount
+      <BasketItemAmount
         onProductQuantityChange={handleProductAmountChange}
         camera={camera}
       />
