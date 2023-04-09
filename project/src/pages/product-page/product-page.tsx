@@ -2,14 +2,13 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 import ProductContent from '../../components/product-content/product-content';
+import BasketModal from '../../components/basket-modal/basket-modal';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchSimilarCamerasAction, fetchCameraByIdAction } from '../../store/api-actions/api-actions';
-
 import { getCurrentCamera } from '../../store/product-process/product-data-selectors';
-import BasketModal from '../../components/basket-modal/basket-modal';
+
 import { ModalType } from '../../const/modal-type';
-import { ModalTitle } from '../../const/modal-title';
 
 function ProductPage() {
   const dispatch = useAppDispatch();
@@ -44,7 +43,6 @@ function ProductPage() {
         <BasketModal
           type={ModalType.AddCameraInBasket}
           onCloseModal={closeAddCameraToBasketModal}
-          title={ModalTitle.AddCameraInBasket}
         />}
     </main>
   );

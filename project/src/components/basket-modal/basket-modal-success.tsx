@@ -16,17 +16,16 @@ import { getSelectedCamera } from '../../store/order-process/order-process-selec
 
 type BasketModalProps = {
   onCloseModal: () => void;
+  title: ModalTitle;
   type: ModalType;
 }
 
-function BasketModal({ onCloseModal, type }: BasketModalProps): JSX.Element {
+function BasketModalSuccess({ onCloseModal, title, type }: BasketModalProps): JSX.Element {
   const selectedCamera = useAppSelector(getSelectedCamera);
 
   const closeModal = () => {
     onCloseModal();
   };
-
-  const modalTitle = ModalTitle[Object.keys(type)[0] as keyof typeof ModalTitle];
 
   const handleButtonCloseClick = () => closeModal();
 
@@ -55,7 +54,7 @@ function BasketModal({ onCloseModal, type }: BasketModalProps): JSX.Element {
           className="modal__content"
           ref={modalRef}
         >
-          <p className="title title--h4">{modalTitle}</p>
+          <p className="title title--h4">{title}</p>
           {selectedCamera && <BasketItemShort camera={selectedCamera} modalType={type}/>}
           <div className="modal__buttons">
             {buttons}
@@ -75,4 +74,4 @@ function BasketModal({ onCloseModal, type }: BasketModalProps): JSX.Element {
     </div>
   );
 }
-export default memo(BasketModal);
+export default memo(BasketModalSuccess);

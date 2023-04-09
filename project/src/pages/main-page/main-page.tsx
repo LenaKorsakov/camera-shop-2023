@@ -13,7 +13,6 @@ import { setCurrentParams } from '../../store/app-process/app-process';
 import BasketModal from '../../components/basket-modal/basket-modal';
 
 import { ModalType } from '../../const/modal-type';
-import { ModalTitle } from '../../const/modal-title';
 
 function MainPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -58,7 +57,6 @@ function MainPage(): JSX.Element {
         <BasketModal
           type={ModalType.AddCameraInBasket}
           onCloseModal={closeAddCameraToBasketModal}
-          title={ModalTitle.AddCameraInBasket}
         />}
     </main>
   );

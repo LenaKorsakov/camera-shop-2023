@@ -1,17 +1,17 @@
+import { useState } from 'react';
+
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 import BasketItem from '../../components/basket-item/basket-item';
 import BasketSummary from '../../components/basket-summary/basket-summary';
 import EmptyPage from '../empty-page/empty-page';
+import BasketModal from '../../components/basket-modal/basket-modal';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
+import { selectCamera } from '../../store/order-process/order-process';
 import { getCamerasInTheBasket } from '../../store/order-process/order-process-selectors';
 
 import { WarningMessage } from '../../const/warning-message';
-import { useState } from 'react';
-import BasketModal from '../../components/basket-modal/basket-modal';
-import { ModalTitle } from '../../const/modal-title';
 import { ModalType } from '../../const/modal-type';
-import { selectCamera } from '../../store/order-process/order-process';
 
 function BasketPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -61,7 +61,6 @@ function BasketPage(): JSX.Element {
       {isModalRemoveCameraFromBasketOpen &&
       <BasketModal
         onCloseModal={handleCloseRemoveCameraFromBasketModal}
-        title={ModalTitle.RemoveCameraFromBasket}
         type={ModalType.RemoveCameraFromBasket}
       />}
     </main>);
