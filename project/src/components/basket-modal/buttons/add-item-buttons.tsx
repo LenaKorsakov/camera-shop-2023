@@ -1,17 +1,19 @@
-import { Camera } from '../../@types/camera-types';
-import { useAppDispatch } from '../../hooks';
-import { addCameraToBasket } from '../../store/order-process/order-process';
+import { Camera } from '../../../@types/camera-types';
+import { useAppDispatch } from '../../../hooks';
+import { addCameraToBasket } from '../../../store/order-process/order-process';
 
-type BasketRemoveItemButtonsProps = {
+type AddItemButtonProps = {
   camera: Camera;
   onCloseModal: () => void;
+  onOpenSuccessModal: () => void;
 }
-const BasketAddItemButtons = ({camera, onCloseModal}:BasketRemoveItemButtonsProps):JSX.Element => {
+const AddItemButton = ({camera, onCloseModal, onOpenSuccessModal}:AddItemButtonProps):JSX.Element => {
   const dispatch = useAppDispatch();
 
   const handleButtonAddToBasketClick = () => {
     dispatch(addCameraToBasket(camera));
     onCloseModal();
+    onOpenSuccessModal();
   };
 
   return (
@@ -22,4 +24,4 @@ const BasketAddItemButtons = ({camera, onCloseModal}:BasketRemoveItemButtonsProp
       Добавить в корзину
     </button>);
 };
-export default BasketAddItemButtons;
+export default AddItemButton;

@@ -6,10 +6,10 @@ import { DEFAULT_TABS_TYPE } from '../../../const/tabs-buttons';
 
 type SuccessModalProps = {
   cameraId: number;
-  onButtonClick: () => void;
+  onModalClose: () => void;
 }
 
-function SuccessModal ({cameraId, onButtonClick}: SuccessModalProps): JSX.Element {
+function SuccessModal ({cameraId, onModalClose}: SuccessModalProps): JSX.Element {
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
@@ -18,7 +18,7 @@ function SuccessModal ({cameraId, onButtonClick}: SuccessModalProps): JSX.Elemen
       search: `?${ComponentName.Tab}=${DEFAULT_TABS_TYPE}`,
     });
 
-    onButtonClick();
+    onModalClose();
   };
 
   return(

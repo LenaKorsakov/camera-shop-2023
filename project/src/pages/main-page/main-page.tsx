@@ -13,12 +13,14 @@ import { setCurrentParams } from '../../store/app-process/app-process';
 import BasketModal from '../../components/basket-modal/basket-modal';
 
 import { ModalType } from '../../const/modal-type';
+import BasketModalSuccess from '../../components/basket-modal/basket-modal-success';
 
 function MainPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const [searchParams] = useSearchParams();
 
   const [isModalAddCameraToBasketOpen, setModalAddCameraToBasketOpen] = useState<boolean>(false);
+  const [isModalSuccessAddedCameraToBasketOpen, setModalSuccessAddedCameraToBasketOpen] = useState<boolean>(false);
 
   const handleAddCameraToBasketButtonClick = () => {
     setModalAddCameraToBasketOpen(true);
@@ -26,6 +28,14 @@ function MainPage(): JSX.Element {
 
   const closeAddCameraToBasketModal = () => {
     setModalAddCameraToBasketOpen(false);
+  };
+
+  const handleOpenSuccessModal = () => {
+    setModalSuccessAddedCameraToBasketOpen(true);
+  };
+
+  const handleCloseSuccessModal = () => {
+    setModalSuccessAddedCameraToBasketOpen(false);
   };
 
   useCheckSearchParams();
@@ -55,8 +65,14 @@ function MainPage(): JSX.Element {
       </div>
       {isModalAddCameraToBasketOpen &&
         <BasketModal
-          type={ModalType.AddCameraInBasket}
+          modalType={ModalType.AddCameraInBasket}
           onCloseModal={closeAddCameraToBasketModal}
+          onOpenSuccessModal={handleOpenSuccessModal}
+        />}
+      {isModalSuccessAddedCameraToBasketOpen &&
+        <BasketModalSuccess
+          modalType={ModalType.CameraAddedToBasket}
+          onCloseModal={handleCloseSuccessModal}
         />}
     </main>
   );

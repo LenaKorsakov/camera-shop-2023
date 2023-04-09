@@ -16,7 +16,7 @@ describe('Component: Success Modal', () => {
     render(
       <Provider store={mockStore}>
         <MemoryRouter>
-          <SuccessModal cameraId={fakeCamera.id} onButtonClick={handleButtonClick}/>
+          <SuccessModal cameraId={fakeCamera.id} onModalClose={handleButtonClick}/>
         </MemoryRouter>
       </Provider>
     );
@@ -31,7 +31,7 @@ describe('Component: Success Modal', () => {
     render(
       <Provider store={mockStore}>
         <MemoryRouter>
-          <SuccessModal cameraId={fakeCamera.id} onButtonClick={handleButtonClick}/>
+          <SuccessModal cameraId={fakeCamera.id} onModalClose={handleButtonClick}/>
         </MemoryRouter>
       </Provider>
     );

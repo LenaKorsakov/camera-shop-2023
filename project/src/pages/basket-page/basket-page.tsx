@@ -12,13 +12,21 @@ import { getCamerasInTheBasket } from '../../store/order-process/order-process-s
 
 import { WarningMessage } from '../../const/warning-message';
 import { ModalType } from '../../const/modal-type';
+import BasketModalSuccess from '../../components/basket-modal/basket-modal-success';
+//import { Camera, Cameras } from '../../@types/camera-types';
 
 function BasketPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const cameras = useAppSelector(getCamerasInTheBasket);
+
+  //получить массив уникальных обьектов
+  // const ucameras = cameras.reduce((acc: Cameras, item: Camera) =>
+  //   acc.some((camera) => camera.id === item.id)) ? acc : [...acc, item]), []);
+
   const uniqueCamerasInTheBasket = [...new Set(cameras)];
 
   const [isModalRemoveCameraFromBasketOpen, setModalRemoveCameraFromBasketOpen] = useState<boolean>(false);
+  const [isModalSuccessAddedCameraToBasketOpen, setModalSuccessAddedCameraToBasketOpen] = useState<boolean>(false);
 
   const handleCloseRemoveCameraFromBasketModal = () => {
     setModalRemoveCameraFromBasketOpen(false);
@@ -31,6 +39,14 @@ function BasketPage(): JSX.Element {
     if (currentCamera) {
       dispatch(selectCamera(currentCamera));
     }
+  };
+
+  const handleOpenSuccessModal = () => {
+    setModalSuccessAddedCameraToBasketOpen(true);
+  };
+
+  const handleCloseSuccessModal = () => {
+    setModalSuccessAddedCameraToBasketOpen(false);
   };
 
   return (
@@ -61,7 +77,13 @@ function BasketPage(): JSX.Element {
       {isModalRemoveCameraFromBasketOpen &&
       <BasketModal
         onCloseModal={handleCloseRemoveCameraFromBasketModal}
-        type={ModalType.RemoveCameraFromBasket}
+        modalType={ModalType.RemoveCameraFromBasket}
+        onOpenSuccessModal={handleOpenSuccessModal}
+      />}
+      {isModalSuccessAddedCameraToBasketOpen &&
+      <BasketModalSuccess
+        modalType={ModalType.CamerasOrdered}
+        onCloseModal={handleCloseSuccessModal}
       />}
     </main>);
 }

@@ -1,7 +1,7 @@
 import { memo, useRef } from 'react';
 
-import BasketAddItemButtons from './basket-add-item-buttons';
-import BasketRemoveItemButtons from './basket-remove-item-buttons copy';
+import AddItemButton from './buttons/add-item-buttons';
+import RemoveItemButtons from './buttons/remove-item-buttons';
 import BasketItemShort from './basket-item-short';
 
 import useOnClickOutside from '../../hooks/use-on-click-outside';
@@ -16,36 +16,35 @@ import { getSelectedCamera } from '../../store/order-process/order-process-selec
 
 type BasketModalProps = {
   onCloseModal: () => void;
-  type: ModalType;
+  onOpenSuccessModal: () => void;
+  modalType: ModalType;
 }
 
-function BasketModal({ onCloseModal, type }: BasketModalProps): JSX.Element {
+function BasketModal({ onCloseModal, modalType: type, onOpenSuccessModal }: BasketModalProps): JSX.Element {
   const selectedCamera = useAppSelector(getSelectedCamera);
 
-  const closeModal = () => {
+  const handleModalCloseClick = () => {
     onCloseModal();
   };
 
   const modalTitle = ModalTitle[Object.keys(type)[0] as keyof typeof ModalTitle];
 
-  const handleButtonCloseClick = () => closeModal();
-
   const getButtons = () => {
     if (type === ModalType.RemoveCameraFromBasket && selectedCamera) {
-      return <BasketRemoveItemButtons cameraId={selectedCamera.id} onCloseModal={onCloseModal}/>;
+      return <RemoveItemButtons cameraId={selectedCamera.id} onCloseModal={onCloseModal}/>;
     }
 
     if (type === ModalType.AddCameraInBasket && selectedCamera) {
-      return <BasketAddItemButtons camera={selectedCamera} onCloseModal={handleButtonCloseClick}/>;
+      return <AddItemButton camera={selectedCamera} onCloseModal={handleModalCloseClick} onOpenSuccessModal={onOpenSuccessModal}/>;
     }
   };
   const buttons = getButtons();
 
   const modalRef = useRef(null);
 
-  useOnClickOutside(modalRef, closeModal);
+  useOnClickOutside(modalRef, handleModalCloseClick);
   useDisableBackground();
-  useKeydownEscClose(closeModal);
+  useKeydownEscClose(handleModalCloseClick);
 
   return(
     <div className="modal is-active" >
@@ -64,7 +63,7 @@ function BasketModal({ onCloseModal, type }: BasketModalProps): JSX.Element {
             className="cross-btn"
             type="button"
             aria-label="Закрыть попап"
-            onClick={handleButtonCloseClick}
+            onClick={handleModalCloseClick}
           >
             <svg width={10} height={10} aria-hidden="true">
               <use xlinkHref="#icon-close" />

@@ -1,69 +1,97 @@
 import { memo, useRef } from 'react';
 
-import BasketAddItemButtons from './basket-add-item-buttons';
-import BasketRemoveItemButtons from './basket-remove-item-buttons copy';
-import BasketItemShort from './basket-item-short';
+import IconThumb from './icon-thumb';
+import IconCheckMark from './icon-check-mark';
+import GoToBasketButtons from './buttons/go-to-basket-button';
+import ReturnToCatalogButton from './buttons/return-to-catalog-button';
 
 import useOnClickOutside from '../../hooks/use-on-click-outside';
 import { useDisableBackground } from '../../hooks/use-disable-background';
-import { useKeydownEscClose } from '../../hooks/use-keydown-esc-close';
-
-import { ModalTitle } from '../../const/modal-title';
-import { ModalType } from '../../const/modal-type';
-
 import { useAppSelector } from '../../hooks';
-import { getSelectedCamera } from '../../store/order-process/order-process-selectors';
+import { useKeydownEscClose } from '../../hooks/use-keydown-esc-close';
+import { getOrderSendingStatus } from '../../store/order-process/order-process-selectors';
+
+import { ModalType } from '../../const/modal-type';
+import { FetchStatus } from '../../const/fetch-status';
+import { WarningMessage } from '../../const/warning-message';
+import { ModalTitle } from '../../const/modal-title';
+
 
 type BasketModalProps = {
   onCloseModal: () => void;
-  title: ModalTitle;
-  type: ModalType;
+  modalType: ModalType;
+  isOnProductPage?: boolean;
 }
 
-function BasketModalSuccess({ onCloseModal, title, type }: BasketModalProps): JSX.Element {
-  const selectedCamera = useAppSelector(getSelectedCamera);
+function BasketModalSuccess({ onCloseModal, modalType: type, isOnProductPage }: BasketModalProps): JSX.Element {
+  const orderSendStatus = useAppSelector(getOrderSendingStatus);
 
-  const closeModal = () => {
+  const isOrderSendSuccess = orderSendStatus === FetchStatus.Success;
+  const isOrderSendStatusError = orderSendStatus === FetchStatus.Error;
+
+  const handleModalClose = () => {
     onCloseModal();
   };
 
-  const handleButtonCloseClick = () => closeModal();
-
-  const getButtons = () => {
-    if (type === ModalType.RemoveCameraFromBasket && selectedCamera) {
-      return <BasketRemoveItemButtons cameraId={selectedCamera.id} onCloseModal={onCloseModal}/>;
-    }
-
-    if (type === ModalType.AddCameraInBasket && selectedCamera) {
-      return <BasketAddItemButtons camera={selectedCamera} onCloseModal={handleButtonCloseClick}/>;
+  const getModalTitle = () => {
+    switch (type) {
+      case ModalType.CamerasOrdered:
+        return isOrderSendStatusError ? WarningMessage.OrderError : ModalTitle.CamerasOrdered;
+      case ModalType.CameraAddedToBasket:
+        return ModalTitle.CameraAddedToBasket;
     }
   };
-  const buttons = getButtons();
+
+  const modalTitle = getModalTitle();
+
+  const getButtons = () => {
+    switch (type) {
+      case ModalType.CamerasOrdered:
+        return <ReturnToCatalogButton onCloseModal={handleModalClose} isOnProductPage={isOnProductPage}/>;
+      case ModalType.CameraAddedToBasket:
+        return <GoToBasketButtons onCloseModal={handleModalClose} isOnProductPage={isOnProductPage}/>;
+    }
+  };
+
+  const modalButtons = getButtons();
+
+  const getIcon = () => {
+    switch (type) {
+      case ModalType.CamerasOrdered:
+        return <IconThumb isSuccess={isOrderSendSuccess}/>;
+      case ModalType.CameraAddedToBasket:
+        return <IconCheckMark/>;
+    }
+  };
+
+  const modalIcon = getIcon();
 
   const modalRef = useRef(null);
 
-  useOnClickOutside(modalRef, closeModal);
+  useOnClickOutside(modalRef, handleModalClose);
   useDisableBackground();
-  useKeydownEscClose(closeModal);
+  useKeydownEscClose(handleModalClose);
 
   return(
-    <div className="modal is-active" >
+    <div className="modal is-active modal--narrow" >
       <div className="modal__wrapper">
         <div className="modal__overlay"/>
         <div
           className="modal__content"
           ref={modalRef}
         >
-          <p className="title title--h4">{title}</p>
-          {selectedCamera && <BasketItemShort camera={selectedCamera} modalType={type}/>}
+          <p className="title title--h4">
+            {modalTitle}
+          </p>
+          {modalIcon}
           <div className="modal__buttons">
-            {buttons}
+            {modalButtons}
           </div>
           <button
             className="cross-btn"
             type="button"
             aria-label="Закрыть попап"
-            onClick={handleButtonCloseClick}
+            onClick={handleModalClose}
           >
             <svg width={10} height={10} aria-hidden="true">
               <use xlinkHref="#icon-close" />

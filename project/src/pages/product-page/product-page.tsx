@@ -9,17 +9,27 @@ import { fetchSimilarCamerasAction, fetchCameraByIdAction } from '../../store/ap
 import { getCurrentCamera } from '../../store/product-process/product-data-selectors';
 
 import { ModalType } from '../../const/modal-type';
+import BasketModalSuccess from '../../components/basket-modal/basket-modal-success';
 
 function ProductPage() {
   const dispatch = useAppDispatch();
   const [isModalAddCameraToBasketOpen, setModalAddCameraToBasketOpen] = useState<boolean>(false);
+  const [isModalSuccessAddedCameraToBasketOpen, setModalSuccessAddedCameraToBasketOpen] = useState<boolean>(false);
 
   const handleAddCameraToBasketButtonClick = () => {
     setModalAddCameraToBasketOpen(true);
   };
 
-  const closeAddCameraToBasketModal = () => {
+  const handleCloseAddCameraToBasketModal = () => {
     setModalAddCameraToBasketOpen(false);
+  };
+
+  const handleOpenSuccessModal = () => {
+    setModalSuccessAddedCameraToBasketOpen(true);
+  };
+
+  const handleCloseSuccessModal = () => {
+    setModalSuccessAddedCameraToBasketOpen(false);
   };
 
   const { id } = useParams() as { id: string };
@@ -41,8 +51,15 @@ function ProductPage() {
       <ProductContent camera={currentCamera} onAddCameraInBasketButtonClick={handleAddCameraToBasketButtonClick}/>
       {isModalAddCameraToBasketOpen &&
         <BasketModal
-          type={ModalType.AddCameraInBasket}
-          onCloseModal={closeAddCameraToBasketModal}
+          modalType={ModalType.AddCameraInBasket}
+          onCloseModal={handleCloseAddCameraToBasketModal}
+          onOpenSuccessModal={handleOpenSuccessModal}
+        />}
+      {isModalSuccessAddedCameraToBasketOpen &&
+        <BasketModalSuccess
+          modalType={ModalType.CameraAddedToBasket}
+          onCloseModal={handleCloseSuccessModal}
+          isOnProductPage
         />}
     </main>
   );

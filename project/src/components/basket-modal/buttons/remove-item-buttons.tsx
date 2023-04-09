@@ -1,12 +1,12 @@
-import { useAppDispatch } from '../../hooks';
-import { removeCameraFromBasket } from '../../store/order-process/order-process';
+import { useAppDispatch } from '../../../hooks';
+import { removeCameraFromBasket } from '../../../store/order-process/order-process';
 
-type BasketRemoveItemButtonsProps = {
+type RemoveItemButtonsProps = {
   cameraId: number;
   onCloseModal: () => void;
 }
 
-const BasketRemoveItemButtons = ({cameraId, onCloseModal}:BasketRemoveItemButtonsProps):JSX.Element => {
+const RemoveItemButtons = ({cameraId, onCloseModal}:RemoveItemButtonsProps):JSX.Element => {
   const dispatch = useAppDispatch();
 
   const handleRemoveItemButtonClick = () => {
@@ -31,4 +31,4 @@ const BasketRemoveItemButtons = ({cameraId, onCloseModal}:BasketRemoveItemButton
       </button>
     </>);
 };
-export default BasketRemoveItemButtons;
+export default RemoveItemButtons;

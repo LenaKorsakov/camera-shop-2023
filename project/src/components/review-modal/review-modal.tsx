@@ -44,7 +44,7 @@ function ReviewModal({ setIsOpen, cameraId }: ReviewModalProps): JSX.Element {
           className="modal__content"
           ref={modalRef}
         >
-          {isReviewSendSuccess ? <SuccessModal cameraId={cameraId} onButtonClick={closeModal}/> : <ReviewForm cameraId={cameraId}/>}
+          {isReviewSendSuccess ? <SuccessModal cameraId={cameraId} onModalClose={closeModal}/> : <ReviewForm cameraId={cameraId}/>}
           <button
             className="cross-btn"
             type="button"

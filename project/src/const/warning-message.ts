@@ -7,5 +7,6 @@ export enum WarningMessage {
   FilterWrongBottomPriceWarning = 'Введите корректную минимальную цену',
   FilterWrongTopPriceWarning = 'Введите корректную максимальную цену',
   LoadingWarning = '...Загрузка',
-  EmptyBasketMessage = 'В данный момент корзина пуста'
+  EmptyBasketMessage = 'В данный момент корзина пуста',
+  OrderError = 'При отправке заказа произошла ошибка, попробуйте повторить позже'
 }
