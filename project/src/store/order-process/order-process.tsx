@@ -5,8 +5,8 @@ import { sendCouponAction, sendOrderAction } from '../api-actions/api-actions';
 import { NameSpace } from '../../const/name-space';
 import { FetchStatus } from '../../const/fetch-status';
 
-import { OrderData } from '../../@types/store-types';
-import { Camera } from '../../@types/camera-types';
+import { OrderData, SeveralCameras } from '../../@types/store-types';
+import { Camera, Cameras } from '../../@types/camera-types';
 
 export const initialStateOrder: OrderData = {
   camerasInBasket: [],
@@ -25,8 +25,19 @@ export const orderProcess = createSlice({
 
       state.camerasInBasket = [...state.camerasInBasket, selectedCamera];
     },
-    removeCameraFromBasket: (state, action: PayloadAction<number>) => {
+    removeSameCamerasFromBasket: (state, action: PayloadAction<number>) => {
       state.camerasInBasket = state.camerasInBasket.filter((camera) => camera.id !== action.payload);
+    },
+    addSeveralCameraToBasket: (state, action: PayloadAction<SeveralCameras>) => {
+      const {camera, camerasAmount} = action.payload;
+      const newCameras = new Array(Number(camerasAmount)).fill(camera) as Cameras;
+
+      state.camerasInBasket = [...state.camerasInBasket, ...newCameras];
+    },
+    removeCameraFromBasket: (state, action: PayloadAction<number>) => {
+      const cameraIndex = state.camerasInBasket.findIndex((camera) => camera.id === action.payload);
+
+      state.camerasInBasket = [...state.camerasInBasket.splice(cameraIndex, 1)];
     },
     selectCamera: (state, action: PayloadAction<Camera>) => {
       state.selectedCamera = action.payload;
@@ -60,5 +71,5 @@ export const orderProcess = createSlice({
   }
 });
 
-export const {addCameraToBasket, removeCameraFromBasket, selectCamera} = orderProcess.actions;
+export const {addCameraToBasket, removeCameraFromBasket, removeSameCamerasFromBasket, selectCamera, addSeveralCameraToBasket} = orderProcess.actions;
 

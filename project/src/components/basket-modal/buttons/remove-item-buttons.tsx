@@ -1,5 +1,5 @@
 import { useAppDispatch } from '../../../hooks';
-import { removeCameraFromBasket } from '../../../store/order-process/order-process';
+import { removeSameCamerasFromBasket } from '../../../store/order-process/order-process';
 
 type RemoveItemButtonsProps = {
   cameraId: number;
@@ -10,7 +10,7 @@ const RemoveItemButtons = ({cameraId, onCloseModal}:RemoveItemButtonsProps):JSX.
   const dispatch = useAppDispatch();
 
   const handleRemoveItemButtonClick = () => {
-    dispatch(removeCameraFromBasket(cameraId));
+    dispatch(removeSameCamerasFromBasket(cameraId));
     onCloseModal();
   };
 

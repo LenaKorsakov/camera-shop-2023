@@ -10,6 +10,11 @@ export const SEARCH_DELAY = 300;
 
 export const NOT_FOUND_ERROR_STATUS = 400;
 
+export enum ProductAmount {
+  Max = 99,
+  Min = 1
+}
+
 export enum PhotocameraCategoryName {
   Photocamera = 'Фотоаппарат',
   ModalPhotocamera = 'Фотокамера'

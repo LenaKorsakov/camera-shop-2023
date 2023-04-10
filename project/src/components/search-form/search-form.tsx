@@ -3,6 +3,8 @@ import { ChangeEvent, KeyboardEvent, memo, useCallback, useEffect, useMemo, useR
 import { useNavigate } from 'react-router-dom';
 import { debounce } from 'lodash';
 
+import ListItem from './list-item';
+
 import { fetchSearchCameraAction } from '../../store/api-actions/api-actions';
 import { getSearchedCameras, getSearchedCamerasStatus } from '../../store/catalog-process/catalog-process-selectors';
 
@@ -15,10 +17,8 @@ import { DEFAULT_TABS_TYPE } from '../../const/tabs-buttons';
 import { SEARCH_DELAY } from '../../const/const';
 import { FetchStatus } from '../../const/fetch-status';
 import { WarningMessage } from '../../const/warning-message';
-import { ErrorMessage } from '../../const/error-message';
 import { AppRoute } from '../../const/app-route';
 import { ComponentName } from '../../const/component-name';
-import ListItem from './list-item';
 
 function SearchForm(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -125,7 +125,7 @@ function SearchForm(): JSX.Element {
           />
         </label>
         <ul className="form-search__select-list scroller">
-          {fetchingStatus === FetchStatus.Error && <li className="form-search__select-item" tabIndex={0}> {ErrorMessage.FetchingError} </li> }
+          {fetchingStatus === FetchStatus.Error && <li className="form-search__select-item" tabIndex={0}> {WarningMessage.DataLoadingWarning} </li> }
           {fetchingStatus === FetchStatus.Loading && <li className="form-search__select-item" tabIndex={0}> {WarningMessage.LoadingWarning} </li>}
           {fetchingStatus === FetchStatus.Success && !searchedCameras.length && searchedValue !== ''
             && <li className="form-search__select-item" tabIndex={0}> {WarningMessage.DataEmptySearchingWarning} </li> }

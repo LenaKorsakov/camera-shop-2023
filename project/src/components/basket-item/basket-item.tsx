@@ -22,11 +22,11 @@ function BasketItem({ camera, onRemoveCameraFromBasketButtonClick } : BasketItem
   const sameCameras = selectedCameras.filter((item) => item.id === id);
   const sameCamerasAmount = sameCameras.length;
 
-  const [camerasAmount, setCamerasAmount] = useState<number>(sameCamerasAmount);
+  const [camerasAmount, setCamerasAmount] = useState<number|string>(sameCamerasAmount);
 
-  const totalPrice = formatPrice(camerasAmount * price);
+  const totalPrice = formatPrice(Number(camerasAmount) * price);
 
-  const handleProductAmountChange = (productAmount: number) => {
+  const handleProductAmountChange = (productAmount: number|string) => {
     setCamerasAmount(productAmount);
   };
 
@@ -63,8 +63,9 @@ function BasketItem({ camera, onRemoveCameraFromBasketButtonClick } : BasketItem
         <span className="visually-hidden">Цена:</span>{formatPrice(price)} ₽
       </p>
       <BasketItemAmount
-        onProductQuantityChange={handleProductAmountChange}
+        onCameraAmountChange={handleProductAmountChange}
         camera={camera}
+        camerasAmount={camerasAmount}
       />
       <div className="basket-item__total-price">
         <span className="visually-hidden">Общая цена:</span>{totalPrice} ₽

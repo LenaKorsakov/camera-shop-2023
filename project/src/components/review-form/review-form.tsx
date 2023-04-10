@@ -12,9 +12,9 @@ import { getReviewSendingStatus } from '../../store/review-process/review-data-s
 
 import { REVIEW_INPUTS } from '../../const/review-inputs';
 import { FetchStatus } from '../../const/fetch-status';
+import { WarningMessage } from '../../const/warning-message';
 
 import { ReviewPost } from '../../@types/review-types';
-import { ErrorMessage } from '../../const/error-message';
 
 type ReviewFormProps = {
   cameraId: number;
@@ -77,7 +77,7 @@ function ReviewForm ({cameraId}: ReviewFormProps): JSX.Element {
         reset();
         setFormData(INITIAL_FORM_DATA);
       },
-      () => dispatch(displayError(ErrorMessage.SendingError)));
+      () => dispatch(displayError(WarningMessage.DataSendingError)));
   };
 
   const isReviewSending = useAppSelector(getReviewSendingStatus) === FetchStatus.Loading;

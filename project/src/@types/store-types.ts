@@ -69,3 +69,7 @@ export type CurrentFilter = {
   value: string;
 }
 
+export type SeveralCameras = {
+  camera: Camera;
+  camerasAmount: number|string;
+}
