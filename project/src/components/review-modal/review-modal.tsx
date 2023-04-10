@@ -18,7 +18,7 @@ type ReviewModalProps = {
 function ReviewModal({ setIsOpen, cameraId }: ReviewModalProps): JSX.Element {
   const dispatch = useAppDispatch();
 
-  const closeModal = () => {
+  const handleModalClose = () => {
 
     dispatch(fetchCameraByIdAction(cameraId)).unwrap().then(
       () => {
@@ -27,14 +27,14 @@ function ReviewModal({ setIsOpen, cameraId }: ReviewModalProps): JSX.Element {
     );
   };
 
-  const handleButtonCloseClick = () => closeModal();
+  const handleButtonCloseClick = () => handleModalClose();
 
   const modalRef = useRef(null);
   const isReviewSendSuccess = useAppSelector(getSuccessStatus);
 
-  useOnClickOutside(modalRef, closeModal);
+  useOnClickOutside(modalRef, handleModalClose);
   useDisableBackground();
-  useKeydownEscClose(closeModal);
+  useKeydownEscClose(handleModalClose);
 
   return(
     <div className={`modal is-active ${isReviewSendSuccess ? 'modal--narrow' : ''}`}>
@@ -44,7 +44,7 @@ function ReviewModal({ setIsOpen, cameraId }: ReviewModalProps): JSX.Element {
           className="modal__content"
           ref={modalRef}
         >
-          {isReviewSendSuccess ? <SuccessModal cameraId={cameraId} onModalClose={closeModal}/> : <ReviewForm cameraId={cameraId}/>}
+          {isReviewSendSuccess ? <SuccessModal cameraId={cameraId} onModalClose={handleModalClose}/> : <ReviewForm cameraId={cameraId}/>}
           <button
             className="cross-btn"
             type="button"

@@ -9,7 +9,7 @@ import { fetchSimilarCamerasAction, fetchCameraByIdAction } from '../../store/ap
 import { getCurrentCamera } from '../../store/product-process/product-data-selectors';
 
 import { ModalType } from '../../const/modal-type';
-import BasketModalSuccess from '../../components/basket-modal/basket-modal-success';
+import BasketSuccessModal from '../../components/basket-success-modal/basket-success-modal';
 
 function ProductPage() {
   const dispatch = useAppDispatch();
@@ -56,7 +56,7 @@ function ProductPage() {
           onOpenSuccessModal={handleOpenSuccessModal}
         />}
       {isModalSuccessAddedCameraToBasketOpen &&
-        <BasketModalSuccess
+        <BasketSuccessModal
           modalType={ModalType.CameraAddedToBasket}
           onCloseModal={handleCloseSuccessModal}
           isOnProductPage

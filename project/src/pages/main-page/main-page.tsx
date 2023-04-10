@@ -13,7 +13,7 @@ import { setCurrentParams } from '../../store/app-process/app-process';
 import BasketModal from '../../components/basket-modal/basket-modal';
 
 import { ModalType } from '../../const/modal-type';
-import BasketModalSuccess from '../../components/basket-modal/basket-modal-success';
+import BasketSuccessModal from '../../components/basket-success-modal/basket-success-modal';
 
 function MainPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -70,7 +70,7 @@ function MainPage(): JSX.Element {
           onOpenSuccessModal={handleOpenSuccessModal}
         />}
       {isModalSuccessAddedCameraToBasketOpen &&
-        <BasketModalSuccess
+        <BasketSuccessModal
           modalType={ModalType.CameraAddedToBasket}
           onCloseModal={handleCloseSuccessModal}
         />}

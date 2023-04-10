@@ -1,7 +1,7 @@
 import { memo, useRef } from 'react';
 
-import IconThumb from './icon-thumb';
-import IconCheckMark from './icon-check-mark';
+import Icon from './icon/icon';
+import IconCheckMark from './icon/icon-check-mark';
 import GoToBasketButtons from './buttons/go-to-basket-button';
 import ReturnToCatalogButton from './buttons/return-to-catalog-button';
 
@@ -23,7 +23,7 @@ type BasketModalProps = {
   isOnProductPage?: boolean;
 }
 
-function BasketModalSuccess({ onCloseModal, modalType: type, isOnProductPage }: BasketModalProps): JSX.Element {
+function BasketSuccessModal({ onCloseModal, modalType: type, isOnProductPage }: BasketModalProps): JSX.Element {
   const orderSendStatus = useAppSelector(getOrderSendingStatus);
 
   const isOrderSendSuccess = orderSendStatus === FetchStatus.Success;
@@ -58,7 +58,7 @@ function BasketModalSuccess({ onCloseModal, modalType: type, isOnProductPage }: 
   const getIcon = () => {
     switch (type) {
       case ModalType.CamerasOrdered:
-        return <IconThumb isSuccess={isOrderSendSuccess}/>;
+        return <Icon isOrderedSuccessful={isOrderSendSuccess}/>;
       case ModalType.CameraAddedToBasket:
         return <IconCheckMark/>;
     }
@@ -102,4 +102,4 @@ function BasketModalSuccess({ onCloseModal, modalType: type, isOnProductPage }: 
     </div>
   );
 }
-export default memo(BasketModalSuccess);
+export default memo(BasketSuccessModal);
