@@ -1,11 +1,11 @@
-import Picture from '../picture/picture';
+import Picture from '../../picture/picture';
 
-import { PictureSize } from '../../const/picture-size';
-import { capitalizeFirstLetter, formatPrice } from '../../utils/format';
+import { PictureSize } from '../../../const/picture-size';
+import { capitalizeFirstLetter, formatPrice } from '../../../utils/format';
 
-import { Camera } from '../../@types/camera-types';
-import { PhotocameraCategoryName } from '../../const/const';
-import { ModalType } from '../../const/modal-type';
+import { Camera } from '../../../@types/camera-types';
+import { PhotocameraCategoryName } from '../../../const/const';
+import { ModalType } from '../../../const/modal-type';
 
 type BasketItemShortProps = {
   camera: Camera;

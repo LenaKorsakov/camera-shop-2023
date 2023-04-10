@@ -2,7 +2,7 @@ import { memo, useRef } from 'react';
 
 import AddItemButton from './buttons/add-item-buttons';
 import RemoveItemButtons from './buttons/remove-item-buttons';
-import BasketItemShort from './basket-item-short';
+import BasketItemShort from './basket-item-short/basket-item-short';
 
 import useOnClickOutside from '../../hooks/use-on-click-outside';
 import { useDisableBackground } from '../../hooks/use-disable-background';
@@ -20,21 +20,21 @@ type BasketModalProps = {
   modalType: ModalType;
 }
 
-function BasketModal({ onCloseModal, modalType: type, onOpenSuccessModal }: BasketModalProps): JSX.Element {
+function BasketModal({ onCloseModal, modalType, onOpenSuccessModal }: BasketModalProps): JSX.Element {
   const selectedCamera = useAppSelector(getSelectedCamera);
 
   const handleModalCloseClick = () => {
     onCloseModal();
   };
 
-  const modalTitle = ModalTitle[Object.keys(type)[0] as keyof typeof ModalTitle];
+  const modalTitle = ModalTitle[Object.keys(modalType)[0] as keyof typeof ModalTitle];
 
   const getButtons = () => {
-    if (type === ModalType.RemoveCameraFromBasket && selectedCamera) {
+    if (modalType === ModalType.RemoveCameraFromBasket && selectedCamera) {
       return <RemoveItemButtons cameraId={selectedCamera.id} onCloseModal={onCloseModal}/>;
     }
 
-    if (type === ModalType.AddCameraInBasket && selectedCamera) {
+    if (modalType === ModalType.AddCameraInBasket && selectedCamera) {
       return <AddItemButton camera={selectedCamera} onCloseModal={handleModalCloseClick} onOpenSuccessModal={onOpenSuccessModal}/>;
     }
   };
@@ -47,7 +47,7 @@ function BasketModal({ onCloseModal, modalType: type, onOpenSuccessModal }: Bask
   useKeydownEscClose(handleModalCloseClick);
 
   return(
-    <div className="modal is-active" >
+    <div className="modal is-active" data-testid='basket-modal'>
       <div className="modal__wrapper">
         <div className="modal__overlay"/>
         <div
@@ -55,7 +55,7 @@ function BasketModal({ onCloseModal, modalType: type, onOpenSuccessModal }: Bask
           ref={modalRef}
         >
           <p className="title title--h4">{modalTitle}</p>
-          {selectedCamera && <BasketItemShort camera={selectedCamera} modalType={type}/>}
+          {selectedCamera && <BasketItemShort camera={selectedCamera} modalType={modalType}/>}
           <div className="modal__buttons">
             {buttons}
           </div>

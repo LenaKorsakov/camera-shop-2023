@@ -26,6 +26,7 @@ const RemoveItemButtons = ({cameraId, onCloseModal}:RemoveItemButtonsProps):JSX.
       <button
         className="btn btn--transparent modal__btn modal__btn--half-width"
         onClick={onCloseModal}
+        data-testid='continue shopping'
       >
         Продолжить покупки
       </button>
