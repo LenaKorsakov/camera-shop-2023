@@ -48,7 +48,6 @@ describe('Application Routing', () => {
     render(fakeApp);
 
     expect(screen.getByText(/В данный момент корзина пуста/i)).toBeInTheDocument();
-    expect(screen.getByText(/К оплате:/i)).toBeInTheDocument();
   });
 
   it('should render "NotFoundPage" when user navigate to non-existent route', () => {

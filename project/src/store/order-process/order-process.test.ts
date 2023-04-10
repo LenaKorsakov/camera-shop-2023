@@ -52,6 +52,6 @@ describe('Reducer: orderProcess', () => {
   });
   it('should add camera in basket', () => {
     expect(orderProcess.reducer(state, addCameraToBasket(fakeCamera)))
-      .toEqual({...state, selectedCameras: [fakeCamera]});
+      .toEqual({...state, camerasInBasket: [fakeCamera]});
   });
 });

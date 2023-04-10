@@ -35,7 +35,7 @@ function BasketItem({ camera, onRemoveCameraFromBasketButtonClick } : BasketItem
   };
 
   return (
-    <li className="basket-item">
+    <li className="basket-item" data-testid='basket item'>
       <div className="basket-item__img">
         <Picture
           previewImg={previewImg}
