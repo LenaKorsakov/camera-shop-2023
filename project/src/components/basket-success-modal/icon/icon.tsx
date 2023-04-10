@@ -9,7 +9,7 @@ const Icon = ({isOrderedSuccessful}: IconProps): JSX.Element => (
     height="78"
     aria-hidden="true"
   >
-    {isOrderedSuccessful ? <use xlinkHref="#icon-review-success"></use> : <use xlinkHref="#icon-review-error"></use>}
+    {isOrderedSuccessful ? <use data-testid='svg-success' xlinkHref="#icon-review-success"></use> : <use xlinkHref="#icon-review-error" data-testid='svg-error'></use>}
   </svg>
 );
 

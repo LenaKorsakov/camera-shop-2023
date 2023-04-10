@@ -39,6 +39,7 @@ export const orderProcess = createSlice({
         state.camerasInBasket = [];
         state.coupon = null;
         state.couponSendingStatus = FetchStatus.Default;
+        state.selectedCamera = null;
       })
       .addCase(sendOrderAction.pending, (state) => {
         state.orderSendingStatus = FetchStatus.Loading;

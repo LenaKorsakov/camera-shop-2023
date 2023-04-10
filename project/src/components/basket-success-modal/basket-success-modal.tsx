@@ -2,7 +2,7 @@ import { memo, useRef } from 'react';
 
 import Icon from './icon/icon';
 import IconCheckMark from './icon/icon-check-mark';
-import GoToBasketButtons from './buttons/go-to-basket-button';
+import GoToBasketButtons from './buttons/go-to-basket-buttons';
 import ReturnToCatalogButton from './buttons/return-to-catalog-button';
 
 import useOnClickOutside from '../../hooks/use-on-click-outside';
@@ -23,7 +23,7 @@ type BasketModalProps = {
   isOnProductPage?: boolean;
 }
 
-function BasketSuccessModal({ onCloseModal, modalType: type, isOnProductPage }: BasketModalProps): JSX.Element {
+function BasketSuccessModal({ onCloseModal, modalType, isOnProductPage }: BasketModalProps): JSX.Element {
   const orderSendStatus = useAppSelector(getOrderSendingStatus);
 
   const isOrderSendSuccess = orderSendStatus === FetchStatus.Success;
@@ -34,7 +34,7 @@ function BasketSuccessModal({ onCloseModal, modalType: type, isOnProductPage }: 
   };
 
   const getModalTitle = () => {
-    switch (type) {
+    switch (modalType) {
       case ModalType.CamerasOrdered:
         return isOrderSendStatusError ? WarningMessage.OrderError : ModalTitle.CamerasOrdered;
       case ModalType.CameraAddedToBasket:
@@ -45,7 +45,7 @@ function BasketSuccessModal({ onCloseModal, modalType: type, isOnProductPage }: 
   const modalTitle = getModalTitle();
 
   const getButtons = () => {
-    switch (type) {
+    switch (modalType) {
       case ModalType.CamerasOrdered:
         return <ReturnToCatalogButton onCloseModal={handleModalClose} isOnProductPage={isOnProductPage}/>;
       case ModalType.CameraAddedToBasket:
@@ -56,7 +56,7 @@ function BasketSuccessModal({ onCloseModal, modalType: type, isOnProductPage }: 
   const modalButtons = getButtons();
 
   const getIcon = () => {
-    switch (type) {
+    switch (modalType) {
       case ModalType.CamerasOrdered:
         return <Icon isOrderedSuccessful={isOrderSendSuccess}/>;
       case ModalType.CameraAddedToBasket:
@@ -73,7 +73,7 @@ function BasketSuccessModal({ onCloseModal, modalType: type, isOnProductPage }: 
   useKeydownEscClose(handleModalClose);
 
   return(
-    <div className="modal is-active modal--narrow" >
+    <div className="modal is-active modal--narrow" data-testid='success-modal'>
       <div className="modal__wrapper">
         <div className="modal__overlay"/>
         <div

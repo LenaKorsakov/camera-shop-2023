@@ -47,9 +47,7 @@ describe('Application Routing', () => {
     history.push(AppRoute.Basket);
     render(fakeApp);
 
-    const element = screen.getByRole('heading', {level: 1});
-    expect(element.innerHTML).toBe('Корзина');
-
+    expect(screen.getByText(/В данный момент корзина пуста/i)).toBeInTheDocument();
     expect(screen.getByText(/К оплате:/i)).toBeInTheDocument();
   });
 
