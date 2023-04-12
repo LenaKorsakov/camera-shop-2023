@@ -1,4 +1,4 @@
-import { ChangeEvent, SyntheticEvent, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, SyntheticEvent, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { getCamerasMaxPrice, getCamerasMinPrice } from '../../store/filter-process/filter-process-selectors';
@@ -144,8 +144,8 @@ function FilterByPrice({bottomPrice, topPrice, onBottomPriceChange, onTopPriceCh
     });
   };
 
-  const handleInputKeyDown = (event: React.KeyboardEvent) => {
-    const input = event.target as HTMLElement;
+  const handleInputKeyDown = (event: KeyboardEvent) => {
+    const input = event.target as HTMLInputElement;
     if (event.key.startsWith('Ent')) {
       input.blur();
     }

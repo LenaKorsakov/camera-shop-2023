@@ -24,22 +24,23 @@ export const orderProcess = createSlice({
       const selectedCamera = action.payload;
 
       state.camerasInBasket = [...state.camerasInBasket, selectedCamera];
+      state.camerasInBasket = state.camerasInBasket.slice().sort((itemA, itemB) => itemA.id - itemB.id);
     },
     removeSameCamerasFromBasket: (state, action: PayloadAction<number>) => {
       state.camerasInBasket = state.camerasInBasket.filter((camera) => camera.id !== action.payload);
     },
-    addSeveralCameraToBasket: (state, action: PayloadAction<SeveralCameras>) => {
+    addSeveralCamerasToBasket: (state, action: PayloadAction<SeveralCameras>) => {
       const {camera, camerasAmount} = action.payload;
       const newCameras = new Array(Number(camerasAmount)).fill(camera) as Cameras;
+      const addedCameraIndex = state.camerasInBasket.findIndex((item) => item.id === camera.id);
 
-      state.camerasInBasket = [...state.camerasInBasket, ...newCameras];
+      state.camerasInBasket = [...state.camerasInBasket.slice(0, addedCameraIndex), ...newCameras, ...state.camerasInBasket.slice(addedCameraIndex + 1)];
     },
     removeCameraFromBasket: (state, action: PayloadAction<number>) => {
-      const cameraIndex = state.camerasInBasket.findIndex((camera) => camera.id === action.payload);
-
-      state.camerasInBasket = [...state.camerasInBasket.splice(cameraIndex, 1)];
+      const removedCameraIndex = state.camerasInBasket.findIndex((camera) => camera.id === action.payload);
+      state.camerasInBasket = [...state.camerasInBasket.slice(0, removedCameraIndex), ...state.camerasInBasket.slice(removedCameraIndex + 1)];
     },
-    selectCamera: (state, action: PayloadAction<Camera>) => {
+    selectCamera: (state, action: PayloadAction<Camera|null>) => {
       state.selectedCamera = action.payload;
     },
   },
@@ -71,5 +72,5 @@ export const orderProcess = createSlice({
   }
 });
 
-export const {addCameraToBasket, removeCameraFromBasket, removeSameCamerasFromBasket, selectCamera, addSeveralCameraToBasket} = orderProcess.actions;
+export const { addCameraToBasket, removeCameraFromBasket, removeSameCamerasFromBasket, selectCamera, addSeveralCamerasToBasket } = orderProcess.actions;
 

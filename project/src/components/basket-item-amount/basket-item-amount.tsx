@@ -1,8 +1,13 @@
-import { ChangeEvent } from 'react';
-import { Camera } from '../../@types/camera-types';
-import { ProductAmount } from '../../const/const';
+import { ChangeEvent, KeyboardEvent } from 'react';
+
 import { useAppDispatch } from '../../hooks';
-import { addCameraToBasket, addSeveralCameraToBasket, removeCameraFromBasket } from '../../store/order-process/order-process';
+import { addCameraToBasket, addSeveralCamerasToBasket, removeCameraFromBasket } from '../../store/order-process/order-process';
+import { displayError } from '../../store/actions';
+
+import { ProductAmount } from '../../const/const';
+import { WarningMessage } from '../../const/warning-message';
+
+import { Camera } from '../../@types/camera-types';
 
 type BasketQuantityProps = {
   onCameraAmountChange: (quantity: number|string) => void;
@@ -13,8 +18,8 @@ type BasketQuantityProps = {
 function BasketItemAmount({onCameraAmountChange, camera, camerasAmount}: BasketQuantityProps): JSX.Element {
   const dispatch = useAppDispatch();
 
-  const isAmountMinimum = Number(camerasAmount) <= ProductAmount.Min;
-  const isAmountMaximum = Number(camerasAmount) >= ProductAmount.Max;
+  const isAmountMinimum = Number(camerasAmount) === ProductAmount.Min;
+  const isAmountMaximum = Number(camerasAmount) === ProductAmount.Max;
 
   const addExtraCameraToBasket = () => {
     dispatch(addCameraToBasket(camera));
@@ -25,34 +30,38 @@ function BasketItemAmount({onCameraAmountChange, camera, camerasAmount}: BasketQ
 
     if (currentProductAmount === 0) {
       onCameraAmountChange('');
+
+      return;
     }
 
     onCameraAmountChange(currentProductAmount);
   };
 
   const handleCameraAmountInputBlur = () => {
-    if (isAmountMinimum) {
+    if (Number(camerasAmount) < ProductAmount.Min) {
+      dispatch(displayError(WarningMessage.ProductsAmountLessThanMinimum));
       onCameraAmountChange(ProductAmount.Min);
-      dispatch(addSeveralCameraToBasket({camera, camerasAmount: ProductAmount.Min}));
+
+      addExtraCameraToBasket();
 
       return;
     }
-    if (isAmountMaximum) {
+    if (Number(camerasAmount) > ProductAmount.Max) {
+      dispatch(displayError(WarningMessage.ProductsAmountMoreThanMaximum));
       onCameraAmountChange(ProductAmount.Max);
-      dispatch(addSeveralCameraToBasket({camera, camerasAmount: ProductAmount.Max}));
+
+      dispatch(addSeveralCamerasToBasket({camera, camerasAmount: ProductAmount.Max}));
 
       return;
     }
 
-    onCameraAmountChange(camerasAmount);
-    dispatch(addSeveralCameraToBasket({camera, camerasAmount}));
+    dispatch(addSeveralCamerasToBasket({camera, camerasAmount}));
   };
 
   const handleCameraDecreaseAmountButton = () => {
     onCameraAmountChange(Number(camerasAmount) - 1);
 
     dispatch(removeCameraFromBasket(camera.id));
-    //почему удаляет другую камеру
   };
 
   const handleCameraIncreaseAmountButton = () => {
@@ -61,13 +70,19 @@ function BasketItemAmount({onCameraAmountChange, camera, camerasAmount}: BasketQ
     addExtraCameraToBasket();
   };
 
+  const handlePriceInputBlur = (event: KeyboardEvent) => {
+    const inputElement = event.target as HTMLInputElement;
+    if (event.key.startsWith('Ent')) {
+      inputElement.blur();
+    }
+  };
+
   return (
     <div className="quantity">
       <button
         className="btn-icon btn-icon--prev"
         disabled={isAmountMinimum}
         onClick={handleCameraDecreaseAmountButton}
-        onBlur={handleCameraAmountInputBlur}
         aria-label="уменьшить количество товара"
       >
         <svg width={7} height={12} aria-hidden="true">
@@ -80,6 +95,8 @@ function BasketItemAmount({onCameraAmountChange, camera, camerasAmount}: BasketQ
         id="counter2"
         value={camerasAmount}
         onChange={handleCameraAmountInputChange}
+        onBlur={handleCameraAmountInputBlur}
+        onKeyDown={handlePriceInputBlur}
         aria-label="количество товара"
       />
       <button

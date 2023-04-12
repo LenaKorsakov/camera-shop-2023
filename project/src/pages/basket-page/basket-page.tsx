@@ -32,6 +32,7 @@ function BasketPage(): JSX.Element {
 
   const handleCloseRemoveCameraFromBasketModal = () => {
     setModalRemoveCameraFromBasketOpen(false);
+    dispatch(selectCamera(null));
   };
 
   const handleRemoveCameraFromBasket = (cameraID: number) => {

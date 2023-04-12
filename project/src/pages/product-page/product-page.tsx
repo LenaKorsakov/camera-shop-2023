@@ -7,6 +7,7 @@ import BasketModal from '../../components/basket-modal/basket-modal';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchSimilarCamerasAction, fetchCameraByIdAction } from '../../store/api-actions/api-actions';
 import { getCurrentCamera } from '../../store/product-process/product-data-selectors';
+import { selectCamera } from '../../store/order-process/order-process';
 
 import { ModalType } from '../../const/modal-type';
 import BasketSuccessModal from '../../components/basket-success-modal/basket-success-modal';
@@ -22,6 +23,7 @@ function ProductPage() {
 
   const handleCloseAddCameraToBasketModal = () => {
     setModalAddCameraToBasketOpen(false);
+    dispatch(selectCamera(null));
   };
 
   const handleOpenSuccessModal = () => {

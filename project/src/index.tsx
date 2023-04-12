@@ -18,7 +18,10 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <HistoryRouter history={browserHistory} basename={process.env.PUBLIC_URL}>
-        <ToastContainer/>
+        <ToastContainer
+          closeOnClick
+          autoClose={2000}
+        />
         <App />
       </HistoryRouter>
     </Provider>

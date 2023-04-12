@@ -11,6 +11,7 @@ import useCheckSearchParams from '../../hooks/use-check-search-params';
 import { fetchAllCameraAction } from '../../store/api-actions/api-actions';
 import { setCurrentParams } from '../../store/app-process/app-process';
 import BasketModal from '../../components/basket-modal/basket-modal';
+import { selectCamera } from '../../store/order-process/order-process';
 
 import { ModalType } from '../../const/modal-type';
 import BasketSuccessModal from '../../components/basket-success-modal/basket-success-modal';
@@ -28,6 +29,7 @@ function MainPage(): JSX.Element {
 
   const closeAddCameraToBasketModal = () => {
     setModalAddCameraToBasketOpen(false);
+    dispatch(selectCamera(null));
   };
 
   const handleOpenSuccessModal = () => {
