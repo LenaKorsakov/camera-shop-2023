@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 
 import BasketOrder from './basket-order/basket-order';
 import BasketCoupon from './basket-promo/basket-promo';
@@ -8,6 +8,7 @@ import { getCamerasInTheBasket, getCoupon, getCouponSendingStatus } from '../../
 import { sendCouponAction } from '../../store/api-actions/api-actions';
 
 import { FetchStatus } from '../../const/fetch-status';
+import { CouponValidityStatus } from '../../const/coupon-validity-status';
 
 function BasketSummary(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -16,28 +17,40 @@ function BasketSummary(): JSX.Element {
   const couponSendingStatus = useAppSelector(getCouponSendingStatus);
   const camerasInBasket = useAppSelector(getCamerasInTheBasket);
 
-  const isPromoCodeNotExist = couponSendingStatus === FetchStatus.Success && promoCode === null;
-  const isPromoCodeSendError = couponSendingStatus === FetchStatus.Error;
-
   const [coupon, setCoupon] = useState<string>('');
+  const [couponValidityStatus, setCouponValidityStatus] = useState<CouponValidityStatus>(CouponValidityStatus.Default);
 
   const handleCouponInputChange = (value: string) => {
-    setCoupon(value.split(' ').join(''));
+    setCoupon(value);
   };
 
   const handlePromoFormSubmit = (event: FormEvent) => {
     event.preventDefault();
 
-    dispatch(sendCouponAction({coupon: coupon}));
+    const validCoupon = coupon.split(' ').join('');
+    dispatch(sendCouponAction({coupon: validCoupon}));
   };
+
+  useEffect(() => {
+    if (couponSendingStatus === FetchStatus.Success) {
+      if (promoCode === null) {
+        setCouponValidityStatus(CouponValidityStatus.NotValid);
+      } else {
+        setCouponValidityStatus(CouponValidityStatus.Valid);
+      }
+    }
+
+    if (couponSendingStatus === FetchStatus.Error) {
+      setCouponValidityStatus(CouponValidityStatus.Error);
+    }
+  },[promoCode, couponSendingStatus]);
 
   return (
     <div className="basket__summary">
       <BasketCoupon
         coupon={coupon}
         onCouponInputChange={handleCouponInputChange}
-        isCouponNotExist={isPromoCodeNotExist}
-        isCouponSendError={isPromoCodeSendError}
+        couponValidityStatus={couponValidityStatus}
         onCouponFormSubmit={handlePromoFormSubmit}
         isBasketEmpty={camerasInBasket.length === 0}
       />
