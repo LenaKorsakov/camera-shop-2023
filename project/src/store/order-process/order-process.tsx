@@ -13,7 +13,8 @@ export const initialStateOrder: OrderData = {
   newCamerasInBasket: null,
   selectedCamera: null,
   orderSendingStatus: FetchStatus.Default,
-  coupon: null,
+  discount: null,
+  coupon: '',
   couponSendingStatus: FetchStatus.Default
 };
 
@@ -42,13 +43,17 @@ export const orderProcess = createSlice({
     selectCamera: (state, action: PayloadAction<Camera|null>) => {
       state.selectedCamera = action.payload;
     },
+    addCoupon: (state, action: PayloadAction<string>) => {
+      state.coupon = action.payload;
+    },
   },
   extraReducers(builder) {
     builder
       .addCase(sendOrderAction.fulfilled, (state) => {
         state.orderSendingStatus = FetchStatus.Success;
         state.camerasInBasket = [];
-        state.coupon = null;
+        state.discount = null;
+        state.coupon = '';
         state.couponSendingStatus = FetchStatus.Default;
         state.selectedCamera = null;
       })
@@ -59,7 +64,7 @@ export const orderProcess = createSlice({
         state.orderSendingStatus = FetchStatus.Error;
       })
       .addCase(sendCouponAction.fulfilled, (state, action) => {
-        state.coupon = action.payload;
+        state.discount = action.payload;
         state.couponSendingStatus = FetchStatus.Success;
       })
       .addCase(sendCouponAction.pending, (state) => {
@@ -71,5 +76,5 @@ export const orderProcess = createSlice({
   }
 });
 
-export const { addCameraToBasket, removeCameraFromBasket, removeSameCamerasFromBasket, selectCamera, addSameCamerasToBasket } = orderProcess.actions;
+export const { addCameraToBasket, removeCameraFromBasket, removeSameCamerasFromBasket, selectCamera, addSameCamerasToBasket, addCoupon } = orderProcess.actions;
 

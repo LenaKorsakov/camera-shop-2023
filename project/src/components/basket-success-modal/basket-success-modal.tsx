@@ -20,10 +20,10 @@ import { ModalTitle } from '../../const/modal-title';
 type BasketModalProps = {
   onCloseModal: () => void;
   modalType: ModalType;
-  isOnProductPage?: boolean;
+  isOnProductOrBasketPage?: boolean;
 }
 
-function BasketSuccessModal({ onCloseModal, modalType, isOnProductPage }: BasketModalProps): JSX.Element {
+function BasketSuccessModal({ onCloseModal, modalType, isOnProductOrBasketPage }: BasketModalProps): JSX.Element {
   const orderSendStatus = useAppSelector(getOrderSendingStatus);
 
   const isOrderSendSuccess = orderSendStatus === FetchStatus.Success;
@@ -47,9 +47,9 @@ function BasketSuccessModal({ onCloseModal, modalType, isOnProductPage }: Basket
   const getButtons = () => {
     switch (modalType) {
       case ModalType.CamerasOrdered:
-        return <ReturnToCatalogButton onCloseModal={handleModalClose} isOnProductPage={isOnProductPage}/>;
+        return <ReturnToCatalogButton onCloseModal={handleModalClose} isOnProductOrBasketPage={isOnProductOrBasketPage}/>;
       case ModalType.CameraAddedToBasket:
-        return <GoToBasketButtons onCloseModal={handleModalClose} isOnProductPage={isOnProductPage}/>;
+        return <GoToBasketButtons onCloseModal={handleModalClose} isOnProductPage={isOnProductOrBasketPage}/>;
     }
   };
 

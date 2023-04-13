@@ -87,6 +87,7 @@ function BasketPage(): JSX.Element {
       <BasketSuccessModal
         modalType={ModalType.CamerasOrdered}
         onCloseModal={handleCloseSuccessModal}
+        isOnProductOrBasketPage
       />}
     </main>);
 }

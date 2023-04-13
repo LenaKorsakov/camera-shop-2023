@@ -21,12 +21,13 @@ function BasketCoupon({ coupon, onCouponInputChange, couponValidityStatus, onCou
   const isCouponSendingWithError = couponValidityStatus === CouponValidityStatus.Error;
 
   const getInputValidityClass = () => {
-    if (isCouponNotExist || isCouponSendingWithError) {
+    if (coupon && (isCouponNotExist || isCouponSendingWithError)) {
       return 'is-invalid';
     }
-    if (isCouponValid) {
+    if (coupon && isCouponValid) {
       return 'is-valid';
     }
+    //разобраться
 
     return '';
   };

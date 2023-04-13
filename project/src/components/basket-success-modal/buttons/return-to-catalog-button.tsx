@@ -3,14 +3,14 @@ import { AppRoute } from '../../../const/app-route';
 
 type ReturnToCatalogButtonProps = {
   onCloseModal: () => void;
-  isOnProductPage?: boolean;
+  isOnProductOrBasketPage?: boolean;
 }
-const ReturnToCatalogButton = ({ onCloseModal, isOnProductPage }:ReturnToCatalogButtonProps):JSX.Element => {
+const ReturnToCatalogButton = ({ onCloseModal, isOnProductOrBasketPage }:ReturnToCatalogButtonProps):JSX.Element => {
   const navigate = useNavigate();
 
 
   const handleButtonReturnToCatalogClick = () => {
-    if (isOnProductPage) {
+    if (isOnProductOrBasketPage) {
       navigate(AppRoute.Main);
     }
 

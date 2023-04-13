@@ -8,15 +8,16 @@ import { FetchStatus } from '../../../const/fetch-status';
 import { OrderButtonTitle } from '../../../const/order-button-title';
 
 type BasketOrderProps = {
-  discount: number;
+  discountPrice: number;
   totalPrice: number;
   isBasketEmpty: boolean;
   onOrderButtonClick: () => void;
 }
 
-function BasketOrder({discount, totalPrice, isBasketEmpty, onOrderButtonClick}: BasketOrderProps): JSX.Element {
-  const totalPriceWithDiscount = totalPrice - discount;
+function BasketOrder({discountPrice, totalPrice, isBasketEmpty, onOrderButtonClick}: BasketOrderProps): JSX.Element {
+  const totalPriceWithDiscount = totalPrice - discountPrice;
   const orderStatus = useAppSelector(getOrderSendingStatus);
+  const isDiscountExist = discountPrice !== 0;
 
   const handleOrderButtonClick = () => {
     onOrderButtonClick();
@@ -30,8 +31,8 @@ function BasketOrder({discount, totalPrice, isBasketEmpty, onOrderButtonClick}: 
       </p>
       <p className="basket__summary-item">
         <span className="basket__summary-text">Скидка:</span>
-        <span className="basket__summary-value basket__summary-value--bonus">
-          {formatPrice(discount)} ₽
+        <span className={` basket__summary-value ${ isDiscountExist ? 'basket__summary-value--bonus' : '' } `}>
+          {formatPrice(discountPrice)} ₽
         </span>
       </p>
       <p className="basket__summary-item">

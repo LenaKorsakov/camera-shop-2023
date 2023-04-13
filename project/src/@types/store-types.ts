@@ -34,7 +34,8 @@ export type OrderData = {
   newCamerasInBasket: CamerasInTheBasket | null;
   selectedCamera: Camera | null;
   orderSendingStatus: FetchStatus;
-  coupon: CouponResponse;
+  discount: CouponResponse;
+  coupon: string;
   couponSendingStatus: FetchStatus;
 }
 

@@ -21,7 +21,8 @@ describe('Reducer: orderProcess', () => {
       camerasInBasket: fakeCameras,
       selectedCamera: fakeCamera,
       newCamerasInBasket: null,
-      coupon: 777,
+      discount: 777,
+      coupon: '',
       orderSendingStatus: FetchStatus.Loading,
       couponSendingStatus: FetchStatus.Loading
     }, {type: sendOrderAction.fulfilled.type}))

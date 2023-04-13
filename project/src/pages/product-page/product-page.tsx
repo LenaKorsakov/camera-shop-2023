@@ -61,7 +61,7 @@ function ProductPage() {
         <BasketSuccessModal
           modalType={ModalType.CameraAddedToBasket}
           onCloseModal={handleCloseSuccessModal}
-          isOnProductPage
+          isOnProductOrBasketPage
         />}
     </main>
   );
