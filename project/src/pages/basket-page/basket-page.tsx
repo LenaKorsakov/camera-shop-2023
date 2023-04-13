@@ -73,7 +73,7 @@ function BasketPage(): JSX.Element {
                 ))
                 : <EmptyPage message={WarningMessage.EmptyBasketMessage}/>}
             </ul>
-            <BasketSummary/>
+            <BasketSummary onModalSuccessOpen={handleOpenSuccessModal}/>
           </div>
         </section>
       </div>

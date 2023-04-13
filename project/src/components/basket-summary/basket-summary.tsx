@@ -5,17 +5,28 @@ import BasketCoupon from './basket-promo/basket-promo';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getCamerasInTheBasket, getCoupon, getCouponSendingStatus } from '../../store/order-process/order-process-selectors';
-import { sendCouponAction } from '../../store/api-actions/api-actions';
+import { sendCouponAction, sendOrderAction } from '../../store/api-actions/api-actions';
 
 import { FetchStatus } from '../../const/fetch-status';
 import { CouponValidityStatus } from '../../const/coupon-validity-status';
 
-function BasketSummary(): JSX.Element {
+import { Camera } from '../../@types/camera-types';
+
+type BasketSummaryProps = {
+  onModalSuccessOpen: () => void;
+};
+
+function BasketSummary({ onModalSuccessOpen }: BasketSummaryProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   const promoCode = useAppSelector(getCoupon);
   const couponSendingStatus = useAppSelector(getCouponSendingStatus);
   const camerasInBasket = useAppSelector(getCamerasInTheBasket);
+
+  const isBasketEmpty = camerasInBasket.length === 0;
+  const camerasIds = camerasInBasket.map((camera) => camera.id);
+  const camerasInBasketTotalPrice = camerasInBasket.reduce((acc: number, item: Camera) => acc + item.price, 0);
+  const discount = promoCode ? Math.ceil(camerasInBasketTotalPrice / 100 * promoCode) : 0;
 
   const [coupon, setCoupon] = useState<string>('');
   const [couponValidityStatus, setCouponValidityStatus] = useState<CouponValidityStatus>(CouponValidityStatus.Default);
@@ -29,6 +40,16 @@ function BasketSummary(): JSX.Element {
 
     const validCoupon = coupon.split(' ').join('');
     dispatch(sendCouponAction({coupon: validCoupon}));
+  };
+
+  const handleOrderButtonClick = () => {
+    const validCoupon = couponValidityStatus === CouponValidityStatus.Valid ? coupon.split(' ').join('') : null;
+
+    dispatch(sendOrderAction({coupon: validCoupon, camerasIds: camerasIds })).unwrap().then(() => {
+      onModalSuccessOpen();
+      setCouponValidityStatus(CouponValidityStatus.Default);
+      setCoupon('');
+    });
   };
 
   useEffect(() => {
@@ -52,9 +73,14 @@ function BasketSummary(): JSX.Element {
         onCouponInputChange={handleCouponInputChange}
         couponValidityStatus={couponValidityStatus}
         onCouponFormSubmit={handlePromoFormSubmit}
-        isBasketEmpty={camerasInBasket.length === 0}
+        isBasketEmpty={isBasketEmpty}
       />
-      <BasketOrder/>
+      <BasketOrder
+        discount={discount}
+        totalPrice={camerasInBasketTotalPrice}
+        isBasketEmpty={isBasketEmpty}
+        onOrderButtonClick={handleOrderButtonClick}
+      />
     </div>
   );
 
