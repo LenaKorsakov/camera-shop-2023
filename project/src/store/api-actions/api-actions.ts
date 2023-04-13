@@ -236,7 +236,7 @@ Coupon,
 >(Action.SendCoupon,
   async (coupon, {extra: api}) => {
     try {
-      const response = await api.post<number>(ApiRoute.Coupons, coupon);
+      const response = await api.post<CouponResponse>(ApiRoute.Coupons, coupon);
       return response.data;
     } catch (error) {
       const status = (error as AxiosError)?.response?.status;

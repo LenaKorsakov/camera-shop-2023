@@ -20,6 +20,7 @@ describe('Reducer: orderProcess', () => {
     expect(orderProcess.reducer({
       camerasInBasket: fakeCameras,
       selectedCamera: fakeCamera,
+      newCamerasInBasket: null,
       coupon: 777,
       orderSendingStatus: FetchStatus.Loading,
       couponSendingStatus: FetchStatus.Loading

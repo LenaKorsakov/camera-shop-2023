@@ -10,6 +10,7 @@ import { Camera, Cameras } from '../../@types/camera-types';
 
 export const initialStateOrder: OrderData = {
   camerasInBasket: [],
+  newCamerasInBasket: null,
   selectedCamera: null,
   orderSendingStatus: FetchStatus.Default,
   coupon: null,
@@ -22,14 +23,12 @@ export const orderProcess = createSlice({
   reducers: {
     addCameraToBasket: (state, action: PayloadAction<Camera>) => {
       const selectedCamera = action.payload;
-
       state.camerasInBasket = [...state.camerasInBasket, selectedCamera];
-      state.camerasInBasket = state.camerasInBasket.slice().sort((itemA, itemB) => itemA.id - itemB.id);
     },
     removeSameCamerasFromBasket: (state, action: PayloadAction<number>) => {
       state.camerasInBasket = state.camerasInBasket.filter((camera) => camera.id !== action.payload);
     },
-    addSeveralCamerasToBasket: (state, action: PayloadAction<SeveralCameras>) => {
+    addSameCamerasToBasket: (state, action: PayloadAction<SeveralCameras>) => {
       const {camera, camerasAmount} = action.payload;
       const newCameras = new Array(Number(camerasAmount)).fill(camera) as Cameras;
       const addedCameraIndex = state.camerasInBasket.findIndex((item) => item.id === camera.id);
@@ -72,5 +71,5 @@ export const orderProcess = createSlice({
   }
 });
 
-export const { addCameraToBasket, removeCameraFromBasket, removeSameCamerasFromBasket, selectCamera, addSeveralCamerasToBasket } = orderProcess.actions;
+export const { addCameraToBasket, removeCameraFromBasket, removeSameCamerasFromBasket, selectCamera, addSameCamerasToBasket } = orderProcess.actions;
 

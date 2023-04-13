@@ -12,4 +12,6 @@ export enum WarningMessage {
   DataSendingError = 'При отправке данных произошла ошибка, попробуйте еще раз',
   ProductsAmountMoreThanMaximum = 'Мы не продаем больше 99 единиц товара в одни руки',
   ProductsAmountLessThanMinimum = 'Введите допустимое количество товара: от 1 до 99 единиц или удалите товар из корзины',
+  PromoCodeDoesNotExist = 'Промокод неверный',
+  PromoCodeSendingError = 'При отправке промокода произошла ошибка',
 }

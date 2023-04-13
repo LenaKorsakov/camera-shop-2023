@@ -7,7 +7,7 @@ import { QueryKey } from '../const/query-key';
 
 import { Camera, Cameras, Promo } from './camera-types';
 import { ReviewsRaw } from './review-types';
-import { CouponResponse } from './order-types';
+import { CamerasInTheBasket, CouponResponse } from './order-types';
 
 export type State = ReturnType<typeof store.getState>;
 
@@ -31,6 +31,7 @@ export type ProductData = {
 
 export type OrderData = {
   camerasInBasket: Cameras;
+  newCamerasInBasket: CamerasInTheBasket | null;
   selectedCamera: Camera | null;
   orderSendingStatus: FetchStatus;
   coupon: CouponResponse;

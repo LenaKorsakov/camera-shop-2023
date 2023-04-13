@@ -1,7 +1,7 @@
 import { ChangeEvent, KeyboardEvent } from 'react';
 
 import { useAppDispatch } from '../../hooks';
-import { addCameraToBasket, addSeveralCamerasToBasket, removeCameraFromBasket } from '../../store/order-process/order-process';
+import { addCameraToBasket, addSameCamerasToBasket, removeCameraFromBasket } from '../../store/order-process/order-process';
 import { displayError } from '../../store/actions';
 
 import { ProductAmount } from '../../const/const';
@@ -50,12 +50,12 @@ function BasketItemAmount({onCameraAmountChange, camera, camerasAmount}: BasketQ
       dispatch(displayError(WarningMessage.ProductsAmountMoreThanMaximum));
       onCameraAmountChange(ProductAmount.Max);
 
-      dispatch(addSeveralCamerasToBasket({camera, camerasAmount: ProductAmount.Max}));
+      dispatch(addSameCamerasToBasket({camera, camerasAmount: ProductAmount.Max}));
 
       return;
     }
 
-    dispatch(addSeveralCamerasToBasket({camera, camerasAmount}));
+    dispatch(addSameCamerasToBasket({camera, camerasAmount}));
   };
 
   const handleCameraDecreaseAmountButton = () => {
