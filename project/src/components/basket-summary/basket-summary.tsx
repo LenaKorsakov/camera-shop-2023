@@ -34,6 +34,9 @@ function BasketSummary({ onModalSuccessOpen }: BasketSummaryProps): JSX.Element 
   const [couponValidityStatus, setCouponValidityStatus] = useState<CouponValidityStatus>(CouponValidityStatus.Default);
 
   const handleCouponInputChange = (value: string) => {
+    if (value === '') {
+      setCouponValidityStatus(CouponValidityStatus.Default);
+    }
     setCoupon(value);
   };
 
@@ -48,14 +51,15 @@ function BasketSummary({ onModalSuccessOpen }: BasketSummaryProps): JSX.Element 
   const handleOrderButtonClick = () => {
     const validCoupon = couponValidityStatus === CouponValidityStatus.Valid ? coupon.split(' ').join('') : null;
 
-    dispatch(sendOrderAction({coupon: validCoupon, camerasIds: camerasIds })).unwrap().then(() => {
-      onModalSuccessOpen();
-      setCouponValidityStatus(CouponValidityStatus.Default);
-      setCoupon('');
-    },
-    () => {
-      onModalSuccessOpen();//разобраться
-    });
+    dispatch(sendOrderAction({coupon: validCoupon, camerasIds: camerasIds })).unwrap().then(
+      () => {
+        onModalSuccessOpen();
+        setCouponValidityStatus(CouponValidityStatus.Default);
+        setCoupon('');
+      },
+      () => {
+        onModalSuccessOpen();
+      });
   };
 
   useEffect(() => {
@@ -69,7 +73,7 @@ function BasketSummary({ onModalSuccessOpen }: BasketSummaryProps): JSX.Element 
     if (couponSendingStatus === FetchStatus.Error) {
       setCouponValidityStatus(CouponValidityStatus.Error);
     }
-  },[discount, couponSendingStatus, coupon]);
+  },[discount, couponSendingStatus]);
 
   return (
     <div className="basket__summary">
