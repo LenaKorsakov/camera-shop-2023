@@ -84,6 +84,7 @@ function BasketItemAmount({onCameraAmountChange, camera, camerasAmount}: BasketQ
         disabled={isAmountMinimum}
         onClick={handleCameraDecreaseAmountButton}
         aria-label="уменьшить количество товара"
+        data-testid='descrease-button'
       >
         <svg width={7} height={12} aria-hidden="true">
           <use xlinkHref="#icon-arrow" />
@@ -104,6 +105,7 @@ function BasketItemAmount({onCameraAmountChange, camera, camerasAmount}: BasketQ
         disabled={isAmountMaximum}
         onClick={handleCameraIncreaseAmountButton}
         aria-label="увеличить количество товара"
+        data-testid='increase-button'
       >
         <svg width={7} height={12} aria-hidden="true">
           <use xlinkHref="#icon-arrow" />

@@ -1,5 +1,5 @@
 import { sendCouponAction, sendOrderAction } from '../api-actions/api-actions';
-import { addCameraToBasket, initialStateOrder, orderProcess } from './order-process';
+import { addCameraToBasket, addCoupon, addSameCamerasToBasket, initialStateOrder, orderProcess, removeCameraFromBasket, removeSameCamerasFromBasket, selectCamera } from './order-process';
 
 import { UNKNOWN_ACTION, fakeCamera, fakeCameras } from '../../utils/mock';
 import { FetchStatus } from '../../const/fetch-status';
@@ -22,7 +22,7 @@ describe('Reducer: orderProcess', () => {
       selectedCamera: fakeCamera,
       newCamerasInBasket: null,
       discount: 777,
-      coupon: '',
+      coupon: '111',
       orderSendingStatus: FetchStatus.Loading,
       couponSendingStatus: FetchStatus.Loading
     }, {type: sendOrderAction.fulfilled.type}))
@@ -36,9 +36,9 @@ describe('Reducer: orderProcess', () => {
     expect(orderProcess.reducer(state, {type: sendOrderAction.rejected.type}))
       .toEqual({...state, orderSendingStatus: FetchStatus.Error});
   });
-  it('should update coupon and change coupon sending status to success and if sendCouponAction fulfiled', () => {
+  it('should update discount and change coupon sending status to success and if sendCouponAction fulfiled', () => {
     expect(orderProcess.reducer(state, {type: sendCouponAction.fulfilled.type, payload: 777}))
-      .toEqual({...state, couponSendingStatus: FetchStatus.Success, coupon: 777});
+      .toEqual({...state, couponSendingStatus: FetchStatus.Success, discount: 777});
   });
   it('should change coupon sending status to success and if sendCouponAction fulfiled and coupon does not exist', () => {
     expect(orderProcess.reducer(state, {type: sendCouponAction.fulfilled.type, payload: null}))
@@ -55,5 +55,25 @@ describe('Reducer: orderProcess', () => {
   it('should add camera in basket', () => {
     expect(orderProcess.reducer(state, addCameraToBasket(fakeCamera)))
       .toEqual({...state, camerasInBasket: [fakeCamera]});
+  });
+  it('should save coupon in store', () => {
+    expect(orderProcess.reducer(state, addCoupon('111')))
+      .toEqual({...state, coupon: '111'});
+  });
+  it('should save selected camera in store', () => {
+    expect(orderProcess.reducer(state, selectCamera(fakeCamera)))
+      .toEqual({...state, selectedCamera: fakeCamera});
+  });
+  it('should remove camera from basket', () => {
+    expect(orderProcess.reducer({...state, camerasInBasket: [fakeCamera]}, removeCameraFromBasket(fakeCamera.id)))
+      .toEqual(state);
+  });
+  it('should remove cameras from basket', () => {
+    expect(orderProcess.reducer({...state, camerasInBasket: [fakeCamera, fakeCamera]}, removeSameCamerasFromBasket(fakeCamera.id)))
+      .toEqual(state);
+  });
+  it('should add several cameras in basket', () => {
+    expect(orderProcess.reducer(state, addSameCamerasToBasket({camera: fakeCamera, camerasAmount: 3})))
+      .toEqual({...state, camerasInBasket: [fakeCamera, fakeCamera, fakeCamera]});
   });
 });

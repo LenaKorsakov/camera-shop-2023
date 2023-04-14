@@ -1,7 +1,7 @@
-import { BreadcrumbsNames } from '../../../const/breadcrumbs-names';
+import { BreadcrumbsName } from '../../../const/breadcrumbs-name';
 
 type BreadcrumbsActiveItemProps = {
-  title: BreadcrumbsNames | string | undefined;
+  title: BreadcrumbsName | string | undefined;
 }
 
 function BreadcrumbsActiveItem({ title }: BreadcrumbsActiveItemProps): JSX.Element {

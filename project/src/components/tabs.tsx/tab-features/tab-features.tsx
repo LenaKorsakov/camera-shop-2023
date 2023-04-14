@@ -1,7 +1,7 @@
 import { memo } from 'react';
 
 import { Camera } from '../../../@types/camera-types';
-import { FeaturesTitles } from '../../../const/tabs-buttons';
+import { FeaturesTitle } from '../../../const/tabs-buttons';
 
 type TabFeaturesProps = {
   camera: Camera;
@@ -18,7 +18,7 @@ function TabFeatures({ camera }: TabFeaturesProps): JSX.Element {
 
   return (
     <ul className="product__tabs-list">
-      {Object.values(FeaturesTitles).map((title, index) => {
+      {Object.values(FeaturesTitle).map((title, index) => {
         const item = Object.values(FeaturesItem)[index];
         return (
           <li

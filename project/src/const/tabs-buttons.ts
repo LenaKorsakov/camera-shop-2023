@@ -3,7 +3,7 @@ type TabsButton = {
   type: string;
 }
 
-enum TabsButtonsTitles {
+enum TabsButtonsTitle {
   Features = 'Характеристики',
   Description = 'Описание'
 }
@@ -13,11 +13,11 @@ export enum TabType {
   Description = 'description'
 }
 export const TABS_BUTTONS: TabsButton[] = [
-  {title: TabsButtonsTitles.Features, type: TabType.Features},
-  {title: TabsButtonsTitles.Description, type: TabType.Description},
+  {title: TabsButtonsTitle.Features, type: TabType.Features},
+  {title: TabsButtonsTitle.Description, type: TabType.Description},
 ];
 
-export enum FeaturesTitles {
+export enum FeaturesTitle {
   VendorCode = 'Артикул',
   Category = 'Категория',
   Type = 'Тип камеры',
@@ -25,4 +25,4 @@ export enum FeaturesTitles {
 }
 
 export const DEFAULT_TABS_TYPE = TabType.Features;
-export const DEFAULT_TABS_TITLE = TabsButtonsTitles.Description;
+export const DEFAULT_TABS_TITLE = TabsButtonsTitle.Description;

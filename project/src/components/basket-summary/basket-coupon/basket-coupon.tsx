@@ -34,7 +34,7 @@ function BasketCoupon({ coupon, onCouponInputChange, couponValidityStatus, onCou
   const inputValidityClass = getInputValidityClass();
 
   return (
-    <div className="basket__promo">
+    <div className="basket__promo" data-testid='basket-promo'>
       <p className="title title--h4">
 Если у вас есть промокод на скидку, примените его в этом поле
       </p>

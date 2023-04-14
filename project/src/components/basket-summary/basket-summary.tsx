@@ -1,7 +1,7 @@
 import { FormEvent, useEffect, useState } from 'react';
 
 import BasketOrder from './basket-order/basket-order';
-import BasketCoupon from './basket-promo/basket-promo';
+import BasketCoupon from './basket-coupon/basket-coupon';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getCamerasInTheBasket, getDiscount, getCouponSendingStatus, getCoupon } from '../../store/order-process/order-process-selectors';

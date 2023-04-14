@@ -1,7 +1,7 @@
 import BreadcrumbsLink from './breadcrumbs-link';
 
 import { AppRoute } from '../../../const/app-route';
-import { BreadcrumbsNames } from '../../../const/breadcrumbs-names';
+import { BreadcrumbsName } from '../../../const/breadcrumbs-name';
 import BreadcrumbsActiveItem from './breadscrumbs-active-item';
 
 type BreadcrumbsItemProps = {
@@ -14,10 +14,10 @@ function BreadcrumbsItem({ productName, isProductPage}: BreadcrumbsItemProps): J
     <>
       <BreadcrumbsLink
         route={AppRoute.Main}
-        title={BreadcrumbsNames.Catalog}
+        title={BreadcrumbsName.Catalog}
       />
       <BreadcrumbsActiveItem
-        title={isProductPage ? productName : BreadcrumbsNames.Basket}
+        title={isProductPage ? productName : BreadcrumbsName.Basket}
       />
     </>
 

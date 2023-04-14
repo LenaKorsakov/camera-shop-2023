@@ -24,7 +24,7 @@ function BasketOrder({discountPrice, totalPrice, isBasketEmpty, onOrderButtonCli
   };
 
   return (
-    <div className="basket__summary-order">
+    <div className="basket__summary-order" data-testid='basket-order'>
       <p className="basket__summary-item">
         <span className="basket__summary-text">Всего:</span>
         <span className="basket__summary-value">{formatPrice(totalPrice)} ₽</span>

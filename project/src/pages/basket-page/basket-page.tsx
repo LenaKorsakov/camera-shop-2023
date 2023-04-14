@@ -10,7 +10,7 @@ import BasketInfoModal from '../../components/basket-info-modal/basket-info-moda
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { selectCamera } from '../../store/order-process/order-process';
-import { getCamerasInTheBasket } from '../../store/order-process/order-process-selectors';
+import { getSortedCamerasInTheBasket } from '../../store/order-process/order-process-selectors';
 
 import { WarningMessage } from '../../const/warning-message';
 import { ModalType } from '../../const/modal-type';
@@ -19,7 +19,7 @@ import { Camera, Cameras } from '../../@types/camera-types';
 
 function BasketPage(): JSX.Element {
   const dispatch = useAppDispatch();
-  const cameras = useAppSelector(getCamerasInTheBasket);
+  const cameras = useAppSelector(getSortedCamerasInTheBasket);
 
   const uniqueCamerasInTheBasket = cameras.reduce(
     (acc: Cameras, item: Camera) =>

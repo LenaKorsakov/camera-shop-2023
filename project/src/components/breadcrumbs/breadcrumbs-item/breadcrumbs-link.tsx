@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../../const/app-route';
-import { BreadcrumbsNames } from '../../../const/breadcrumbs-names';
+import { BreadcrumbsName } from '../../../const/breadcrumbs-name';
 
 type BreadcrumbsLinkProps = {
   route: AppRoute;
-  title: BreadcrumbsNames;
+  title: BreadcrumbsName;
 }
 
 function BreadcrumbsLink({ route, title }: BreadcrumbsLinkProps): JSX.Element {
