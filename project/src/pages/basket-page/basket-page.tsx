@@ -6,7 +6,7 @@ import BasketItem from '../../components/basket-item/basket-item';
 import BasketSummary from '../../components/basket-summary/basket-summary';
 import EmptyPage from '../empty-page/empty-page';
 import BasketModal from '../../components/basket-modal/basket-modal';
-import BasketSuccessModal from '../../components/basket-success-modal/basket-success-modal';
+import BasketInfoModal from '../../components/basket-info-modal/basket-info-modal';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { selectCamera } from '../../store/order-process/order-process';
@@ -28,7 +28,7 @@ function BasketPage(): JSX.Element {
   );
 
   const [isModalRemoveCameraFromBasketOpen, setModalRemoveCameraFromBasketOpen] = useState<boolean>(false);
-  const [isModalSuccessAddedCameraToBasketOpen, setModalSuccessAddedCameraToBasketOpen] = useState<boolean>(false);
+  const [isInfoModalOpen, setInfoModalOpen] = useState<boolean>(false);
 
   const handleCloseRemoveCameraFromBasketModal = () => {
     setModalRemoveCameraFromBasketOpen(false);
@@ -44,12 +44,12 @@ function BasketPage(): JSX.Element {
     }
   };
 
-  const handleOpenSuccessModal = () => {
-    setModalSuccessAddedCameraToBasketOpen(true);
+  const handleOpenInfoModal = () => {
+    setInfoModalOpen(true);
   };
 
-  const handleCloseSuccessModal = () => {
-    setModalSuccessAddedCameraToBasketOpen(false);
+  const handleCloseInfoModal = () => {
+    setInfoModalOpen(false);
   };
 
   return (
@@ -73,7 +73,7 @@ function BasketPage(): JSX.Element {
                 ))
                 : <EmptyPage message={WarningMessage.EmptyBasketMessage}/>}
             </ul>
-            <BasketSummary onModalSuccessOpen={handleOpenSuccessModal}/>
+            <BasketSummary onModalInfoOpen={handleOpenInfoModal}/>
           </div>
         </section>
       </div>
@@ -81,12 +81,12 @@ function BasketPage(): JSX.Element {
       <BasketModal
         onCloseModal={handleCloseRemoveCameraFromBasketModal}
         modalType={ModalType.RemoveCameraFromBasket}
-        onOpenSuccessModal={handleOpenSuccessModal}
+        onOpenSuccessModal={handleOpenInfoModal}
       />}
-      {isModalSuccessAddedCameraToBasketOpen &&
-      <BasketSuccessModal
+      {isInfoModalOpen &&
+      <BasketInfoModal
         modalType={ModalType.CamerasOrdered}
-        onCloseModal={handleCloseSuccessModal}
+        onCloseModal={handleCloseInfoModal}
         isOnProductOrBasketPage
       />}
     </main>);

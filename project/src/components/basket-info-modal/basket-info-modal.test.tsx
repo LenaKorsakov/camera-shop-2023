@@ -2,11 +2,10 @@ import { MemoryRouter } from 'react-router-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { Provider} from 'react-redux';
 
-
 import { fakeCamera, getMockStore} from '../../utils/mock';
 import { ModalType } from '../../const/modal-type';
 import { NameSpace } from '../../const/name-space';
-import BasketSuccessModal from './basket-success-modal';
+import BasketInfoModal from './basket-info-modal';
 
 const store = getMockStore({
   [NameSpace.Order]: {
@@ -14,7 +13,7 @@ const store = getMockStore({
   }
 });
 
-describe('Component: Basket success Modal', () => {
+describe('Component: Basket Info Modal', () => {
   const handleCloseModal = jest.fn();
 
   it('should render correctly add camera in basket modal', () => {
@@ -22,7 +21,7 @@ describe('Component: Basket success Modal', () => {
     render(
       <Provider store={store}>
         <MemoryRouter>
-          <BasketSuccessModal onCloseModal={handleCloseModal} modalType={ModalType.AddCameraInBasket}/>
+          <BasketInfoModal onCloseModal={handleCloseModal} modalType={ModalType.AddCameraInBasket}/>
         </MemoryRouter>
       </Provider>
     );
@@ -35,7 +34,7 @@ describe('Component: Basket success Modal', () => {
     render(
       <Provider store={store}>
         <MemoryRouter>
-          <BasketSuccessModal onCloseModal={handleCloseModal} modalType={ModalType.AddCameraInBasket}/>
+          <BasketInfoModal onCloseModal={handleCloseModal} modalType={ModalType.AddCameraInBasket}/>
         </MemoryRouter>
       </Provider>
     );

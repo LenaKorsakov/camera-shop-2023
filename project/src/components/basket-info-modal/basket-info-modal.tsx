@@ -17,13 +17,13 @@ import { WarningMessage } from '../../const/warning-message';
 import { ModalTitle } from '../../const/modal-title';
 
 
-type BasketModalProps = {
+type BasketInfoModalProps = {
   onCloseModal: () => void;
   modalType: ModalType;
   isOnProductOrBasketPage?: boolean;
 }
 
-function BasketSuccessModal({ onCloseModal, modalType, isOnProductOrBasketPage }: BasketModalProps): JSX.Element {
+function BasketInfoModal({ onCloseModal, modalType, isOnProductOrBasketPage }: BasketInfoModalProps): JSX.Element {
   const orderSendStatus = useAppSelector(getOrderSendingStatus);
 
   const isOrderSendSuccess = orderSendStatus === FetchStatus.Success;
@@ -102,4 +102,4 @@ function BasketSuccessModal({ onCloseModal, modalType, isOnProductOrBasketPage }
     </div>
   );
 }
-export default memo(BasketSuccessModal);
+export default memo(BasketInfoModal);

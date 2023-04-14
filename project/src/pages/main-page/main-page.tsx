@@ -14,7 +14,7 @@ import BasketModal from '../../components/basket-modal/basket-modal';
 import { selectCamera } from '../../store/order-process/order-process';
 
 import { ModalType } from '../../const/modal-type';
-import BasketSuccessModal from '../../components/basket-success-modal/basket-success-modal';
+import BasketInfoModal from '../../components/basket-info-modal/basket-info-modal';
 
 function MainPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -72,7 +72,7 @@ function MainPage(): JSX.Element {
           onOpenSuccessModal={handleOpenSuccessModal}
         />}
       {isModalSuccessAddedCameraToBasketOpen &&
-        <BasketSuccessModal
+        <BasketInfoModal
           modalType={ModalType.CameraAddedToBasket}
           onCloseModal={handleCloseSuccessModal}
         />}

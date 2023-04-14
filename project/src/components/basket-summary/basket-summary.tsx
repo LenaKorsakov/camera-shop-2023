@@ -14,10 +14,10 @@ import { Camera } from '../../@types/camera-types';
 import { addCoupon } from '../../store/order-process/order-process';
 
 type BasketSummaryProps = {
-  onModalSuccessOpen: () => void;
+  onModalInfoOpen: () => void;
 };
 
-function BasketSummary({ onModalSuccessOpen }: BasketSummaryProps): JSX.Element {
+function BasketSummary({ onModalInfoOpen }: BasketSummaryProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   const discount = useAppSelector(getDiscount);
@@ -53,12 +53,12 @@ function BasketSummary({ onModalSuccessOpen }: BasketSummaryProps): JSX.Element 
 
     dispatch(sendOrderAction({coupon: validCoupon, camerasIds: camerasIds })).unwrap().then(
       () => {
-        onModalSuccessOpen();
+        onModalInfoOpen();
         setCouponValidityStatus(CouponValidityStatus.Default);
         setCoupon('');
       },
       () => {
-        onModalSuccessOpen();
+        onModalInfoOpen();
       });
   };
 
