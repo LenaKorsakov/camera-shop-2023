@@ -146,7 +146,7 @@ function FilterByPrice({bottomPrice, topPrice, onBottomPriceChange, onTopPriceCh
 
   const handleInputKeyDown = (event: KeyboardEvent) => {
     const input = event.target as HTMLInputElement;
-    if (event.key.startsWith('Ent')) {
+    if (event.key === 'Enter') {
       input.blur();
     }
   };

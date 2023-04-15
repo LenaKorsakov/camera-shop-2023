@@ -72,7 +72,7 @@ function BasketItemAmount({onCameraAmountChange, camera, camerasAmount}: BasketQ
 
   const handlePriceInputBlur = (event: KeyboardEvent) => {
     const inputElement = event.target as HTMLInputElement;
-    if (event.key.startsWith('Ent')) {
+    if (event.key === 'Enter') {
       inputElement.blur();
     }
   };
