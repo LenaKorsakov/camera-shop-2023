@@ -2,7 +2,7 @@
 Camera shop is an online supermarket where users can buy various cameras.
 This web application has an easy and intuitive user-friendly interface that makes shopping even faster and more enjoyable.!
 ## Description
-//Here is a description with pictures.
+//soon
 
 ## Stack
 - ReactJS,
@@ -13,7 +13,7 @@ This web application has an easy and intuitive user-friendly interface that make
 - Jest.
 
 ## Demo site
- <a href='camera-shop-korsakova.vercel.app'> GO TO SITE ---> </a>
+ <a href='https://camera-shop-korsakova.vercel.app'> GO TO SITE ---> </a>
 
 ## How to run app:
 
