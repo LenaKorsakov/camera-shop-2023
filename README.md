@@ -13,7 +13,7 @@ This web application has an easy and intuitive user-friendly interface that make
 - Jest.
 
 ## Demo site
-//Here is a link
+ <a href='camera-shop-korsakova.vercel.app'> GO TO SITE ---> </a>
 
 ## How to run app:
 
