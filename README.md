@@ -6,8 +6,8 @@ This web application has an easy and intuitive user-friendly interface that make
 I present to you the Camera Shop web application for searching, comparing, and buying various photo and video cameras.
 The application is oriented to the Russian market, perhaps in the future, it will be translated into other languages.
 
-The application has four active pages: a main page, a product catalog (with pagination), a page for each camera with details and product description and a basket page, where the purchase will take place. 
-The main page has a simple familiar design: we can see that each product is presented as a card with two buttons: clicking on the bright purple button add the product to basket, clicking on the white one will take you to the page where you can find out details about the product.
+The application has four active pages: a main page, a product catalog (with pagination), a page for each camera with details and product description and a cart page, where the purchase will take place. 
+The main page has a simple familiar design: we can see that each product is presented as a card with two buttons: clicking on the bright purple button add the product to cart, clicking on the white one will take you to the page where you can find out details about the product.
 
 ![Main](https://github.com/LenaKorsakov/camera-shop-2023/blob/main/project/screenshots/main.png)
 
@@ -45,7 +45,25 @@ Below the slider is a block with product reviews. The user has the opportunity t
 
 After submitting a valid comment, a popup will appear with information for the user that his review was successfully sent, and the review will immediately appear first in the general list of reviews.
 
-![Reviews](https://github.com/LenaKorsakov/camera-shop-2023/blob/main/project/screenshots/review-form.png)
+![Reviews](https://github.com/LenaKorsakov/camera-shop-2023/blob/main/project/screenshots/reviews.png)
+
+Finally, let's take a look at the cart page, where we can see the list of items the user is planning to purchase and the total cost of the purchase. The user has the opportunity to change the quantity of each product right there, using the buttons or manually.
+In addition, the user has the opportunity to enter a purchase coupon in the input field and, if the code is correct, the interface will notify the user about this and a discount will be applied to the total purchase price.
+
+![Basket](https://github.com/LenaKorsakov/camera-shop-2023/blob/main/project/screenshots/basket-page.png)
+
+
+In the end, would like to note the high level of application response to user actions: each action leads to the appearance of a pop-up (with information or with an action), 
+a loader or an informational message will appear if the data is loaded for a long time.
+In addition, possible errors are processed: if the page does not exist, if there are problems with the network, if the user entered incorrect data, the application will respond with informational messages or warnings
+
+This pop-up prompts the user to add a product to the cart.
+
+![Pop-Up-Cart](https://github.com/LenaKorsakov/camera-shop-2023/blob/main/project/screenshots/buy-popup.png)
+
+This pop-up will appear when the order is successfully sent and will thank the user for the order.
+
+![Pop-Up-Success](https://github.com/LenaKorsakov/camera-shop-2023/blob/main/project/screenshots/success-popup.png)
 
 ## Stack
 - ReactJS,
