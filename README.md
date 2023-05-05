@@ -1,5 +1,5 @@
 ## Camera Shop
-# Camera Shop is a one-page application (SPA) that was made using REACT and REDUX.
+# Camera Shop is an one-page application (SPA) that was made using REACT and REDUX.
 Camera shop is an online supermarket where users can buy various cameras.
 This web application has an easy and intuitive user-friendly interface that makes shopping even faster and more enjoyable!
 ## Description
